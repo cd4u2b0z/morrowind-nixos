@@ -29,9 +29,8 @@
       "input"
       "bluetooth"
       "plugdev"
-      "docker"       # if you use docker
-      "libvirtd"     # if you use virtualization
-      "gamemode"     # for gaming optimizations
+      # "docker"     # Uncomment if you use Docker
+      # "libvirtd"   # Uncomment if you use virtualization
     ];
     
     shell = pkgs.zsh;

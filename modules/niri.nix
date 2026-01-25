@@ -134,6 +134,10 @@
   
   # Polkit authentication agent
   security.polkit.enable = true;
+  
+  # PAM configuration for swaylock (REQUIRED for lock screen to work!)
+  security.pam.services.swaylock = {};
+  
   systemd.user.services.polkit-gnome-authentication-agent-1 = {
     description = "polkit-gnome-authentication-agent-1";
     wantedBy = [ "graphical-session.target" ];
@@ -157,16 +161,20 @@
     
     packages = with pkgs; [
       noto-fonts
-      noto-fonts-cjk
+      noto-fonts-cjk-sans
       noto-fonts-emoji
       font-awesome
-      (nerdfonts.override { fonts = [ "JetBrainsMono" "FiraCode" "Iosevka" ]; })
+      inter
+      # Nerd Fonts - new syntax for nixpkgs-unstable (individual packages)
+      nerd-fonts.jetbrains-mono
+      nerd-fonts.fira-code
+      nerd-fonts.iosevka
     ];
     
     fontconfig = {
       defaultFonts = {
         serif = [ "Noto Serif" ];
-        sansSerif = [ "Noto Sans" ];
+        sansSerif = [ "Inter" "Noto Sans" ];
         monospace = [ "JetBrainsMono Nerd Font" ];
         emoji = [ "Noto Color Emoji" ];
       };

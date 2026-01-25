@@ -162,8 +162,9 @@
   };
   
   # Link Neovim config from Chezmoi
-  xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink 
-    "/home/${username}/.local/share/chezmoi/dot_config/nvim";
+  # NOTE: Uncomment after running: chezmoi init --apply https://github.com/cd4u2b0z/dotfiles.git
+  # xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink 
+  #   "/home/${username}/.local/share/chezmoi/dot_config/nvim";
 
   # ═══════════════════════════════════════════════════════════════════
   # Tmux
@@ -171,11 +172,12 @@
   
   programs.tmux = {
     enable = true;
-    # Link from Chezmoi or configure here
   };
   
-  xdg.configFile."tmux".source = config.lib.file.mkOutOfStoreSymlink 
-    "/home/${username}/.local/share/chezmoi/dot_config/tmux";
+  # Link Tmux config from Chezmoi
+  # NOTE: Uncomment after running: chezmoi init --apply https://github.com/cd4u2b0z/dotfiles.git
+  # xdg.configFile."tmux".source = config.lib.file.mkOutOfStoreSymlink 
+  #   "/home/${username}/.local/share/chezmoi/dot_config/tmux";
 
   # ═══════════════════════════════════════════════════════════════════
   # GTK Theming
@@ -253,38 +255,38 @@
   '';
 
   # ═══════════════════════════════════════════════════════════════════
-  # Additional Configuration Files from Chezmoi
+  # Additional Configuration Files from Chezmoi (OPTIONAL)
   # ═══════════════════════════════════════════════════════════════════
   
-  # Link other configs from Chezmoi
-  xdg.configFile."btop".source = config.lib.file.mkOutOfStoreSymlink 
-    "/home/${username}/.local/share/chezmoi/dot_config/btop";
+  # NOTE: These symlinks require Chezmoi to be initialized first!
+  # Run: chezmoi init --apply https://github.com/cd4u2b0z/dotfiles.git
+  # Then uncomment the lines below and rebuild.
   
-  xdg.configFile."cava".source = config.lib.file.mkOutOfStoreSymlink 
-    "/home/${username}/.local/share/chezmoi/dot_config/cava";
+  # xdg.configFile."btop".source = config.lib.file.mkOutOfStoreSymlink 
+  #   "/home/${username}/.local/share/chezmoi/dot_config/btop";
   
-  xdg.configFile."fastfetch".source = config.lib.file.mkOutOfStoreSymlink 
-    "/home/${username}/.local/share/chezmoi/dot_config/fastfetch";
+  # xdg.configFile."cava".source = config.lib.file.mkOutOfStoreSymlink 
+  #   "/home/${username}/.local/share/chezmoi/dot_config/cava";
   
-  xdg.configFile."ncmpcpp".source = config.lib.file.mkOutOfStoreSymlink 
-    "/home/${username}/.local/share/chezmoi/dot_config/ncmpcpp";
+  # xdg.configFile."fastfetch".source = config.lib.file.mkOutOfStoreSymlink 
+  #   "/home/${username}/.local/share/chezmoi/dot_config/fastfetch";
   
-  xdg.configFile."ncspot".source = config.lib.file.mkOutOfStoreSymlink 
-    "/home/${username}/.local/share/chezmoi/dot_config/ncspot";
+  # xdg.configFile."ncmpcpp".source = config.lib.file.mkOutOfStoreSymlink 
+  #   "/home/${username}/.local/share/chezmoi/dot_config/ncmpcpp";
   
-  xdg.configFile."MangoHud".source = config.lib.file.mkOutOfStoreSymlink 
-    "/home/${username}/.local/share/chezmoi/dot_config/MangoHud";
+  # xdg.configFile."ncspot".source = config.lib.file.mkOutOfStoreSymlink 
+  #   "/home/${username}/.local/share/chezmoi/dot_config/ncspot";
   
-  xdg.configFile."Thunar".source = config.lib.file.mkOutOfStoreSymlink 
-    "/home/${username}/.local/share/chezmoi/dot_config/private_Thunar";
+  # xdg.configFile."Thunar".source = config.lib.file.mkOutOfStoreSymlink 
+  #   "/home/${username}/.local/share/chezmoi/dot_config/private_Thunar";
 
   # ═══════════════════════════════════════════════════════════════════
-  # User Scripts
+  # User Scripts (OPTIONAL - requires Chezmoi)
   # ═══════════════════════════════════════════════════════════════════
   
-  # Link local bin scripts
-  home.file.".local/bin".source = config.lib.file.mkOutOfStoreSymlink 
-    "/home/${username}/.local/share/chezmoi/private_dot_local/bin";
+  # NOTE: Uncomment after Chezmoi is initialized
+  # home.file.".local/bin".source = config.lib.file.mkOutOfStoreSymlink 
+  #   "/home/${username}/.local/share/chezmoi/private_dot_local/bin";
 
   # ═══════════════════════════════════════════════════════════════════
   # XDG User Directories
@@ -302,6 +304,9 @@
     templates = "${config.home.homeDirectory}/Templates";
     publicShare = "${config.home.homeDirectory}/Public";
   };
+
+  # Create Screenshots directory for grim/screenshot bindings
+  home.file."Pictures/Screenshots/.keep".text = "";
 
   # ═══════════════════════════════════════════════════════════════════
   # Wallpapers

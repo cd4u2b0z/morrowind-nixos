@@ -232,7 +232,7 @@ binds {
     // SCREENSHOTS
     Print { screenshot; }
     Mod+Print { screenshot-screen; }
-    Mod+Shift+S { spawn "sh" "-c" "grim -g \"$(slurp)\" ~/Pictures/Screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png"; }
+    Mod+Shift+S { spawn "sh" "-c" "grim -g \"$(slurp)\" $HOME/Pictures/Screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png"; }
     Ctrl+Print { spawn "sh" "-c" "grim - | wl-copy"; }
     Ctrl+Mod+Print { spawn "sh" "-c" "grim -g \"$(slurp)\" - | wl-copy"; }
     
@@ -263,8 +263,8 @@ binds {
     Mod+Alt+R { spawn "sh" "-c" "killall waybar; waybar &"; }
     
     // WALLPAPER
-    Mod+W { spawn "~/.config/niri/scripts/theme-switcher.sh"; }
-    Mod+Shift+W { spawn "~/.config/niri/scripts/quick-wallpaper.sh"; }
+    Mod+W { spawn "sh" "-c" "$HOME/.config/niri/scripts/theme-switcher.sh"; }
+    Mod+Shift+W { spawn "sh" "-c" "$HOME/.config/niri/scripts/quick-wallpaper.sh"; }
     
     // NOTIFICATIONS
     Mod+N { spawn "makoctl" "dismiss"; }
@@ -283,8 +283,9 @@ spawn-at-startup "waybar"
 spawn-at-startup "mako"
 // XWayland bridge - REQUIRED for X11 apps (Discord, etc.)
 spawn-at-startup "xwayland-satellite"
-// Set wallpaper - uses forest.png by default, change to your preferred
-spawn-at-startup "swaybg" "-i" "~/Pictures/Wallpapers/forest.png" "-m" "fill"
+// Set a default wallpaper - will use bundled wallpapers from ~/Pictures/Wallpapers/
+// Note: If this fails, run: swaybg -i /path/to/wallpaper.jpg -m fill &
+spawn-at-startup "sh" "-c" "swaybg -i $HOME/Pictures/Wallpapers/forest.png -m fill || swaybg -c '#2e3440'"
 spawn-at-startup "swayidle" "-w" "timeout" "300" "swaylock -f" "timeout" "600" "systemctl suspend"
 spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
 spawn-at-startup "thunar" "--daemon"
