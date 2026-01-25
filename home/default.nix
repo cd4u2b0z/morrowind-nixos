@@ -14,15 +14,33 @@
   programs.home-manager.enable = true;
 
   # ═══════════════════════════════════════════════════════════════════
-  # Niri Configuration
+  # Hyprland Configuration
   # ═══════════════════════════════════════════════════════════════════
   
-  # Niri compositor config (translated from your Hyprland config)
-  xdg.configFile."niri/config.kdl".source = ./dotfiles/niri/config.kdl;
+  # Hyprland compositor config (your actual config from Arch)
+  xdg.configFile."hypr/hyprland.conf".source = ./dotfiles/hypr/hyprland.conf;
+  xdg.configFile."hypr/monitors.conf".source = ./dotfiles/hypr/monitors.conf;
+  xdg.configFile."hypr/workspaces.conf".source = ./dotfiles/hypr/workspaces.conf;
+  xdg.configFile."hypr/wallust-colors.conf".source = ./dotfiles/hypr/wallust-colors.conf;
   
-  # Niri scripts (wallpaper, screenshot, startup, etc.)
-  xdg.configFile."niri/scripts" = {
-    source = ./dotfiles/niri/scripts;
+  # Hyprlock (screen locker)
+  xdg.configFile."hypr/hyprlock.conf".source = ./dotfiles/hypr/hyprlock.conf;
+  
+  # Hypridle (idle manager)
+  xdg.configFile."hypr/hypridle.conf".source = ./dotfiles/hypr/hypridle.conf;
+  
+  # Hyprpaper (wallpaper daemon)
+  xdg.configFile."hypr/hyprpaper.conf".source = ./dotfiles/hypr/hyprpaper.conf;
+  
+  # Hypr scripts (wallpaper, screenshot, startup, etc.)
+  xdg.configFile."hypr/scripts" = {
+    source = ./dotfiles/hypr/scripts;
+    recursive = true;
+  };
+  
+  # Hypr assets (images for hyprlock, etc.)
+  xdg.configFile."hypr/assets" = {
+    source = ./dotfiles/hypr/assets;
     recursive = true;
   };
 
@@ -32,7 +50,7 @@
   
   programs.waybar.enable = true;
   
-  # Bundled Waybar config (adapted for Niri)
+  # Bundled Waybar config (your Hyprland-compatible setup)
   xdg.configFile."waybar/config".source = ./dotfiles/waybar/config;
   xdg.configFile."waybar/style.css".source = ./dotfiles/waybar/style.css;
   xdg.configFile."waybar/wallust-colors.css".source = ./dotfiles/waybar/wallust-colors.css;
@@ -47,8 +65,6 @@
   
   # Kitty terminal
   programs.kitty.enable = true;
-  
-  # Use bundled Kitty config
   xdg.configFile."kitty/kitty.conf".source = ./dotfiles/kitty/kitty.conf;
   
   # Zsh
@@ -60,18 +76,10 @@
     
     oh-my-zsh = {
       enable = true;
-      plugins = [ 
-        "git" 
-        "sudo" 
-        "docker" 
-        "kubectl" 
-        "command-not-found"
-        "z"
-      ];
+      plugins = [ "git" "sudo" "docker" "kubectl" "command-not-found" "z" ];
       theme = "";  # Using Starship instead
     };
     
-    # Source your .zshrc from Chezmoi for custom config
     initExtra = ''
       # Source Chezmoi-managed zshrc if it exists
       if [ -f ~/.zshrc.local ]; then
@@ -82,8 +90,6 @@
   
   # Starship prompt
   programs.starship.enable = true;
-  
-  # Use bundled Starship config
   xdg.configFile."starship.toml".source = ./dotfiles/starship.toml;
 
   # ═══════════════════════════════════════════════════════════════════
@@ -91,8 +97,6 @@
   # ═══════════════════════════════════════════════════════════════════
   
   services.mako.enable = true;
-  
-  # Use bundled Mako config
   xdg.configFile."mako/config".source = ./dotfiles/mako/config;
 
   # ═══════════════════════════════════════════════════════════════════
@@ -100,39 +104,7 @@
   # ═══════════════════════════════════════════════════════════════════
   
   programs.fuzzel.enable = true;
-  
-  # Use bundled Fuzzel config
   xdg.configFile."fuzzel/fuzzel.ini".source = ./dotfiles/fuzzel/fuzzel.ini;
-
-  # ═══════════════════════════════════════════════════════════════════
-  # Swaylock (Screen locker)
-  # ═══════════════════════════════════════════════════════════════════
-  
-  programs.swaylock = {
-    enable = true;
-    package = pkgs.swaylock-effects;
-  };
-  
-  # Use bundled Swaylock config
-  xdg.configFile."swaylock/config".source = ./dotfiles/swaylock/config;
-
-  # ═══════════════════════════════════════════════════════════════════
-  # Swayidle (Idle manager)
-  # ═══════════════════════════════════════════════════════════════════
-  
-  services.swayidle = {
-    enable = true;
-    timeouts = [
-      {
-        timeout = 300;  # 5 minutes
-        command = "${pkgs.swaylock-effects}/bin/swaylock -f";
-      }
-      {
-        timeout = 600;  # 10 minutes
-        command = "${pkgs.systemd}/bin/systemctl suspend";
-      }
-    ];
-  };
 
   # ═══════════════════════════════════════════════════════════════════
   # Git Configuration
@@ -160,24 +132,12 @@
     viAlias = true;
     vimAlias = true;
   };
-  
-  # Link Neovim config from Chezmoi
-  # NOTE: Uncomment after running: chezmoi init --apply https://github.com/cd4u2b0z/dotfiles.git
-  # xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink 
-  #   "/home/${username}/.local/share/chezmoi/dot_config/nvim";
 
   # ═══════════════════════════════════════════════════════════════════
   # Tmux
   # ═══════════════════════════════════════════════════════════════════
   
-  programs.tmux = {
-    enable = true;
-  };
-  
-  # Link Tmux config from Chezmoi
-  # NOTE: Uncomment after running: chezmoi init --apply https://github.com/cd4u2b0z/dotfiles.git
-  # xdg.configFile."tmux".source = config.lib.file.mkOutOfStoreSymlink 
-  #   "/home/${username}/.local/share/chezmoi/dot_config/tmux";
+  programs.tmux.enable = true;
 
   # ═══════════════════════════════════════════════════════════════════
   # GTK Theming
@@ -207,19 +167,14 @@
       size = 11;
     };
     
-    gtk3.extraConfig = {
-      gtk-application-prefer-dark-theme = 1;
-    };
-    
-    gtk4.extraConfig = {
-      gtk-application-prefer-dark-theme = 1;
-    };
+    gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;
+    gtk4.extraConfig.gtk-application-prefer-dark-theme = 1;
   };
   
   # Qt theming
   qt = {
     enable = true;
-    platformTheme = "gtk";
+    platformTheme.name = "gtk";
     style = {
       name = "adwaita-dark";
       package = pkgs.adwaita-qt;
@@ -230,63 +185,23 @@
   # Browser Configuration (Wayland-native)
   # ═══════════════════════════════════════════════════════════════════
   
-  # LibreWolf - Firefox-based, uses MOZ_ENABLE_WAYLAND=1 from niri.nix
-  # No extra config needed - inherits environment variables
-  
-  # Brave - Chromium-based, needs Ozone flags for native Wayland
   xdg.configFile."brave-flags.conf".text = ''
     --enable-features=UseOzonePlatform
     --ozone-platform=wayland
     --enable-wayland-ime
   '';
   
-  # Chrome/Chromium flags (if you install them later)
   xdg.configFile."chromium-flags.conf".text = ''
     --enable-features=UseOzonePlatform
     --ozone-platform=wayland
     --enable-wayland-ime
   '';
   
-  # Electron apps flags (VS Code, Discord, etc.)
   xdg.configFile."electron-flags.conf".text = ''
     --enable-features=UseOzonePlatform
     --ozone-platform=wayland
     --enable-wayland-ime
   '';
-
-  # ═══════════════════════════════════════════════════════════════════
-  # Additional Configuration Files from Chezmoi (OPTIONAL)
-  # ═══════════════════════════════════════════════════════════════════
-  
-  # NOTE: These symlinks require Chezmoi to be initialized first!
-  # Run: chezmoi init --apply https://github.com/cd4u2b0z/dotfiles.git
-  # Then uncomment the lines below and rebuild.
-  
-  # xdg.configFile."btop".source = config.lib.file.mkOutOfStoreSymlink 
-  #   "/home/${username}/.local/share/chezmoi/dot_config/btop";
-  
-  # xdg.configFile."cava".source = config.lib.file.mkOutOfStoreSymlink 
-  #   "/home/${username}/.local/share/chezmoi/dot_config/cava";
-  
-  # xdg.configFile."fastfetch".source = config.lib.file.mkOutOfStoreSymlink 
-  #   "/home/${username}/.local/share/chezmoi/dot_config/fastfetch";
-  
-  # xdg.configFile."ncmpcpp".source = config.lib.file.mkOutOfStoreSymlink 
-  #   "/home/${username}/.local/share/chezmoi/dot_config/ncmpcpp";
-  
-  # xdg.configFile."ncspot".source = config.lib.file.mkOutOfStoreSymlink 
-  #   "/home/${username}/.local/share/chezmoi/dot_config/ncspot";
-  
-  # xdg.configFile."Thunar".source = config.lib.file.mkOutOfStoreSymlink 
-  #   "/home/${username}/.local/share/chezmoi/dot_config/private_Thunar";
-
-  # ═══════════════════════════════════════════════════════════════════
-  # User Scripts (OPTIONAL - requires Chezmoi)
-  # ═══════════════════════════════════════════════════════════════════
-  
-  # NOTE: Uncomment after Chezmoi is initialized
-  # home.file.".local/bin".source = config.lib.file.mkOutOfStoreSymlink 
-  #   "/home/${username}/.local/share/chezmoi/private_dot_local/bin";
 
   # ═══════════════════════════════════════════════════════════════════
   # XDG User Directories
@@ -312,7 +227,6 @@
   # Wallpapers
   # ═══════════════════════════════════════════════════════════════════
   
-  # Install wallpapers to ~/Pictures/Wallpapers
   home.file."Pictures/Wallpapers" = {
     source = ./dotfiles/wallpapers;
     recursive = true;

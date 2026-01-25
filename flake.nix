@@ -1,5 +1,5 @@
 {
-  description = "NixOS configuration for ASUS Vivobook S15 with Niri";
+  description = "NixOS configuration for ASUS Vivobook S15 with Hyprland";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -9,14 +9,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     
-    # Niri compositor
-    niri = {
-      url = "github:sodiboo/niri-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # Hyprland compositor
+    hyprland.url = "github:hyprwm/Hyprland";
   };
 
-  outputs = { self, nixpkgs, home-manager, niri, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, hyprland, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -40,9 +37,8 @@
           # Core system configuration
           ./modules/system.nix
           
-          # Niri compositor
-          niri.nixosModules.niri
-          ./modules/niri.nix
+          # Hyprland compositor
+          ./modules/hyprland.nix
           
           # Services
           ./modules/services.nix

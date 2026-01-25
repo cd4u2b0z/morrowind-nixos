@@ -1,0 +1,4 @@
+### Added by assistant: apply fractional scaling for detected output name
+# This is a non-destructive addition. If you already have a monitor rule for Unknown-1,
+# you can remove this file and merge the line into your main hyprland.conf instead.
+monitor = Unknown-1,3840x2160@144,0x0,1.33
