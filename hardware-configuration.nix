@@ -169,23 +169,9 @@
     udisks2.enable = true;
   };
   
-  # Bluetooth hardware support
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = true;
-    settings = {
-      General = {
-        Enable = "Source,Sink,Media,Socket";
-        Experimental = true;
-      };
-    };
-  };
-  
   # ═══════════════════════════════════════════════════════════════════
-  # Networking
+  # Networking Hardware
   # ═══════════════════════════════════════════════════════════════════
-  
-  networking.hostName = "vivobook";
   
   # WiFi - Intel Wireless (common on Vivobook S15)
   # The i7-8565U model typically has Intel Wireless-AC 9560 or similar

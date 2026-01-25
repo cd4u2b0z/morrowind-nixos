@@ -143,6 +143,21 @@
   services.dbus.enable = true;
 
   # ═══════════════════════════════════════════════════════════════════
+  # Bluetooth
+  # ═══════════════════════════════════════════════════════════════════
+  
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+    settings = {
+      General = {
+        Enable = "Source,Sink,Media,Socket";
+        Experimental = true;
+      };
+    };
+  };
+
+  # ═══════════════════════════════════════════════════════════════════
   # Location services (for redshift/night light)
   # ═══════════════════════════════════════════════════════════════════
   
