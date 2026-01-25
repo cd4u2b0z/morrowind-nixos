@@ -89,7 +89,7 @@
     
     # MPD
     mpd
-    mpc-cli
+    mpc            # MPD client (renamed from mpc-cli)
     
     # Video
     mpv
