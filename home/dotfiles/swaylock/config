@@ -1,0 +1,54 @@
+# Swaylock configuration
+# Nord theme lock screen
+
+ignore-empty-password
+show-failed-attempts
+daemonize
+
+# Colors - Nord theme
+color=2e3440
+bs-hl-color=bf616a
+caps-lock-bs-hl-color=bf616a
+caps-lock-key-hl-color=ebcb8b
+font=Inter
+font-size=16
+
+# Indicator
+indicator-idle-visible
+indicator-radius=120
+indicator-thickness=8
+
+inside-color=2e3440ee
+inside-clear-color=81a1c1ee
+inside-caps-lock-color=ebcb8bee
+inside-ver-color=88c0d0ee
+inside-wrong-color=bf616aee
+
+key-hl-color=88c0d0
+layout-bg-color=2e3440cc
+layout-border-color=4c566a
+layout-text-color=d8dee9
+
+line-color=00000000
+line-clear-color=00000000
+line-caps-lock-color=00000000
+line-ver-color=00000000
+line-wrong-color=00000000
+
+ring-color=5e81ac
+ring-clear-color=81a1c1
+ring-caps-lock-color=ebcb8b
+ring-ver-color=88c0d0
+ring-wrong-color=bf616a
+
+separator-color=00000000
+text-color=eceff4
+text-clear-color=eceff4
+text-caps-lock-color=2e3440
+text-ver-color=eceff4
+text-wrong-color=eceff4
+
+# Effect
+effect-blur=8x5
+effect-vignette=0.5:0.5
+screenshots

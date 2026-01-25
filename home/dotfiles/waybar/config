@@ -1,0 +1,181 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 48,
+  "exclusive": true,
+  "passthrough": false,
+  "gtk-layer-shell": true,
+  "margin": "6 8 0 8",
+  "modules-left": [
+    "niri/workspaces",
+    "custom/app-tray",
+    "custom/music",
+    "custom/cava"
+  ],
+  "modules-center": [
+    "custom/weather",
+    "clock"
+  ],
+  "modules-right": [
+    "custom/system-stats",
+    "custom/updates",
+    "bluetooth",
+    "network",
+    "battery",
+    "pulseaudio"
+  ],
+  "niri/workspaces": {
+    "format": "{icon}",
+    "format-icons": {
+      "active": "●",
+      "default": "○"
+    }
+  },
+  "niri/window": {
+    "format": "{}",
+    "max-length": 50,
+    "separate-outputs": true
+  },
+  "battery": {
+    "states": {
+      "good": 95,
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{icon} {capacity}%",
+    "format-charging": "󰂄 {capacity}%",
+    "format-plugged": "󰂄 {capacity}%",
+    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+    "tooltip-format": "{timeTo}\n{power}W"
+  },
+  "custom/weather": {
+    "exec": "~/.config/waybar/scripts/bulletproof-weather.sh",
+    "interval": 300,
+    "format": "󰖐   {}",
+    "tooltip": false,
+    "on-click": "xdg-open 'https://openweathermap.org/city/4597040'",
+    "on-click-right": "kitty -e bash -c 'cd ~/projects/oracle-weather && source .venv/bin/activate && python weather_dashboard.py'"
+  },
+  "clock": {
+    "interval": 2,
+    "format": "{:%H:%M}",
+    "format-alt": "{:%A, %B %d %Y   %H:%M}",
+    "tooltip-format": "{calendar}",
+    "calendar": {
+      "mode": "month",
+      "mode-mon-col": 3,
+      "weeks-pos": "left",
+      "on-scroll": 1,
+      "format": {
+        "months": "<span color='#EBDBB2' size='large' weight='bold'>{}</span>",
+        "days": "<span color='#EBDBB2'>{:>2}</span>",
+        "weeks": "<span color='#928374'>W{} </span>",
+        "weekdays": "<span color='#458588' weight='bold'>{:>2}</span>",
+        "today": "<span background='#98971A' color='#282828' weight='bold'> {:>2} </span>"
+      }
+    },
+    "actions": {
+      "on-click-right": "mode",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down"
+    }
+  },
+  "custom/system-stats": {
+    "format": "{}",
+    "interval": 2,
+    "return-type": "json",
+    "exec": "~/.config/waybar/scripts/system-stats.sh",
+    "tooltip": true,
+    "on-click": "kitty btop",
+    "on-right-click": "kitty htop"
+  },
+  "bluetooth": {
+    "format": "󰂯",
+    "format-disabled": "󰂲",
+    "format-off": "󰂲",
+    "format-on": "󰂯",
+    "format-connected": "󰂱 {num_connections}",
+    "format-connected-battery": "󰂱 {device_alias} {device_battery_percentage}%",
+    "tooltip": true,
+    "tooltip-format": "Bluetooth: {status}",
+    "tooltip-format-connected": "Connected: {device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}",
+    "on-click": "blueman-manager"
+  },
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-bluetooth": "{icon} {volume}%",
+    "format-muted": "󰝟 Muted",
+    "format-icons": {
+      "headphone": "󰋋",
+      "hands-free": "󰋎",
+      "headset": "󰋎",
+      "phone": "󰏲",
+      "portable": "󰋋",
+      "car": "󰄋",
+      "default": ["󰕿", "󰖀", "󰕾"]
+    },
+    "scroll-step": 5,
+    "on-click": "pavucontrol",
+    "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+  },
+  "network": {
+    "format": "{icon}",
+    "format-wifi": "{icon}",
+    "format-ethernet": "{icon}",
+    "format-linked": "{icon}",
+    "format-disconnected": "{icon}",
+    "format-disabled": "{icon}",
+    "tooltip": true,
+    "tooltip-format": "{ifname}: {ipaddr}\nSpeed: {bandwidthDownBits} down / {bandwidthUpBits} up",
+    "tooltip-format-wifi": "WiFi: {essid}\nSignal: {signalStrength}%\nIP: {ipaddr}\nSpeed: {bandwidthDownBits} ↓ / {bandwidthUpBits} ↑",
+    "tooltip-format-ethernet": "Ethernet: {ifname}\nIP: {ipaddr}\nSpeed: {bandwidthDownBits} ↓ / {bandwidthUpBits} ↑",
+    "tooltip-format-disconnected": "No network connection",
+    "format-icons": {
+      "wifi": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+      "ethernet": "󰈀",
+      "disconnected": "󰤭"
+    },
+    "on-click": "kitty -e nmtui",
+    "on-click-right": "nm-connection-editor"
+  },
+  "custom/app-tray": {
+    "exec": "~/.config/waybar/scripts/multi-app-tray.sh",
+    "interval": 2,
+    "format": "{}",
+    "return-type": "json",
+    "on-click": "~/.config/waybar/scripts/app-manager.sh",
+    "on-click-right": "fuzzel",
+    "tooltip": true,
+    "signal": 8
+  },
+  "custom/updates": {
+    "exec": "~/.config/waybar/scripts/nixos-updates.sh",
+    "return-type": "json",
+    "interval": 3600,
+    "format": "{}",
+    "tooltip": true,
+    "on-click": "kitty -e sudo nixos-rebuild switch --flake /etc/nixos",
+    "on-click-right": "kitty -e nix flake update /etc/nixos",
+    "signal": 8
+  },
+  "custom/cava": {
+    "return-type": "json",
+    "exec": "~/.config/waybar/scripts/cava.sh",
+    "format": "{}",
+    "tooltip": false,
+    "on-click": "pkill -f cava.sh"
+  },
+  "custom/music": {
+    "exec": "~/.config/waybar/scripts/music-player.sh",
+    "return-type": "json",
+    "interval": 2,
+    "format": "{}",
+    "tooltip": true,
+    "on-click": "playerctl play-pause",
+    "on-click-right": "playerctl next",
+    "on-click-middle": "playerctl previous",
+    "on-scroll-up": "playerctl volume 0.05+",
+    "on-scroll-down": "playerctl volume 0.05-"
+  }
+}

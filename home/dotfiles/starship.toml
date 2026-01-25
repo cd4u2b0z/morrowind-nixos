@@ -1,0 +1,171 @@
+# Starship prompt configuration
+# Nord-themed to match desktop environment
+
+format = """
+[](#5e81ac)\
+$os\
+$username\
+[](bg:#81a1c1 fg:#5e81ac)\
+$directory\
+[](fg:#81a1c1 bg:#88c0d0)\
+$git_branch\
+$git_status\
+[](fg:#88c0d0 bg:#8fbcbb)\
+$c\
+$elixir\
+$elm\
+$golang\
+$gradle\
+$haskell\
+$java\
+$julia\
+$nodejs\
+$nim\
+$rust\
+$scala\
+$python\
+$nix_shell\
+[](fg:#8fbcbb bg:#a3be8c)\
+$docker_context\
+[](fg:#a3be8c bg:#b48ead)\
+$time\
+[ ](fg:#b48ead)\
+"""
+
+# Disable the blank line at the start of the prompt
+add_newline = false
+
+# OS icon
+[os]
+disabled = false
+style = "bg:#5e81ac fg:#eceff4"
+
+[os.symbols]
+NixOS = "󱄅 "
+Arch = "󰣇 "
+Ubuntu = " "
+Debian = " "
+Fedora = " "
+Linux = " "
+Windows = " "
+Macos = " "
+
+# Username
+[username]
+show_always = true
+style_user = "bg:#5e81ac fg:#eceff4"
+style_root = "bg:#bf616a fg:#eceff4"
+format = '[$user ]($style)'
+disabled = false
+
+# Directory
+[directory]
+style = "bg:#81a1c1 fg:#2e3440"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = " "
+"Pictures" = " "
+"Projects" = "󰲋 "
+
+# Git
+[git_branch]
+symbol = ""
+style = "bg:#88c0d0 fg:#2e3440"
+format = '[ $symbol $branch ]($style)'
+
+[git_status]
+style = "bg:#88c0d0 fg:#2e3440"
+format = '[$all_status$ahead_behind ]($style)'
+
+# Programming languages
+[c]
+symbol = " "
+style = "bg:#8fbcbb fg:#2e3440"
+format = '[ $symbol ($version) ]($style)'
+
+[elixir]
+symbol = " "
+style = "bg:#8fbcbb fg:#2e3440"
+format = '[ $symbol ($version) ]($style)'
+
+[elm]
+symbol = " "
+style = "bg:#8fbcbb fg:#2e3440"
+format = '[ $symbol ($version) ]($style)'
+
+[golang]
+symbol = " "
+style = "bg:#8fbcbb fg:#2e3440"
+format = '[ $symbol ($version) ]($style)'
+
+[gradle]
+style = "bg:#8fbcbb fg:#2e3440"
+format = '[ $symbol ($version) ]($style)'
+
+[haskell]
+symbol = " "
+style = "bg:#8fbcbb fg:#2e3440"
+format = '[ $symbol ($version) ]($style)'
+
+[java]
+symbol = " "
+style = "bg:#8fbcbb fg:#2e3440"
+format = '[ $symbol ($version) ]($style)'
+
+[julia]
+symbol = " "
+style = "bg:#8fbcbb fg:#2e3440"
+format = '[ $symbol ($version) ]($style)'
+
+[nodejs]
+symbol = ""
+style = "bg:#8fbcbb fg:#2e3440"
+format = '[ $symbol ($version) ]($style)'
+
+[nim]
+symbol = "󰆥 "
+style = "bg:#8fbcbb fg:#2e3440"
+format = '[ $symbol ($version) ]($style)'
+
+[rust]
+symbol = ""
+style = "bg:#8fbcbb fg:#2e3440"
+format = '[ $symbol ($version) ]($style)'
+
+[scala]
+symbol = " "
+style = "bg:#8fbcbb fg:#2e3440"
+format = '[ $symbol ($version) ]($style)'
+
+[python]
+symbol = " "
+style = "bg:#8fbcbb fg:#2e3440"
+format = '[ $symbol ($version) ]($style)'
+
+[nix_shell]
+symbol = "󱄅 "
+style = "bg:#8fbcbb fg:#2e3440"
+format = '[ $symbol $state( \($name\)) ]($style)'
+
+# Docker
+[docker_context]
+symbol = " "
+style = "bg:#a3be8c fg:#2e3440"
+format = '[ $symbol $context ]($style)'
+
+# Time
+[time]
+disabled = false
+time_format = "%R"
+style = "bg:#b48ead fg:#2e3440"
+format = '[ ♥ $time ]($style)'
+
+# Command duration
+[cmd_duration]
+min_time = 2_000
+format = "took [$duration](bold #ebcb8b) "
