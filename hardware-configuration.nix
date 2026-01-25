@@ -69,24 +69,21 @@
   # Filesystems
   # ═══════════════════════════════════════════════════════════════════
   
-  # NOTE: Replace these with your actual partition UUIDs from installation
-  # Get them with: blkid
+  # Filesystem UUIDs from lsblk -f on the ASUS Vivobook S15
   
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/REPLACE-WITH-YOUR-ROOT-UUID";
+    device = "/dev/disk/by-uuid/8d1e7ce0-5184-43a3-bc2a-a9c86737335d";
     fsType = "ext4";
     options = [ "noatime" ];  # Performance optimization
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/REPLACE-WITH-YOUR-BOOT-UUID";
+    device = "/dev/disk/by-uuid/A45D-FCFE";
     fsType = "vfat";
   };
 
-  # Swap (optional, recommended for laptops with sleep/hibernate)
-  swapDevices = [
-    { device = "/dev/disk/by-uuid/REPLACE-WITH-YOUR-SWAP-UUID"; }
-  ];
+  # No swap partition - using zramSwap instead (configured below)
+  swapDevices = [ ];
 
   # ═══════════════════════════════════════════════════════════════════
   # Hardware Optimization - Intel i7-8565U + UHD 620
