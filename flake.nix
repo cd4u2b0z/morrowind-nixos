@@ -20,7 +20,7 @@
       
       # Your username from Ansible config
       username = "craig";
-      hostname = "argos";
+      hostname = "mnemosyne";
       
     in {
       nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
