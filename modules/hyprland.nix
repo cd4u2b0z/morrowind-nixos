@@ -64,6 +64,13 @@
     brightnessctl     # Screen brightness control
     playerctl         # Media player control
     pamixer           # Audio volume control
+    
+    # SDDM theme
+    (catppuccin-sddm.override {
+      flavor = "mocha";
+      font = "Noto Sans";
+      fontSize = "12";
+    })
   ];
 
   # ═══════════════════════════════════════════════════════════════════
@@ -128,14 +135,4 @@
     theme = "catppuccin-mocha";
     package = pkgs.kdePackages.sddm;
   };
-  
-  # SDDM theme
-  environment.systemPackages = with pkgs; [
-    (catppuccin-sddm.override {
-      flavor = "mocha";
-      font = "Noto Sans";
-      fontSize = "12";
-    })
-  ];
-
 }
