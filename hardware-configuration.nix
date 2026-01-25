@@ -106,9 +106,9 @@
     
     extraPackages = with pkgs; [
       intel-media-driver    # VAAPI driver for Intel Gen 8+ (UHD 620) - recommended
-      intel-vaapi-driver    # Older VAAPI driver (fallback, vaapiIntel renamed)
-      vaapiVdpau           # VDPAU compatibility layer
-      libvdpau-va-gl       # VDPAU backend for VAAPI
+      intel-vaapi-driver    # Older VAAPI driver (fallback)
+      libva-vdpau-driver    # VDPAU compatibility layer (renamed from vaapiVdpau)
+      libvdpau-va-gl        # VDPAU backend for VAAPI
       intel-compute-runtime # OpenCL support
     ];
     
