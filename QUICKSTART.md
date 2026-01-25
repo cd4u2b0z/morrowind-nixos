@@ -7,8 +7,7 @@ I've created a complete NixOS flake configuration for your ASUS Vivobook S15 tha
 ✅ **Replaces Hyprland with Niri** - A modern scrollable-tiling Wayland compositor  
 ✅ **Preserves your ecosystem** - Waybar, Mako, Fuzzel, Kitty all work the same  
 ✅ **Keeps your Chezmoi dotfiles** - Integrated via Home Manager symlinks  
-✅ **Gaming-ready** - Steam, GameMode, MangoHud, Heroic, Ryujinx  
-✅ **AMD optimized** - TLP, thermald, AMDGPU drivers  
+✅ **Intel optimized** - TLP, thermald, Intel UHD 620 drivers  
 ✅ **Fully modular** - Each component in separate flake modules  
 
 ## Key Differences from Your Arch Setup
@@ -34,7 +33,6 @@ I've created a complete NixOS flake configuration for your ASUS Vivobook S15 tha
 - All the same Wayland tools work (Waybar, Mako, Fuzzel, etc.)
 - Same keybindings (I translated them for you)
 - Same performance benefits
-- Same gaming compatibility
 
 ## Installation Steps (Summary)
 

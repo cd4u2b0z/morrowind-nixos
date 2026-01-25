@@ -26,11 +26,6 @@ This document shows how your Arch packages were translated to NixOS.
 | python3 | python3 | ✅ |
 | nodejs | nodejs | ✅ |
 | firefox | firefox | ✅ | (Wayland via MOZ_ENABLE_WAYLAND=1)
-| steam | steam | ✅ |
-| lutris | lutris | ✅ |
-| wine | wine | ✅ |
-| mangohud | mangohud | ✅ |
-| gamemode | gamemode | ✅ |
 | pipewire | pipewire | ✅ |
 | wireplumber | wireplumber | ✅ |
 | pavucontrol | pavucontrol | ✅ |
@@ -59,18 +54,11 @@ This document shows how your Arch packages were translated to NixOS.
 | nordzy-cursors | nordzy-cursor-theme | ✅ |
 | papirus-folders | papirus-icon-theme | ✅ |
 | waybar-updates | waybar | ✅ (integrated) |
-| heroic-games-launcher | heroic | ✅ |
-| bottles | bottles | ✅ |
-| protonup-qt-bin | protonup-qt | ✅ |
-| ryujinx | ryubing | ✅ | (community fork, ryujinx discontinued)
+
 | wallust | wallust | ✅ | (available in nixpkgs unstable)
 | cmatrix-git | cmatrix | ✅ |
 | pipes.sh | pipes | ✅ |
 | cbonsai-git | cbonsai | ✅ | (available in nixpkgs unstable)
-| dxvk-bin | dxvk | ✅ |
-| vkd3d-proton-bin | vkd3d-proton | ✅ |
-| faudio | faudio | ✅ |
-| lib32-faudio | faudio (32-bit) | ✅ |
 | python-asciimatics | python311Packages.asciimatics | ✅ |
 
 ## Wayland Ecosystem (Hyprland → Niri)
@@ -145,7 +133,6 @@ This document shows how your Arch packages were translated to NixOS.
 - All your config files (except Hyprland)
 - Terminal workflows (zsh, tmux, etc.)
 - Development tools
-- Gaming setup
 
 ## Performance Comparison
 
@@ -159,20 +146,6 @@ This document shows how your Arch packages were translated to NixOS.
 | Rollback capability | Manual snapshots | Built-in (instant) |
 | Reproducibility | Requires Ansible run | Instant (nix copy) |
 
-## Gaming Performance
-
-No change expected! Both setups use:
-- Same kernel
-- Same GPU drivers (AMD)
-- Same Wayland protocol
-- Same gaming tools (Steam, GameMode, MangoHud)
-- Same Proton/Wine
-
-Niri may actually be slightly better for gaming due to:
-- Simpler compositor (fewer animations)
-- Better window management for multiple monitors
-- Less resource usage than Hyprland
-
 ## Migration Checklist
 
 - [ ] Backup current Arch system
@@ -182,10 +155,8 @@ Niri may actually be slightly better for gaming due to:
 - [ ] Apply Chezmoi dotfiles
 - [ ] Test Niri keybindings
 - [ ] Verify all apps work
-- [ ] Set up game libraries
 - [ ] Import SSH/GPG keys
 - [ ] Configure Git credentials
-- [ ] Test gaming performance
 
 ## Troubleshooting Common Issues
 

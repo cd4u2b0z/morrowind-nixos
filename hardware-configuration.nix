@@ -98,7 +98,7 @@
   # NOTE: hardware.graphics replaces deprecated hardware.opengl on NixOS 24.05+
   hardware.graphics = {
     enable = true;
-    enable32Bit = true;  # For 32-bit games/apps (Steam)
+    enable32Bit = true;  # For 32-bit applications (legacy software)
     
     extraPackages = with pkgs; [
       intel-media-driver    # VAAPI driver for Intel Gen 8+ (UHD 620) - recommended
@@ -108,7 +108,7 @@
       intel-compute-runtime # OpenCL support
     ];
     
-    # For 32-bit applications (Steam games)
+    # For 32-bit applications (legacy software)
     extraPackages32 = with pkgs.pkgsi686Linux; [
       intel-media-driver
       intel-vaapi-driver

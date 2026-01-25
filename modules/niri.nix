@@ -108,7 +108,7 @@
     # System info (you have nwg-displays)
     nwg-displays
     
-    # XWayland bridge for X11 apps (Steam, Discord, etc.)
+    # XWayland bridge for X11 apps (Discord, legacy apps, etc.)
     # CRITICAL: Without this, X11 apps won't work in Niri!
     xwayland-satellite
     

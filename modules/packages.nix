@@ -4,7 +4,7 @@
 { config, pkgs, ... }:
 
 {
-  # Allow unfree packages (Steam, NVIDIA, etc.)
+  # Allow unfree packages (VSCode, Discord, etc.)
   nixpkgs.config.allowUnfree = true;
 
   # ═══════════════════════════════════════════════════════════════════
