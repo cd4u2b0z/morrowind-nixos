@@ -1,6 +1,6 @@
-# NixOS Configuration for ASUS Vivobook S15 with Niri
+# NixOS Configuration for ASUS Vivobook S15 with Hyprland
 
-A complete NixOS flake-based configuration for ASUS Vivobook S15 (Intel i7-8565U + UHD 620), featuring the **Niri scrollable-tiling Wayland compositor**. This is a complete translation of an Arch Linux + Hyprland setup to NixOS + Niri with **identical look and feel**.
+A complete NixOS flake-based configuration for ASUS Vivobook S15 (Intel i7-8565U + UHD 620), featuring the **Hyprland scrollable-tiling Wayland compositor**. This is a complete translation of an Arch Linux + Hyprland setup to NixOS + Hyprland with **identical look and feel**.
 
 ---
 
@@ -27,12 +27,12 @@ A complete NixOS flake-based configuration for ASUS Vivobook S15 (Intel i7-8565U
 
 | Component | Description |
 |-----------|-------------|
-| **Niri** | Scrollable-tiling Wayland compositor (Hyprland alternative) |
+| **Hyprland** | Scrollable-tiling Wayland compositor (Hyprland alternative) |
 | **Waybar** | Status bar with workspaces, weather, music, system stats |
 | **Mako** | Notification daemon (Nord themed) |
 | **Fuzzel** | Application launcher (Nord themed) |
 | **Kitty** | GPU-accelerated terminal |
-| **Swaylock** | Screen locker with blur effects |
+| **Hyprlock** | Screen locker with blur effects |
 | **Starship** | Cross-shell prompt |
 | **PipeWire** | Modern audio server |
 | **TLP** | Battery optimization for laptops |
@@ -65,20 +65,20 @@ This configuration is optimized for:
 ## 📂 Project Structure
 
 ```
-nixos-asus-vivobook/
+nixos-asus-mnemosyne/
 ├── flake.nix                          # Main flake entry point
 ├── flake.lock                         # Locked dependencies (generated)
 ├── hardware-configuration.nix         # Hardware-specific settings
 ├── modules/
 │   ├── system.nix                     # User, locale, Nix settings
-│   ├── niri.nix                       # Niri compositor & Wayland
+│   ├── hyprland.nix                       # Hyprland compositor & Wayland
 │   ├── packages.nix                   # All system packages
 │   └── services.nix                   # System services
 ├── home/
 │   ├── default.nix                    # Home Manager config
 │   └── dotfiles/
-│       ├── niri/
-│       │   ├── config.kdl             # Niri keybindings & settings
+│       ├── hyprland/
+│       │   ├── hyprland.conf             # Hyprland keybindings & settings
 │       │   └── scripts/               # Wallpaper, screenshot, etc.
 │       ├── waybar/
 │       │   ├── config                 # Waybar modules
@@ -88,7 +88,7 @@ nixos-asus-vivobook/
 │       ├── kitty/kitty.conf           # Terminal config
 │       ├── mako/config                # Notifications
 │       ├── fuzzel/fuzzel.ini          # Launcher
-│       ├── swaylock/config            # Lock screen
+│       ├── hyprlock/config            # Lock screen
 │       └── starship.toml              # Shell prompt
 ├── README.md                          # This file
 ├── QUICKSTART.md                      # Quick reference
@@ -173,10 +173,10 @@ sudo swapon /dev/disk/by-label/SWAP
 nix-shell -p git
 
 # 2. Clone this repository
-git clone https://github.com/cd4u2b0z/nixos-asus-vivobook.git /mnt/etc/nixos
+git clone https://github.com/cd4u2b0z/nixos-asus-mnemosyne.git /mnt/etc/nixos
 
 # 3. Or copy from USB
-cp -r /path/to/usb/nixos-asus-vivobook /mnt/etc/nixos
+cp -r /path/to/usb/nixos-asus-mnemosyne /mnt/etc/nixos
 ```
 
 ### Phase 4: Configure Hardware
@@ -230,7 +230,7 @@ git init
 git add -A
 
 # 3. Install NixOS
-sudo nixos-install --flake .#vivobook
+sudo nixos-install --flake .#mnemosyne
 
 # 4. Set root password when prompted
 
@@ -255,7 +255,7 @@ After rebooting into your new system:
 # 1. Login at greetd (display manager)
 # Enter your username and password
 
-# 2. Niri should start automatically with Waybar
+# 2. Hyprland should start automatically with Waybar
 
 # 3. Open terminal: Super + Return
 
@@ -291,19 +291,19 @@ mkdir -p ~/Pictures/Wallpapers
 swaybg -i ~/Pictures/Wallpapers/your-wallpaper.jpg -m fill &
 
 # 4. Or use the wallpaper picker
-~/.config/niri/scripts/quick-wallpaper.sh select
+~/.config/hyprland/scripts/quick-wallpaper.sh select
 ```
 
 ### 🚀 First Boot Expectations
 
-When you first log into Niri, here's what to expect:
+When you first log into Hyprland, here's what to expect:
 
 | What You'll See | Why | What To Do |
 |-----------------|-----|------------|
 | **Black/gray background** | No wallpaper set yet | Run `swaybg -i ~/Pictures/Wallpapers/yourimage.jpg -m fill &` or use the wallpaper script |
 | **Waybar at top** | Should load automatically | If missing, press `Super+Return` for terminal, then run `waybar &` |
 | **No windows open** | Fresh session | Press `Super+Return` for terminal, `Super+R` for app launcher |
-| **Mouse cursor works** | Niri is running correctly | Good sign! |
+| **Mouse cursor works** | Hyprland is running correctly | Good sign! |
 | **XWayland apps (Discord) work** | xwayland-satellite starts automatically | If not, run `xwayland-satellite &` |
 
 **First things to verify:**
@@ -312,7 +312,7 @@ When you first log into Niri, here's what to expect:
 2. **Test launcher**: `Super + R` → Fuzzel should pop up
 3. **Check audio**: Click speaker icon in Waybar or run `pactl info`
 4. **Test notifications**: Run `notify-send "Test" "Hello World"`
-5. **Set wallpaper**: `~/.config/niri/scripts/quick-wallpaper.sh select`
+5. **Set wallpaper**: `~/.config/hyprland/scripts/quick-wallpaper.sh select`
 
 > 💡 **Tip**: Your first session may feel bare. After setting a wallpaper and opening a few apps, it will look just like your Hyprland setup!
 
@@ -331,7 +331,7 @@ Save this as `~/test-system.sh` and run it:
 set -e
 
 echo "═══════════════════════════════════════════════════════════════"
-echo "  NixOS + Niri Validation Script"
+echo "  NixOS + Hyprland Validation Script"
 echo "═══════════════════════════════════════════════════════════════"
 
 PASS=0
@@ -369,12 +369,12 @@ test_file() {
 
 echo ""
 echo "── Core Applications ──"
-test_cmd niri
+test_cmd hyprland
 test_cmd waybar
 test_cmd kitty
 test_cmd fuzzel
 test_cmd mako
-test_cmd swaylock
+test_cmd hyprlock
 test_cmd grim
 test_cmd slurp
 
@@ -392,7 +392,7 @@ test_service bluetooth
 
 echo ""
 echo "── Configuration Files ──"
-test_file ~/.config/niri/config.kdl
+test_file ~/.config/hyprland/hyprland.conf
 test_file ~/.config/waybar/config
 test_file ~/.config/waybar/style.css
 test_file ~/.config/kitty/kitty.conf
@@ -453,7 +453,7 @@ chmod +x ~/test-system.sh
 | Screenshot | `Super + Shift + S` | Area capture |
 | Volume Up | `XF86AudioRaiseVolume` | Volume increases |
 | Brightness | `XF86MonBrightnessUp` | Screen brighter |
-| Lock Screen | `Super + L` | Swaylock activates |
+| Lock Screen | `Super + L` | Hyprlock activates |
 | File Manager | `Super + E` | Thunar opens |
 | Notifications | `notify-send "Test" "Hello"` | Notification appears |
 
@@ -467,12 +467,12 @@ chmod +x ~/test-system.sh
 
 ```bash
 # Boot to TTY (Ctrl+Alt+F2)
-# Check Niri logs
-journalctl --user -u niri -b
+# Check Hyprland logs
+journalctl --user -u hyprland -b
 
 # Common fixes:
 # - GPU driver issue: check hardware-configuration.nix
-# - Missing config: verify ~/.config/niri/config.kdl exists
+# - Missing config: verify ~/.config/hyprland/hyprland.conf exists
 ```
 
 #### 2. Waybar Not Showing
@@ -552,14 +552,14 @@ blueman-manager
 #### 6. Keybindings Not Working
 
 ```bash
-# Verify Niri config syntax
-niri validate
+# Verify Hyprland config syntax
+hyprland validate
 
-# Check if Niri is reading config
-niri msg outputs  # Should respond
+# Check if Hyprland is reading config
+hyprland msg outputs  # Should respond
 
 # Reload config
-niri msg action reload-config
+hyprland msg action reload-config
 ```
 
 #### 7. Flake Build Errors
@@ -572,10 +572,10 @@ nix flake update
 nix flake check
 
 # Build without switching (dry run)
-nixos-rebuild build --flake .#vivobook
+nixos-rebuild build --flake .#mnemosyne
 
 # View build logs
-nixos-rebuild switch --flake .#vivobook 2>&1 | tee /tmp/build.log
+nixos-rebuild switch --flake .#mnemosyne 2>&1 | tee /tmp/build.log
 ```
 
 #### 8. Missing Fonts/Icons
@@ -612,10 +612,10 @@ cd /etc/nixos
 sudo nix flake update
 
 # Rebuild system
-sudo nixos-rebuild switch --flake .#vivobook
+sudo nixos-rebuild switch --flake .#mnemosyne
 
 # Or test first (doesn't persist after reboot)
-sudo nixos-rebuild test --flake .#vivobook
+sudo nixos-rebuild test --flake .#mnemosyne
 ```
 
 ### Package Management
@@ -651,10 +651,10 @@ sudo nix-store --optimize
 sudo nano /etc/nixos/modules/packages.nix
 
 # Rebuild and switch
-sudo nixos-rebuild switch --flake /etc/nixos#vivobook
+sudo nixos-rebuild switch --flake /etc/nixos#mnemosyne
 
 # Rebuild home-manager only
-home-manager switch --flake /etc/nixos#craig@vivobook
+home-manager switch --flake /etc/nixos#craig@mnemosyne
 ```
 
 ---
@@ -708,7 +708,7 @@ home-manager switch --flake /etc/nixos#craig@vivobook
 
 | Keybinding | Action |
 |------------|--------|
-| `Super + Shift + E` | Exit Niri |
+| `Super + Shift + E` | Exit Hyprland |
 | `Super + Shift + R` | Reload config |
 
 ---
@@ -722,10 +722,10 @@ home-manager switch --flake /etc/nixos#craig@vivobook
 swaybg -i /path/to/wallpaper.jpg -m fill &
 
 # Use wallpaper picker
-~/.config/niri/scripts/quick-wallpaper.sh select
+~/.config/hyprland/scripts/quick-wallpaper.sh select
 
 # Set random wallpaper
-~/.config/niri/scripts/quick-wallpaper.sh random
+~/.config/hyprland/scripts/quick-wallpaper.sh random
 ```
 
 ### Change Theme Colors
@@ -755,12 +755,12 @@ environment.systemPackages = with pkgs; [
 Then rebuild:
 
 ```bash
-sudo nixos-rebuild switch --flake /etc/nixos#vivobook
+sudo nixos-rebuild switch --flake /etc/nixos#mnemosyne
 ```
 
 ### Modify Keybindings
 
-Edit `~/.config/niri/config.kdl` or `/etc/nixos/home/dotfiles/niri/config.kdl`:
+Edit `~/.config/hyprland/hyprland.conf` or `/etc/nixos/home/dotfiles/hyprland/hyprland.conf`:
 
 ```kdl
 binds {
@@ -817,7 +817,7 @@ If system is unbootable:
    sudo nixos-enter --root /mnt
    cd /etc/nixos
    # Fix configuration
-   nixos-rebuild switch --flake .#vivobook
+   nixos-rebuild switch --flake .#mnemosyne
    ```
 
 ---
@@ -826,7 +826,7 @@ If system is unbootable:
 
 - [NixOS Manual](https://nixos.org/manual/nixos/stable/)
 - [Home Manager Manual](https://nix-community.github.io/home-manager/)
-- [Niri Documentation](https://github.com/YaLTeR/niri/wiki)
+- [Hyprland Documentation](https://github.com/YaLTeR/hyprland/wiki)
 - [Nix Package Search](https://search.nixos.org/packages)
 - [NixOS Discourse](https://discourse.nixos.org/)
 

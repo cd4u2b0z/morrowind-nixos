@@ -25,7 +25,7 @@ This document shows how your Arch packages were translated to NixOS.
 | gcc | gcc | ✅ |
 | python3 | python3 | ✅ |
 | nodejs | nodejs | ✅ |
-| firefox | firefox | ✅ | (Wayland via MOZ_ENABLE_WAYLAND=1)
+| firefox | firefox | ✅ (Wayland via MOZ_ENABLE_WAYLAND=1) |
 | pipewire | pipewire | ✅ |
 | wireplumber | wireplumber | ✅ |
 | pavucontrol | pavucontrol | ✅ |
@@ -54,26 +54,24 @@ This document shows how your Arch packages were translated to NixOS.
 | nordzy-cursors | nordzy-cursor-theme | ✅ |
 | papirus-folders | papirus-icon-theme | ✅ |
 | waybar-updates | waybar | ✅ (integrated) |
-
-| wallust | wallust | ✅ | (available in nixpkgs unstable)
+| wallust | wallust | ✅ (available in nixpkgs unstable) |
 | cmatrix-git | cmatrix | ✅ |
 | pipes.sh | pipes | ✅ |
-| cbonsai-git | cbonsai | ✅ | (available in nixpkgs unstable)
-| python-asciimatics | python311Packages.asciimatics | ✅ |
 
-## Wayland Ecosystem (Hyprland → Niri)
+## Wayland Ecosystem (Hyprland - identical to Arch)
 
-| Component | Hyprland Setup | Niri Setup | Status |
-|-----------|----------------|------------|---------|
-| Compositor | hyprland | niri | ✅ Replaced |
+| Component | Arch Setup | NixOS Setup | Status |
+|-----------|------------|-------------|---------|
+| Compositor | hyprland | hyprland | ✅ Same |
 | Status bar | waybar | waybar | ✅ Same |
 | Notifications | mako | mako | ✅ Same |
 | Launcher | fuzzel | fuzzel | ✅ Same |
-| Locker | hyprlock | swaylock-effects | ✅ Alternative |
-| Idle | hypridle | swayidle | ✅ Alternative |
+| Locker | hyprlock | hyprlock | ✅ Same |
+| Idle | hypridle | hypridle | ✅ Same |
+| Wallpaper | hyprpaper | hyprpaper | ✅ Same |
 | Screenshots | grim + slurp | grim + slurp | ✅ Same |
 | Clipboard | wl-clipboard | wl-clipboard | ✅ Same |
-| Wallpaper | hyprpaper | swaybg | ✅ Alternative |
+| Color picker | hyprpicker | hyprpicker | ✅ Same |
 
 ## Services (systemd)
 
@@ -86,7 +84,7 @@ This document shows how your Arch packages were translated to NixOS.
 | mpd | user service | user service | ✅ |
 | cronie | system timer | nix cron | ✅ |
 | reflector.timer | system timer | not needed | ⚠️ NixOS doesn't need mirrorlist updates |
-| hypridle | user service | swayidle (user) | ✅ Alternative |
+| hypridle | user service | user service | ✅ |
 
 ## System Configuration
 
@@ -103,13 +101,13 @@ This document shows how your Arch packages were translated to NixOS.
 
 | File Type | Ansible Location | NixOS Location | Approach |
 |-----------|-----------------|----------------|-----------|
-| Waybar | chezmoi | Symlink from chezmoi | ✅ Reuse |
-| Kitty | chezmoi | Symlink from chezmoi | ✅ Reuse |
+| Hyprland | chezmoi | home/dotfiles/hypr/ | ✅ Bundled |
+| Waybar | chezmoi | home/dotfiles/waybar/ | ✅ Bundled |
+| Kitty | chezmoi | home/dotfiles/kitty/ | ✅ Bundled |
+| Mako | chezmoi | home/dotfiles/mako/ | ✅ Bundled |
+| Fuzzel | chezmoi | home/dotfiles/fuzzel/ | ✅ Bundled |
 | Neovim | chezmoi | Symlink from chezmoi | ✅ Reuse |
-| Zsh | chezmoi | Symlink from chezmoi | ✅ Reuse |
-| Hyprland | chezmoi | Replaced with Niri | ✅ New config |
-| Mako | chezmoi | Symlink from chezmoi | ✅ Reuse |
-| Fuzzel | chezmoi | Symlink from chezmoi | ✅ Reuse |
+| Zsh | chezmoi | Managed by Home Manager | ✅ Bundled |
 | MPD | chezmoi | Symlink from chezmoi | ✅ Reuse |
 
 ## What Changes from Your Workflow
@@ -126,18 +124,18 @@ This document shows how your Arch packages were translated to NixOS.
 - `nix flake update` (update package sources)
 - `nix-collect-garbage` (cleanup)
 - Home Manager for user config
-- `niri` instead of `hyprland`
 
 ### 🔄 Stays The Same:
-- `chezmoi` for dotfiles
-- All your config files (except Hyprland)
+- Hyprland compositor
+- All your config files (hyprland.conf, hyprlock.conf, etc.)
 - Terminal workflows (zsh, tmux, etc.)
 - Development tools
+- `chezmoi` for additional dotfiles
 
 ## Performance Comparison
 
-| Aspect | Arch + Hyprland | NixOS + Niri |
-|--------|----------------|--------------|
+| Aspect | Arch + Hyprland | NixOS + Hyprland |
+|--------|----------------|------------------|
 | Boot time | ~5-10s | ~5-10s (similar) |
 | Memory usage | Low | Low (similar) |
 | Update speed | Fast (pacman) | Slower (downloads more) |
@@ -152,8 +150,9 @@ This document shows how your Arch packages were translated to NixOS.
 - [ ] Clone this NixOS config
 - [ ] Test in VM (optional)
 - [ ] Install NixOS on ASUS Vivobook
+- [ ] Update hardware-configuration.nix with actual UUIDs
 - [ ] Apply Chezmoi dotfiles
-- [ ] Test Niri keybindings
+- [ ] Test Hyprland keybindings
 - [ ] Verify all apps work
 - [ ] Import SSH/GPG keys
 - [ ] Configure Git credentials
@@ -183,9 +182,9 @@ NixOS uses declarative services:
 - **Nix Pills**: https://nixos.org/guides/nix-pills/
 - **NixOS Manual**: https://nixos.org/manual/nixos/stable/
 - **Home Manager**: https://nix-community.github.io/home-manager/
-- **Niri Wiki**: https://github.com/YaLTeR/niri/wiki
+- **Hyprland Wiki**: https://wiki.hyprland.org/
 - **NixOS Discourse**: https://discourse.nixos.org/
 
 ---
 
-**Summary**: 95% of your packages have direct NixOS equivalents. The main change is switching from Hyprland to Niri, but all your other configs and workflows remain the same!
+**Summary**: 95% of your packages have direct NixOS equivalents. This is essentially the same Arch + Hyprland setup, just managed declaratively with NixOS instead of Ansible/pacman.

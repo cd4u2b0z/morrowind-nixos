@@ -243,17 +243,17 @@ Flakes are Nix's answer to reproducibility and composability.
       inputs.nixpkgs.follows = "nixpkgs";  # Use same nixpkgs
     };
     
-    # Niri compositor
-    niri.url = "github:sodiboo/niri-flake";
+    # Hyprland compositor
+    hyprland.url = "github:sodiboo/hyprland-flake";
   };
 
   # ┌─────────────────────────────────────────────────────────────┐
   # │ OUTPUTS: What this flake provides                           │
   # └─────────────────────────────────────────────────────────────┘
-  outputs = { self, nixpkgs, home-manager, niri, ... }:
+  outputs = { self, nixpkgs, home-manager, hyprland, ... }:
   {
     # NixOS system configurations
-    nixosConfigurations.vivobook = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.mnemosyne = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         ./hardware-configuration.nix
@@ -308,7 +308,7 @@ Flakes are Nix's answer to reproducibility and composability.
 ### Directory Structure
 
 ```
-nixos-asus-vivobook/
+nixos-asus-mnemosyne/
 │
 ├── flake.nix                    # Entry point - defines inputs and outputs
 ├── flake.lock                   # Locked dependency versions (auto-generated)
@@ -317,15 +317,15 @@ nixos-asus-vivobook/
 │
 ├── modules/
 │   ├── system.nix              # Users, locale, timezone, Nix settings
-│   ├── niri.nix                # Niri compositor, Wayland, fonts, portals
+│   ├── hyprland.nix                # Hyprland compositor, Wayland, fonts, portals
 │   ├── packages.nix            # All system packages
 │   └── services.nix            # NetworkManager, Bluetooth, PipeWire, etc.
 │
 └── home/
     ├── default.nix             # Home Manager entry point
     └── dotfiles/
-        ├── niri/
-        │   ├── config.kdl      # Niri keybindings and settings
+        ├── hyprland/
+        │   ├── hyprland.conf      # Hyprland keybindings and settings
         │   └── scripts/        # Wallpaper, screenshot scripts
         ├── waybar/
         │   ├── config          # Waybar modules configuration
@@ -345,8 +345,8 @@ nixos-asus-vivobook/
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
 │                          flake.nix                                  │
-│  Defines: inputs (nixpkgs, home-manager, niri)                      │
-│           outputs (nixosConfigurations.vivobook)                    │
+│  Defines: inputs (nixpkgs, home-manager, hyprland)                      │
+│           outputs (nixosConfigurations.mnemosyne)                    │
 └───────────────────────────────┬─────────────────────────────────────┘
                                 │
                                 ▼
@@ -362,7 +362,7 @@ nixos-asus-vivobook/
 │ .nix          │     │                 │     │                 │
 ├───────────────┤     ├─────────────────┤     ├─────────────────┤
 │ • CPU config  │     │ • system.nix    │     │ • home/         │
-│ • GPU drivers │     │ • niri.nix      │     │   default.nix   │
+│ • GPU drivers │     │ • hyprland.nix      │     │   default.nix   │
 │ • Filesystems │     │ • packages.nix  │     │ • dotfiles/     │
 │ • Boot loader │     │ • services.nix  │     │                 │
 └───────────────┘     └─────────────────┘     └─────────────────┘
@@ -377,7 +377,7 @@ nixos-asus-vivobook/
                     ┌─────────────────────┐
                     │  /nix/store/...     │
                     │  -nixos-system-     │
-                    │  vivobook           │
+                    │  mnemosyne           │
                     └─────────────────────┘
 ```
 
@@ -388,7 +388,7 @@ nixos-asus-vivobook/
 | `flake.nix` | Entry point, input management, module composition |
 | `hardware-configuration.nix` | Hardware detection, drivers, boot, filesystems |
 | `modules/system.nix` | Users, locales, timezone, Nix settings |
-| `modules/niri.nix` | Compositor, Wayland environment, fonts, XDG portals |
+| `modules/hyprland.nix` | Compositor, Wayland environment, fonts, XDG portals |
 | `modules/packages.nix` | All installable packages |
 | `modules/services.nix` | System services (network, audio, bluetooth) |
 | `home/default.nix` | User config, dotfiles, theming |
@@ -487,7 +487,7 @@ modules = [
 │   │   └── firefox           # Hardcoded paths to dependencies
 │   └── lib/
 │       └── ... → /nix/store/abc123...-glibc-2.38/lib/...
-├── ghi789...-nixos-system-vivobook-24.05/
+├── ghi789...-nixos-system-mnemosyne-24.05/
 │   └── ... (entire system derivation)
 └── ...
 ```
@@ -504,9 +504,9 @@ modules = [
 ```
 /nix/var/nix/profiles/
 ├── system -> system-42-link
-├── system-42-link -> /nix/store/...-nixos-system-vivobook/
-├── system-41-link -> /nix/store/...-nixos-system-vivobook/  (previous)
-├── system-40-link -> /nix/store/...-nixos-system-vivobook/  (older)
+├── system-42-link -> /nix/store/...-nixos-system-mnemosyne/
+├── system-41-link -> /nix/store/...-nixos-system-mnemosyne/  (previous)
+├── system-40-link -> /nix/store/...-nixos-system-mnemosyne/  (older)
 └── ...
 
 # Each generation is a complete, bootable system!
@@ -524,22 +524,22 @@ modules = [
 # ═══════════════════════════════════════════════════════════════
 
 # Build and switch to new configuration (most common)
-sudo nixos-rebuild switch --flake .#vivobook
+sudo nixos-rebuild switch --flake .#mnemosyne
 
 # Build and switch, but don't add to boot menu
-sudo nixos-rebuild test --flake .#vivobook
+sudo nixos-rebuild test --flake .#mnemosyne
 
 # Build only (don't switch) - useful for testing
-nixos-rebuild build --flake .#vivobook
+nixos-rebuild build --flake .#mnemosyne
 
 # Build with verbose output
-sudo nixos-rebuild switch --flake .#vivobook --show-trace
+sudo nixos-rebuild switch --flake .#mnemosyne --show-trace
 
 # ═══════════════════════════════════════════════════════════════
 # FLAKE OPERATIONS
 # ═══════════════════════════════════════════════════════════════
 
-# Update all inputs (nixpkgs, home-manager, niri, etc.)
+# Update all inputs (nixpkgs, home-manager, hyprland, etc.)
 nix flake update
 
 # Update specific input
@@ -596,7 +596,7 @@ sudo nix-store --optimise
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│ $ sudo nixos-rebuild switch --flake .#vivobook                  │
+│ $ sudo nixos-rebuild switch --flake .#mnemosyne                  │
 └─────────────────────────────────────────────────────────────────┘
                               │
                               ▼
@@ -643,7 +643,7 @@ sudo nix-store --optimise
 
 | Task | Frequency | Command |
 |------|-----------|---------|
-| Update packages | Weekly/Monthly | `nix flake update && sudo nixos-rebuild switch --flake .#vivobook` |
+| Update packages | Weekly/Monthly | `nix flake update && sudo nixos-rebuild switch --flake .#mnemosyne` |
 | Garbage collect | Monthly | `sudo nix-collect-garbage --delete-older-than 30d` |
 | Optimize store | Quarterly | `sudo nix-store --optimise` |
 | Review generations | Monthly | `sudo nix-env --list-generations -p /nix/var/nix/profiles/system` |
@@ -660,7 +660,7 @@ sudo nix-store --optimise
 
 2. Rebuild:
    ```bash
-   sudo nixos-rebuild switch --flake .#vivobook
+   sudo nixos-rebuild switch --flake .#mnemosyne
    ```
 
 ### Updating the System
@@ -675,7 +675,7 @@ nix flake update
 git diff flake.lock
 
 # Rebuild with new versions
-sudo nixos-rebuild switch --flake .#vivobook
+sudo nixos-rebuild switch --flake .#mnemosyne
 
 # If something breaks, rollback
 sudo nixos-rebuild switch --rollback
@@ -692,14 +692,14 @@ sudo nixos-rebuild switch --rollback
                               ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │ 2. TEST BUILD (optional but recommended)                        │
-│    $ nixos-rebuild build --flake .#vivobook                     │
+│    $ nixos-rebuild build --flake .#mnemosyne                     │
 │    (Catches errors without changing system)                     │
 └─────────────────────────────────────────────────────────────────┘
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │ 3. APPLY CHANGES                                                │
-│    $ sudo nixos-rebuild switch --flake .#vivobook               │
+│    $ sudo nixos-rebuild switch --flake .#mnemosyne               │
 └─────────────────────────────────────────────────────────────────┘
                               │
                               ▼
@@ -718,13 +718,13 @@ sudo nixos-rebuild switch --rollback
 
 ```bash
 # Show detailed error trace
-sudo nixos-rebuild switch --flake .#vivobook --show-trace
+sudo nixos-rebuild switch --flake .#mnemosyne --show-trace
 
 # Check flake syntax
 nix flake check
 
 # Evaluate without building (faster error checking)
-nix eval .#nixosConfigurations.vivobook.config.system.build.toplevel
+nix eval .#nixosConfigurations.mnemosyne.config.system.build.toplevel
 ```
 
 ### Common Issues
@@ -754,7 +754,7 @@ If system won't boot:
    # Fix configuration and rebuild
    cd /etc/nixos
    # ... fix the issue ...
-   nixos-rebuild switch --flake .#vivobook
+   nixos-rebuild switch --flake .#mnemosyne
    ```
 
 ---
@@ -867,8 +867,8 @@ in {
 - [r/NixOS](https://reddit.com/r/NixOS)
 
 ### This Configuration
-- [Niri Documentation](https://github.com/YaLTeR/niri/wiki)
-- [Niri Flake](https://github.com/sodiboo/niri-flake)
+- [Hyprland Documentation](https://github.com/YaLTeR/hyprland/wiki)
+- [Hyprland Flake](https://github.com/sodiboo/hyprland-flake)
 
 ---
 
