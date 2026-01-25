@@ -1,17 +1,16 @@
 # Hyprland Compositor Configuration
 # Wayland compositor and desktop environment settings
 
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   # ═══════════════════════════════════════════════════════════════════
-  # Hyprland Compositor
+  # Hyprland Compositor (using nixpkgs version - pre-built)
   # ═══════════════════════════════════════════════════════════════════
   
   programs.hyprland = {
     enable = true;
-    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-    portalPackage = inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland;
+    # Uses nixpkgs version (pre-compiled binary, no build needed)
   };
 
   # ═══════════════════════════════════════════════════════════════════

@@ -9,11 +9,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     
-    # Hyprland compositor
-    hyprland.url = "github:hyprwm/Hyprland";
+    # Using Hyprland from nixpkgs (pre-built, no compilation needed)
   };
 
-  outputs = { self, nixpkgs, home-manager, hyprland, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
