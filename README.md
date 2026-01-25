@@ -173,7 +173,7 @@ sudo swapon /dev/disk/by-label/SWAP
 nix-shell -p git
 
 # 2. Clone this repository
-git clone https://github.com/YOUR_USERNAME/nixos-asus-vivobook.git /mnt/etc/nixos
+git clone https://github.com/cd4u2b0z/nixos-asus-vivobook.git /mnt/etc/nixos
 
 # 3. Or copy from USB
 cp -r /path/to/usb/nixos-asus-vivobook /mnt/etc/nixos
@@ -293,6 +293,28 @@ swaybg -i ~/Pictures/Wallpapers/your-wallpaper.jpg -m fill &
 # 4. Or use the wallpaper picker
 ~/.config/niri/scripts/quick-wallpaper.sh select
 ```
+
+### 🚀 First Boot Expectations
+
+When you first log into Niri, here's what to expect:
+
+| What You'll See | Why | What To Do |
+|-----------------|-----|------------|
+| **Black/gray background** | No wallpaper set yet | Run `swaybg -i ~/Pictures/Wallpapers/yourimage.jpg -m fill &` or use the wallpaper script |
+| **Waybar at top** | Should load automatically | If missing, press `Super+Return` for terminal, then run `waybar &` |
+| **No windows open** | Fresh session | Press `Super+Return` for terminal, `Super+R` for app launcher |
+| **Mouse cursor works** | Niri is running correctly | Good sign! |
+| **XWayland apps (Discord) work** | xwayland-satellite starts automatically | If not, run `xwayland-satellite &` |
+
+**First things to verify:**
+
+1. **Open terminal**: `Super + Return` → Kitty should appear
+2. **Test launcher**: `Super + R` → Fuzzel should pop up
+3. **Check audio**: Click speaker icon in Waybar or run `pactl info`
+4. **Test notifications**: Run `notify-send "Test" "Hello World"`
+5. **Set wallpaper**: `~/.config/niri/scripts/quick-wallpaper.sh select`
+
+> 💡 **Tip**: Your first session may feel bare. After setting a wallpaper and opening a few apps, it will look just like your Hyprland setup!
 
 ---
 
@@ -493,7 +515,41 @@ nmcli device wifi list
 nmcli device wifi connect "SSID" password "PASSWORD"
 ```
 
-#### 5. Keybindings Not Working
+#### 5. Bluetooth Not Connecting
+
+```bash
+# Check Bluetooth service
+systemctl status bluetooth
+
+# Start if not running
+sudo systemctl start bluetooth
+
+# Use bluetoothctl to pair
+bluetoothctl
+> power on
+> agent on
+> default-agent
+> scan on
+# Wait for your device to appear (e.g., [NEW] Device XX:XX:XX:XX:XX:XX Your Device)
+> pair XX:XX:XX:XX:XX:XX
+> trust XX:XX:XX:XX:XX:XX
+> connect XX:XX:XX:XX:XX:XX
+> quit
+
+# For GUI management
+blueman-manager
+```
+
+**Common Bluetooth Issues:**
+
+| Issue | Solution |
+|-------|----------|
+| Device not found | Ensure device is in pairing mode, run `scan on` |
+| Connection refused | Remove and re-pair: `remove XX:XX:XX:XX:XX:XX` then pair again |
+| Audio device no sound | Check PipeWire: `pactl list sinks short`, select Bluetooth sink |
+| Bluetooth disabled after reboot | Check BIOS settings, ensure `hardware.bluetooth.enable = true` |
+
+#### 6. Keybindings Not Working
 
 ```bash
 # Verify Niri config syntax
@@ -506,7 +562,7 @@ niri msg outputs  # Should respond
 niri msg action reload-config
 ```
 
-#### 6. Flake Build Errors
+#### 7. Flake Build Errors
 
 ```bash
 # Update flake lock
@@ -522,7 +578,7 @@ nixos-rebuild build --flake .#vivobook
 nixos-rebuild switch --flake .#vivobook 2>&1 | tee /tmp/build.log
 ```
 
-#### 7. Missing Fonts/Icons
+#### 8. Missing Fonts/Icons
 
 ```bash
 # Rebuild font cache
