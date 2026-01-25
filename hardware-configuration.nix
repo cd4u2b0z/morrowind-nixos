@@ -36,7 +36,7 @@
       kernelModules = [ "i915" ];  # Load Intel GPU early for smooth boot
     };
     
-    kernelModules = [ "kvm-intel" ];  # Intel CPU virtualization (VT-x)
+    kernelModules = [ "kvm-intel" "iwlwifi" ];  # Intel virtualization + WiFi
     extraModulePackages = [ ];
     
     # Intel GPU kernel parameters for better performance
@@ -44,6 +44,10 @@
       "i915.enable_fbc=1"           # Framebuffer compression (saves power)
       "i915.enable_psr=1"           # Panel Self Refresh (saves power on eDP)
       "i915.fastboot=1"             # Skip unnecessary mode switches
+      
+      # ASUS laptop ACPI compatibility
+      "acpi_osi=Linux"              # Tell ACPI we're Linux (helps with some quirks)
+      "acpi_backlight=native"       # Use native backlight control
     ];
     
     # Bootloader - UEFI with systemd-boot
@@ -179,6 +183,12 @@
   
   # Enable Intel firmware for WiFi
   hardware.enableRedistributableFirmware = true;
+  
+  # Intel WiFi power management (disable to prevent connection drops)
+  boot.extraModprobeConfig = ''
+    options iwlwifi power_save=0
+    options iwlmvm power_scheme=1
+  '';
   
   # ═══════════════════════════════════════════════════════════════════
   # Memory Optimization for 8GB RAM
