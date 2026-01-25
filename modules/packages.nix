@@ -168,8 +168,8 @@
     # ─────────────────────────────────────────────────────────────────
     # Additional tools from your setup
     # ─────────────────────────────────────────────────────────────────
-    qt5ct          # Qt5 configuration tool
-    lxappearance   # GTK theme switcher
+    libsForQt5.qt5ct  # Qt5 configuration tool
+    lxappearance      # GTK theme switcher
   ];
 
   # ═══════════════════════════════════════════════════════════════════

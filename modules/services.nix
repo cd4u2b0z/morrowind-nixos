@@ -34,8 +34,8 @@
   # Audio (PipeWire)
   # ═══════════════════════════════════════════════════════════════════
   
-  # Disable PulseAudio
-  hardware.pulseaudio.enable = false;
+  # Disable PulseAudio (using PipeWire instead)
+  services.pulseaudio.enable = false;
   
   # Enable PipeWire
   services.pipewire = {
