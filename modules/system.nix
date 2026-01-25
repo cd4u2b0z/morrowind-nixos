@@ -11,7 +11,7 @@
   system.stateVersion = "24.05";  # Update to your NixOS version
   
   # Hostname
-  networking.hostName = "vivobook";
+  networking.hostName = "argos";
   
   # ═══════════════════════════════════════════════════════════════════
   # User Configuration
