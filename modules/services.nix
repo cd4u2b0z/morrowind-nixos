@@ -38,14 +38,8 @@
   # Audio (PipeWire)
   # ═══════════════════════════════════════════════════════════════════
   
-  # systemd-resolved for DNS management
-  services.resolved = {
-    enable = false;  # crab-hole handles DNS
-    fallbackDns = [ "8.8.8.8" "8.8.4.4" ];  # Google fallback
-    llmnr = "true";  # Local hostname resolution
-    dnssec = "false";  # Disabled for compatibility
-    dnsovertls = "true";  # Encrypt DNS queries from ISP
-  };
+  # systemd-resolved disabled - crab-hole handles DNS
+  services.resolved.enable = false;
   
   
   # ══════════════════════════════════════════════════════════════════
