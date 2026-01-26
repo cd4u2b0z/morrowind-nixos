@@ -57,7 +57,7 @@
     nerd-fonts.hack
     nerd-fonts.symbols-only
     noto-fonts
-    noto-fonts-emoji
+    noto-fonts-color-emoji
     font-awesome
     
     # ─────────────────────────────────────────────────────────────────
