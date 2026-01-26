@@ -54,7 +54,7 @@
     # Development Tools
     # ─────────────────────────────────────────────────────────────────
     neovim
-    vscode
+    zed-editor
     git
     gh             # GitHub CLI
     
