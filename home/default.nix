@@ -271,7 +271,6 @@
       border-radius = 12;
       margin = "12";
       padding = "16";
-      font = "JetBrainsMono Nerd Font 12";
       max-history = 50;
       max-visible = 5;
       anchor = "top-right";
