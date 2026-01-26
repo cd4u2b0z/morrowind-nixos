@@ -172,11 +172,27 @@
   xdg.configFile."mako/config".source = ./dotfiles/mako/config;
 
   # ═══════════════════════════════════════════════════════════════════
+  # Cava Audio Visualizer
+  # ═══════════════════════════════════════════════════════════════════
+  
+  xdg.configFile."cava/config".source = ./dotfiles/cava/config;
+
+  # ═══════════════════════════════════════════════════════════════════
   # Fuzzel Launcher
   # ═══════════════════════════════════════════════════════════════════
   
   programs.fuzzel.enable = true;
   xdg.configFile."fuzzel/fuzzel.ini".source = ./dotfiles/fuzzel/fuzzel.ini;
+
+  # ═══════════════════════════════════════════════════════════════════
+  # Wallust (Dynamic Theming - like pywal but better)
+  # ═══════════════════════════════════════════════════════════════════
+  
+  xdg.configFile."wallust/wallust.toml".source = ./dotfiles/wallust/wallust.toml;
+  xdg.configFile."wallust/templates" = {
+    source = ./dotfiles/wallust/templates;
+    recursive = true;
+  };
 
   # ═══════════════════════════════════════════════════════════════════
   # Git Configuration
@@ -195,7 +211,7 @@
   };
 
   # ═══════════════════════════════════════════════════════════════════
-  # Neovim
+  # Neovim (with Lazy.nvim, Telescope, Treesitter, LSP)
   # ═══════════════════════════════════════════════════════════════════
   
   programs.neovim = {
@@ -203,13 +219,52 @@
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
+    
+    # Dependencies for plugins (telescope, treesitter, etc.)
+    extraPackages = with pkgs; [
+      # Telescope dependencies
+      ripgrep
+      fd
+      
+      # Treesitter
+      tree-sitter
+      gcc  # for treesitter compilation
+      
+      # LSP servers
+      lua-language-server
+      nil  # Nix LSP
+      nodePackages.typescript-language-server
+      nodePackages.vscode-langservers-extracted  # HTML/CSS/JSON
+      pyright  # Python
+      rust-analyzer
+      
+      # Formatters
+      stylua
+      nixpkgs-fmt
+      prettierd
+      black
+      
+      # Other tools
+      lazygit  # for lazygit.nvim
+    ];
+  };
+  
+  # Neovim config directory (your full Arch config with lazy.nvim)
+  xdg.configFile."nvim" = {
+    source = ./dotfiles/nvim;
+    recursive = true;
   };
 
   # ═══════════════════════════════════════════════════════════════════
-  # Tmux
+  # Tmux (with your custom config)
   # ═══════════════════════════════════════════════════════════════════
   
   programs.tmux.enable = true;
+  
+  # Tmux config files
+  home.file.".tmux.conf".source = ./dotfiles/tmux/.tmux.conf;
+  xdg.configFile."tmux/tmux-music.conf".source = ./dotfiles/tmux/tmux-music.conf;
+  xdg.configFile."tmux/wallust-colors.conf".source = ./dotfiles/tmux/wallust-colors.conf;
 
   # ═══════════════════════════════════════════════════════════════════
   # GTK Theming
