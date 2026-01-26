@@ -4,6 +4,7 @@
 
 WALLPAPER_DIR="${HOME}/Pictures/Wallpapers"
 STATE_FILE="${HOME}/.cache/wallpaper-state"
+HYPRLOCK_CONF="${HOME}/.config/hypr/hyprlock.conf"
 
 # Get list of wallpapers
 get_wallpapers() {
@@ -16,6 +17,14 @@ get_current_index() {
         cat "$STATE_FILE"
     else
         echo 0
+    fi
+}
+
+# Sync hyprlock background
+sync_hyprlock() {
+    local wallpaper_path="$1"
+    if [[ -f "$HYPRLOCK_CONF" ]]; then
+        sed -i "/^background {/,/^}/ s|^\([[:space:]]*path = \).*|\1${wallpaper_path}|" "$HYPRLOCK_CONF"
     fi
 }
 
@@ -48,6 +57,9 @@ apply_wallpaper() {
         hyprctl hyprpaper wallpaper ",$wallpaper" 2>/dev/null
     fi
     
+    # Sync hyprlock background
+    sync_hyprlock "$wallpaper"
+    
     # Apply wallust colors if available
     if command -v wallust &>/dev/null; then
         wallust run "$wallpaper" 2>/dev/null
@@ -55,6 +67,8 @@ apply_wallpaper() {
         pkill waybar 2>/dev/null
         sleep 0.3
         waybar &
+        # Reload mako
+        makoctl reload 2>/dev/null || true
     fi
     
     # Save state
