@@ -125,13 +125,15 @@
   };
 
   # ═══════════════════════════════════════════════════════════════════
-  # SDDM Display Manager (Wayland)
+  # Display Manager - DISABLED (using TTY login)
   # ═══════════════════════════════════════════════════════════════════
+  # To login: enter username, password, then run: Hyprland
   
-  services.displayManager.sddm = {
-    enable = true;
-    wayland.enable = true;
-    theme = "catppuccin-mocha";
-    package = pkgs.kdePackages.sddm;
-  };
+  # SDDM is disabled - if you want graphical login, uncomment below:
+  # services.displayManager.sddm = {
+  #   enable = true;
+  #   wayland.enable = true;
+  #   theme = "catppuccin-mocha";
+  #   package = pkgs.kdePackages.sddm;
+  # };
 }
