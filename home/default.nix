@@ -420,11 +420,6 @@
     gtk4.extraConfig.gtk-application-prefer-dark-theme = 1;
   };
   
-  # Qt theming - let it follow GTK (Stylix compatible)
-  qt = {
-    enable = true;
-    platformTheme.name = "gtk";
-  };
 
   # ═══════════════════════════════════════════════════════════════════
   # Browser Configuration (Wayland-native)
