@@ -98,6 +98,7 @@
     CLUTTER_BACKEND = "wayland";     # Clutter use Wayland
     
     # Cursor
+    XCURSOR_THEME = "Bibata-Modern-Ice";
     XCURSOR_SIZE = "24";
     
     # Qt theming
