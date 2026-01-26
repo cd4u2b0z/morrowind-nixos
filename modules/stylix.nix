@@ -91,16 +91,9 @@
     targets = {
       # Desktop
       gtk.enable = true;
-      hyprland.enable = true;
       
       # Terminal
       kitty.enable = true;
-      
-      # Notifications
-      mako.enable = true;
-      
-      # Bar
-      waybar.enable = true;
       
       # Console (TTY)
       console.enable = true;
