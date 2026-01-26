@@ -22,6 +22,9 @@
   # Let Home Manager manage itself
   programs.home-manager.enable = true;
 
+  # Enable dconf (required for gsettings to work)
+  dconf.enable = true;
+
   # ═══════════════════════════════════════════════════════════════════
   # Hyprland Configuration
   # ═══════════════════════════════════════════════════════════════════
