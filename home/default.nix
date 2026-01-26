@@ -56,28 +56,25 @@
   };
 
   # ═══════════════════════════════════════════════════════════════════
+  # ════════════════════════════════════════════════════════════════════
   # Waybar Configuration
-  # ═══════════════════════════════════════════════════════════════════
+  # ════════════════════════════════════════════════════════════════════
   
   programs.waybar = {
     enable = true;
-    # Stylix handles style.css colors automatically
+    # Load config from JSON file, Stylix generates style.css
+    settings = [ (builtins.fromJSON (builtins.readFile ./dotfiles/waybar/config)) ];
   };
   
-  # Custom waybar config (layout/modules - Stylix handles colors)
-  xdg.configFile."waybar/config".source = ./dotfiles/waybar/config;
-  xdg.configFile."waybar/launch.sh" = {
-    source = ./dotfiles/waybar/launch.sh;
-    executable = true;
-  };
+  # Waybar scripts (custom modules like weather, system-stats)
   xdg.configFile."waybar/scripts" = {
     source = ./dotfiles/waybar/scripts;
     recursive = true;
   };
 
-  # ═══════════════════════════════════════════════════════════════════
+  # ════════════════════════════════════════════════════════════════════
   # Terminal & Shell
-  # ═══════════════════════════════════════════════════════════════════
+  # ════════════════════════════════════════════════════════════════════
   
   # Kitty terminal (Stylix handles colors, we add extra settings)
   programs.kitty = {
