@@ -339,7 +339,7 @@
     
     settings = {
       user.name = "craig";  # Change to your name
-      user.email = "your-email@example.com";  # Change to your email
+      user.email = "masked-elf@pm.me";  
       init.defaultBranch = "main";
       pull.rebase = false;
       core.editor = "nvim";
