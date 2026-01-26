@@ -81,11 +81,11 @@
     }
   },
   "custom/system-stats": {
-    "format": "{}",
+    "format": "  ",
     "interval": 2,
-    "return-type": "json",
-    "exec": "~/.config/waybar/scripts/system-stats.sh",
-    "tooltip": true,
+    "return-type": "",
+    "exec": "",
+    "tooltip-format": "Click to open btop",
     "on-click": "kitty btop",
     "on-right-click": "kitty htop"
   },
