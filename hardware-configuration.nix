@@ -77,7 +77,7 @@
     };
     
     # Enable Plymouth for beautiful boot splash
-    plymouth.enable = false;  # Disabled - causes issues with dual displays
+    plymouth.enable = true;
     consoleLogLevel = 0;  # Suppress all boot console messages
   };
 
