@@ -509,3 +509,114 @@ This is why we store configs in a repo - your entire system is version controlle
 7. **Do not fight it** - The declarative model is different but powerful once you adapt
 
 The adjustment period is about 1-2 weeks. After that, you will wonder how you ever managed systems without declarative configuration!
+
+---
+
+## 🔒 Persistence Patterns - What Survives Rebuilds?
+
+This is the **most important concept** for Arch users to understand. On Arch, everything you install or configure just... stays. On NixOS, you need to think about what's declarative vs imperative.
+
+### ❌ What Gets WIPED on Rebuild
+
+| Item | Why | Solution |
+|------|-----|----------|
+| Manually installed browser extensions | Home Manager regenerates profile | Declare in config |
+| GTK/Qt themes set via GUI | Stylix regenerates configs | Use Stylix settings |
+| Manually added packages via `nix-env` | Not in flake | Add to `packages.nix` |
+| Direct edits to `~/.config/*` (managed files) | Home Manager overwrites | Edit source in repo |
+| System services enabled via `systemctl` | Not in config | Add to `services.nix` |
+
+### ✅ What PERSISTS Across Rebuilds
+
+| Item | Why |
+|------|-----|
+| `~/.local/share/*` | Not managed by Home Manager |
+| `~/.cache/*` | Cache directories persist |
+| Browser bookmarks/history (in profile) | Profile data persists, just not extensions |
+| SSH keys (`~/.ssh/`) | Not managed (and shouldn't be!) |
+| GPG keys | Not managed |
+| Git repos | Your data, not config |
+| Files in `~/Documents`, `~/Pictures`, etc. | User data |
+
+### 🌐 Browser Extensions - The Right Way
+
+**Wrong (Arch way):**
+```
+Click "Add extension" in browser → Lost on rebuild!
+```
+
+**Right (NixOS way):**
+```nix
+# In home/default.nix
+programs.librewolf = {
+  enable = true;
+  policies.ExtensionSettings = {
+    "uBlock0@raymondhill.net" = {
+      install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi"\;
+      installation_mode = "force_installed";
+    };
+  };
+};
+```
+
+**Alternative:** Enable Firefox/Librewolf Sync - extensions sync back after rebuild.
+
+### 📦 Desktop Apps - Declare Custom Entries
+
+If an app needs special flags (like Wayland), create a desktop entry:
+
+```nix
+# In home/default.nix
+xdg.desktopEntries.brave-browser = {
+  name = "Brave";
+  exec = "brave --ozone-platform=wayland %U";
+  icon = "brave";
+  terminal = false;
+  categories = [ "Network" "WebBrowser" ];
+};
+```
+
+### 🔐 Secrets & API Keys
+
+**Never commit secrets directly-50 /home/craig/projects/nixos-asus-vivobook/ARCH-TO-NIXOS.md* Options:
+
+1. **Environment variables** - Set in your shell
+2. **agenix/sops-nix** - Encrypted secrets in repo
+3. **External files** - Reference files not in git
+
+Example with external file:
+```nix
+# Read API key from file outside git
+environment.variables.WEATHER_API_KEY = 
+  builtins.readFile /home/craig/.secrets/weather-api;
+```
+
+### 💾 The `flake.lock` File
+
+Your `flake.lock` pins exact versions of nixpkgs/home-manager/stylix. **Commit it!**
+
+```bash
+# After successful rebuild
+git add flake.lock
+git commit -m "chore: pin flake inputs"
+git push
+```
+
+This ensures:
+- Same versions on all machines
+- Reproducible builds
+- Easy rollback if update breaks something
+
+### 🔄 Hybrid Approach
+
+You don't have to declare EVERYTHING. A pragmatic approach:
+
+| Declare in Config | Leave Imperative |
+|-------------------|------------------|
+| Critical extensions (uBlock, Bitwarden) | Nice-to-have extensions |
+| System packages | `nix-shell` for temp tools |
+| Shell aliases & config | Personal scripts in `~/.local/bin` |
+| Core services | User systemd services (optional) |
+
+The goal: If your SSD dies, `nixos-rebuild` + restore `~/.ssh` and `~/.local` = back to 95% normal.
+
