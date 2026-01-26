@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Quick wallpaper picker using fuzzel
-# Selects a wallpaper from ~/Pictures/Wallpapers and applies it with wallust
+# Selects a wallpaper from ~/Pictures/Wallpaper and applies it with wallust
 
-WALLPAPER_DIR="${HOME}/Pictures/Wallpapers"
+WALLPAPER_DIR="${HOME}/Pictures/Wallpaper"
 
 # Check if wallpaper directory exists
 if [[ ! -d "$WALLPAPER_DIR" ]]; then

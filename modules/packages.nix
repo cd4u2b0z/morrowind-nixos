@@ -42,6 +42,7 @@
     gnome-keyring
     libsecret
     seahorse  # GUI for managing keyring
+    xdg-utils # For xdg-open (VSCode auth browser popup)
     
     # Archive tools
     unzip

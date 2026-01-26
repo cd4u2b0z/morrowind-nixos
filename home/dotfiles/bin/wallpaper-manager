@@ -2,7 +2,7 @@
 # Wallpaper manager - slideshow control and status
 # Usage: wallpaper-manager [next|prev|status]
 
-WALLPAPER_DIR="${HOME}/Pictures/Wallpapers"
+WALLPAPER_DIR="${HOME}/Pictures/Wallpaper"
 STATE_FILE="${HOME}/.cache/wallpaper-state"
 
 # Get list of wallpapers
