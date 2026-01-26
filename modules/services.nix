@@ -10,12 +10,12 @@
   
   networking = {
     # Cloudflare DNS (encrypted via DoT)
-    nameservers = [ "1.1.1.1" "1.0.0.1" ];
+    nameservers = [ "127.0.0.1" ];
     
     networkmanager = {
       enable = true;
       wifi.powersave = false;  # Prevents WiFi disconnects
-      dns = "systemd-resolved";  # Use systemd-resolved
+      dns = "none";  # crab-hole handles DNS
     };
     
     # Firewall
@@ -40,7 +40,7 @@
   
   # systemd-resolved for DNS management
   services.resolved = {
-    enable = true;
+    enable = false;  # crab-hole handles DNS
     fallbackDns = [ "8.8.8.8" "8.8.4.4" ];  # Google fallback
     llmnr = "true";  # Local hostname resolution
     dnssec = "false";  # Disabled for compatibility
@@ -48,6 +48,61 @@
   };
   
   
+  # ══════════════════════════════════════════════════════════════════
+  # crab-hole - DNS-level ad/tracker blocking with DoT
+  # ══════════════════════════════════════════════════════════════════
+  
+  services.crab-hole = {
+    enable = true;
+    
+    settings = {
+      # Blocklists
+      blocklist = {
+        include_subdomains = true;
+        lists = [
+          "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
+          "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/hosts/pro.txt"
+        ];
+      };
+      
+      # Listen on localhost
+      downstream = [
+        {
+          protocol = "udp";
+          listen = "127.0.0.1";
+          port = 53;
+        }
+        {
+          protocol = "udp";
+          listen = "::1";
+          port = 53;
+        }
+      ];
+      
+      # Cloudflare DoT upstream (encrypted!)
+      upstream = {
+        name_servers = [
+          {
+            socket_addr = "1.1.1.1:853";
+            protocol = "tls";
+            tls_dns_name = "1dot1dot1dot1.cloudflare-dns.com";
+            trust_nx_responses = false;
+          }
+          {
+            socket_addr = "1.0.0.1:853";
+            protocol = "tls";
+            tls_dns_name = "1dot1dot1dot1.cloudflare-dns.com";
+            trust_nx_responses = false;
+          }
+        ];
+        # Disable DNSSEC validation (compatibility)
+        options = {
+          validate = false;
+        };
+      };
+    };
+  };
+
   # Disable PulseAudio (using PipeWire instead)
   services.pulseaudio.enable = false;
   
