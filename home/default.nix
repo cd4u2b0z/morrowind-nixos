@@ -249,8 +249,11 @@
   };
   
   # Starship prompt
-  programs.starship.enable = true;
-  xdg.configFile."starship.toml".source = ./dotfiles/starship.toml;
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+    settings = builtins.fromTOML (builtins.readFile ./dotfiles/starship.toml);
+  };
 
   # ═══════════════════════════════════════════════════════════════════
   # Mako Notification Daemon
