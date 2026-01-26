@@ -24,7 +24,7 @@
 * {
   border: none;
   border-radius: 12px;
-  font-family: "Inter", "JetBrainsMono Nerd Font", system-ui, sans-serif;
+  font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Inter", system-ui, sans-serif;
   font-weight: 500;
   font-size: 12px;
   min-height: 0;
@@ -65,7 +65,7 @@ tooltip * {
 
 tooltip label {
   color: @color15;
-  font-family: "Inter", "JetBrainsMono Nerd Font", sans-serif;
+  font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Inter", sans-serif;
   font-size: 13px;
   padding: 8px 12px;
 }
@@ -73,7 +73,7 @@ tooltip label {
 #clock tooltip label {
   color: @foreground;
   font-size: 11px;
-  font-family: "Inter", "JetBrainsMono Nerd Font", monospace;
+  font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Inter", monospace;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -99,7 +99,7 @@ tooltip label {
   color: @foreground;
   font-weight: 600;
   font-size: 16px;
-  font-family: "JetBrainsMono Nerd Font", "Inter", sans-serif;
+  font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Inter", sans-serif;
   transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
@@ -120,7 +120,7 @@ tooltip label {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   WORKSPACES - Niri compatible
+   WORKSPACES - Hyprland
    ═══════════════════════════════════════════════════════════════════ */
 #workspaces {
   background: transparent;
@@ -139,7 +139,7 @@ tooltip label {
   border-radius: 8px;
   font-weight: 600;
   font-size: 14px;
-  font-family: "Inter", "JetBrainsMono Nerd Font", sans-serif;
+  font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Inter", sans-serif;
   transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
@@ -165,7 +165,7 @@ tooltip label {
   color: @color15;
   font-weight: 700;
   font-size: 16px;
-  font-family: "Inter", sans-serif;
+  font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Inter", sans-serif;
   letter-spacing: 0.3px;
   padding: 6px 12px;
   border-radius: 12px;
@@ -183,7 +183,7 @@ tooltip label {
   color: @color15;
   font-weight: 700;
   font-size: 16px;
-  font-family: "Inter", "JetBrainsMono Nerd Font", sans-serif;
+  font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Inter", sans-serif;
   letter-spacing: 0.3px;
   padding: 6px 24px;
   border-radius: 12px;
@@ -205,31 +205,31 @@ tooltip label {
   border: none;
   border-radius: 12px;
   font-size: 16px;
-  font-family: "JetBrainsMono Nerd Font", "Inter", sans-serif;
+  font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Inter", sans-serif;
 }
 
 #custom-system-stats {
   padding: 8px 14px;
   font-size: 16px;
-  font-family: "Inter", "JetBrainsMono Nerd Font", sans-serif;
+  font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Inter", sans-serif;
 }
 
 #bluetooth {
   padding: 8px 14px;
   font-size: 16px;
-  font-family: "JetBrainsMono Nerd Font", "Inter", sans-serif;
+  font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Inter", sans-serif;
 }
 
 #network {
   padding: 8px 14px;
   font-size: 16px;
-  font-family: "JetBrainsMono Nerd Font", "Inter", sans-serif;
+  font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Inter", sans-serif;
 }
 
 #battery {
   padding: 8px 14px;
   font-size: 16px;
-  font-family: "Inter", "JetBrainsMono Nerd Font", sans-serif;
+  font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Inter", sans-serif;
 }
 
 #battery.charging, #battery.plugged {
@@ -248,7 +248,7 @@ tooltip label {
 #pulseaudio {
   padding: 8px 14px;
   font-size: 16px;
-  font-family: "Inter", "JetBrainsMono Nerd Font", sans-serif;
+  font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Inter", sans-serif;
 }
 
 #pulseaudio.muted {
@@ -312,7 +312,7 @@ calendar {
   border-radius: 12px;
   padding: 12px;
   color: @foreground;
-  font-family: "Inter", "JetBrainsMono Nerd Font", sans-serif;
+  font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Inter", sans-serif;
 }
 
 calendar:selected {

@@ -51,17 +51,6 @@
     unrar
     
     # ─────────────────────────────────────────────────────────────────
-    # Fonts - Nerd Fonts for terminal/waybar icons
-    # ─────────────────────────────────────────────────────────────────
-    nerd-fonts.jetbrains-mono
-    nerd-fonts.fira-code
-    nerd-fonts.hack
-    nerd-fonts.symbols-only
-    noto-fonts
-    noto-fonts-color-emoji
-    font-awesome
-    
-    # ─────────────────────────────────────────────────────────────────
     # Development Tools
     # ─────────────────────────────────────────────────────────────────
     neovim
@@ -220,12 +209,34 @@
   programs.xfconf.enable = true;
   services.tumbler.enable = true;  # Thumbnails for Thunar
   
-  # Font configuration
+  # ═══════════════════════════════════════════════════════════════════
+  # Font Configuration
+  # ═══════════════════════════════════════════════════════════════════
+  
+  fonts.packages = with pkgs; [
+    # Nerd Fonts (for terminal/waybar icons)
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.fira-code
+    nerd-fonts.hack
+    nerd-fonts.symbols-only
+    
+    # System fonts
+    inter              # Modern UI font used in waybar
+    noto-fonts
+    noto-fonts-cjk-sans
+    noto-fonts-color-emoji
+    font-awesome
+    
+    # Additional fonts
+    liberation_ttf
+    ubuntu_font_family
+  ];
+  
   fonts.fontconfig = {
     enable = true;
     defaultFonts = {
-      monospace = [ "JetBrainsMono Nerd Font" "Hack Nerd Font" ];
-      sansSerif = [ "Noto Sans" ];
+      monospace = [ "JetBrainsMono Nerd Font" "Hack Nerd Font" "Fira Code" ];
+      sansSerif = [ "Inter" "Noto Sans" ];
       serif = [ "Noto Serif" ];
       emoji = [ "Noto Color Emoji" ];
     };
