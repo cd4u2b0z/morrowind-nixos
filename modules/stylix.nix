@@ -75,8 +75,8 @@
     # ═══════════════════════════════════════════════════════════════════
     
     cursor = {
-      package = pkgs.nordzy-cursor-theme;
-      name = "Nordzy-cursors-white";
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Modern-Ice";
       size = 24;
     };
     
