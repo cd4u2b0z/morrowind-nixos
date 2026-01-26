@@ -5,7 +5,7 @@
 CACHE_FILE="${XDG_CACHE_HOME:-$HOME/.cache}/nixos-updates/status"
 CACHE_AGE=3600  # 1 hour
 
-mkdir -p "$(dirname "$CACHE_FILE")"
+rm -f "$(dirname "$CACHE_FILE")" 2>/dev/null; mkdir -p "$(dirname "$CACHE_FILE")"
 
 get_update_status() {
     local current_gen=$(readlink /nix/var/nix/profiles/system 2>/dev/null | grep -oP 'system-\K\d+' || echo "?")

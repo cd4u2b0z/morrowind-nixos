@@ -14,7 +14,7 @@ D='\033[0;90m'   # Dim
 N='\033[0m'      # Reset
 
 CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/nixos-updates"
-mkdir -p "$CACHE_DIR"
+rm -f "$CACHE_DIR" 2>/dev/null; mkdir -p "$CACHE_DIR"
 
 refresh_waybar() {
     pkill -SIGRTMIN+8 waybar 2>/dev/null || true
