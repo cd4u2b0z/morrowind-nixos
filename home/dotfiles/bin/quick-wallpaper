@@ -10,8 +10,8 @@ if [[ ! -d "$WALLPAPER_DIR" ]]; then
     exit 1
 fi
 
-# List wallpapers and let user pick with fuzzel
-SELECTED=$(find "$WALLPAPER_DIR" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.webp" \) -printf '%f\n' | sort | fuzzel --dmenu -p "Wallpaper: ")
+# List wallpapers and let user pick with fuzzel (follow symlinks with -L)
+SELECTED=$(find -L "$WALLPAPER_DIR" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.webp" \) -printf '%f\n' | sort | fuzzel --dmenu -p "Wallpaper: ")
 
 if [[ -z "$SELECTED" ]]; then
     exit 0

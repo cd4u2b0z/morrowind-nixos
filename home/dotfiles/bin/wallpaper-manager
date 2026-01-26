@@ -7,7 +7,7 @@ STATE_FILE="${HOME}/.cache/wallpaper-state"
 
 # Get list of wallpapers
 get_wallpapers() {
-    find "$WALLPAPER_DIR" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.webp" \) | sort
+    find -L "$WALLPAPER_DIR" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.webp" \) | sort
 }
 
 # Get current wallpaper index
