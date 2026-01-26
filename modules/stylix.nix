@@ -87,22 +87,7 @@
     # Polarity: "dark" or "light"
     polarity = "dark";
     
-    # Enable Stylix theming for these apps
-    targets = {
-      # Desktop
-      gtk.enable = true;
-      
-      # Terminal
-      kitty.enable = true;
-      
-      # Console (TTY)
-      console.enable = true;
-      
-      # Neovim (via base16 plugin)
-      neovim.enable = true;
-      
-      # Tmux
-      tmux.enable = true;
-    };
+    # Stylix auto-enables theming for installed apps
+    # No need to manually specify targets
   };
 }
