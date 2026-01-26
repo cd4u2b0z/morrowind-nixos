@@ -87,16 +87,32 @@
     # Polarity: "dark" or "light"
     polarity = "dark";
     
-    # Don't style things we want to manage manually (optional)
+    # Enable Stylix theming for these apps
     targets = {
-      # Let Stylix theme these:
+      # Desktop
       gtk.enable = true;
-      
-      # Hyprland theming
       hyprland.enable = true;
       
-      # Console (TTY) theming
+      # Terminal
+      kitty.enable = true;
+      
+      # Notifications
+      mako.enable = true;
+      
+      # Launcher  
+      fuzzel.enable = true;
+      
+      # Bar
+      waybar.enable = true;
+      
+      # Console (TTY)
       console.enable = true;
+      
+      # Neovim (via base16 plugin)
+      neovim.enable = true;
+      
+      # Tmux
+      tmux.enable = true;
     };
   };
 }

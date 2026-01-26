@@ -26,7 +26,7 @@
   xdg.configFile."hypr/hyprland.conf".source = ./dotfiles/hypr/hyprland.conf;
   xdg.configFile."hypr/monitors.conf".source = ./dotfiles/hypr/monitors.conf;
   xdg.configFile."hypr/workspaces.conf".source = ./dotfiles/hypr/workspaces.conf;
-  xdg.configFile."hypr/wallust-colors.conf".source = ./dotfiles/hypr/wallust-colors.conf;
+  # Hyprland colors now managed by Stylix
   
   # Hyprlock (screen locker)
   xdg.configFile."hypr/hyprlock.conf" = {
@@ -59,12 +59,13 @@
   # Waybar Configuration
   # ═══════════════════════════════════════════════════════════════════
   
-  programs.waybar.enable = true;
+  programs.waybar = {
+    enable = true;
+    # Stylix handles style.css colors automatically
+  };
   
-  # Bundled Waybar config (your Hyprland-compatible setup)
+  # Custom waybar config (layout/modules - Stylix handles colors)
   xdg.configFile."waybar/config".source = ./dotfiles/waybar/config;
-  xdg.configFile."waybar/style.css".source = ./dotfiles/waybar/style.css;
-  xdg.configFile."waybar/wallust-colors.css".source = ./dotfiles/waybar/wallust-colors.css;
   xdg.configFile."waybar/launch.sh" = {
     source = ./dotfiles/waybar/launch.sh;
     executable = true;
@@ -78,9 +79,46 @@
   # Terminal & Shell
   # ═══════════════════════════════════════════════════════════════════
   
-  # Kitty terminal
-  programs.kitty.enable = true;
-  xdg.configFile."kitty/kitty.conf".source = ./dotfiles/kitty/kitty.conf;
+  # Kitty terminal (Stylix handles colors, we add extra settings)
+  programs.kitty = {
+    enable = true;
+    
+    # Extra settings (non-color)
+    settings = {
+      # Font
+      font_family = "JetBrainsMono Nerd Font";
+      font_size = 11;
+      
+      # Cursor
+      cursor_shape = "beam";
+      cursor_beam_thickness = "1.5";
+      cursor_blink_interval = "0.5";
+      
+      # Scrollback
+      scrollback_lines = 10000;
+      
+      # Mouse
+      mouse_hide_wait = "3.0";
+      copy_on_select = "clipboard";
+      
+      # Performance
+      repaint_delay = 10;
+      input_delay = 3;
+      sync_to_monitor = "yes";
+      
+      # Bell
+      enable_audio_bell = "no";
+      
+      # Window
+      window_padding_width = 8;
+      hide_window_decorations = "yes";
+      confirm_os_window_close = 0;
+      
+      # Tab bar
+      tab_bar_edge = "bottom";
+      tab_bar_style = "powerline";
+    };
+  };
   
   # Zsh
   programs.zsh = {
@@ -186,11 +224,8 @@
       
       # FZF integration
       if command -v fzf &>/dev/null; then
-        # FZF options
+        # FZF options (colors inherited from terminal via Stylix)
         export FZF_DEFAULT_OPTS="--height=50% --layout=reverse --border --margin=1 --padding=1"
-        
-        # Source wallust-generated colors for FZF (dynamic theme)
-        [[ -f ~/.cache/wallust/fzf-colors.sh ]] && source ~/.cache/wallust/fzf-colors.sh
         
         # Use ripgrep for FZF if available
         if command -v rg &>/dev/null; then
@@ -224,8 +259,27 @@
   # Mako Notification Daemon
   # ═══════════════════════════════════════════════════════════════════
   
-  services.mako.enable = true;
-  xdg.configFile."mako/config".source = ./dotfiles/mako/config;
+  services.mako = {
+    enable = true;
+    # Stylix handles colors, we set layout/behavior
+    settings = {
+      sort = "-time";
+      layer = "overlay";
+      width = 350;
+      height = 120;
+      border-size = 2;
+      border-radius = 12;
+      margin = "12";
+      padding = "16";
+      font = "JetBrainsMono Nerd Font 12";
+      max-history = 50;
+      max-visible = 5;
+      anchor = "top-right";
+      default-timeout = 4000;
+      icons = 1;
+      max-icon-size = 64;
+    };
+  };
 
   # ═══════════════════════════════════════════════════════════════════
   # Cava Audio Visualizer
@@ -243,18 +297,37 @@
   # Fuzzel Launcher
   # ═══════════════════════════════════════════════════════════════════
   
-  programs.fuzzel.enable = true;
-  xdg.configFile."fuzzel/fuzzel.ini".source = ./dotfiles/fuzzel/fuzzel.ini;
+  programs.fuzzel = {
+    enable = true;
+    # Stylix handles colors, we set layout/behavior
+    settings = {
+      main = {
+        font = "JetBrainsMono Nerd Font:size=12";
+        dpi-aware = "auto";
+        icon-theme = "Papirus-Dark";
+        terminal = "kitty";
+        layer = "overlay";
+        prompt = "\" \"";
+        width = 45;
+        horizontal-pad = 20;
+        vertical-pad = 12;
+        inner-pad = 8;
+        line-height = 22;
+        letter-spacing = 0;
+      };
+      border = {
+        width = 2;
+        radius = 12;
+      };
+      dmenu = {
+        exit-immediately-if-empty = "no";
+      };
+    };
+  };
 
   # ═══════════════════════════════════════════════════════════════════
-  # Wallust (Dynamic Theming - like pywal but better)
+  # Note: Dynamic theming now handled by Stylix (modules/stylix.nix)
   # ═══════════════════════════════════════════════════════════════════
-  
-  xdg.configFile."wallust/wallust.toml".source = ./dotfiles/wallust/wallust.toml;
-  xdg.configFile."wallust/templates" = {
-    source = ./dotfiles/wallust/templates;
-    recursive = true;
-  };
 
   # ═══════════════════════════════════════════════════════════════════
   # Git Configuration
@@ -318,15 +391,17 @@
   };
 
   # ═══════════════════════════════════════════════════════════════════
-  # Tmux (with your custom config)
+  # Tmux (Stylix handles colors)
   # ═══════════════════════════════════════════════════════════════════
   
-  programs.tmux.enable = true;
+  programs.tmux = {
+    enable = true;
+    # Stylix injects colors; we keep custom keybinds/behavior via extraConfig
+  };
   
-  # Tmux config files
+  # Custom tmux config (keybinds, behavior - Stylix handles colors)
   home.file.".tmux.conf".source = ./dotfiles/tmux/.tmux.conf;
   xdg.configFile."tmux/tmux-music.conf".source = ./dotfiles/tmux/tmux-music.conf;
-  xdg.configFile."tmux/wallust-colors.conf".source = ./dotfiles/tmux/wallust-colors.conf;
 
   # ═══════════════════════════════════════════════════════════════════
   # GTK Theming (Stylix handles theme/cursor/fonts, we add icons)
