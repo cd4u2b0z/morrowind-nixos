@@ -515,7 +515,6 @@
       "x-scheme-handler/unknown" = "firefox.desktop";
     };
   };
-}
 
   # ════════════════════════════════════════════════════════════════════════════
   # Librewolf Browser
