@@ -4,7 +4,7 @@
 # Primary: OpenWeatherMap API, Fallback: wttr.in
 
 CACHE_FILE="/tmp/waybar_weather"
-API_KEY="69def8ba31d3be7da6226b6d51b2b655"
+API_KEY="3a19848b2e7af1ba7370321f10c73169"
 CITY_ID="4597040"  # Summerville, SC
 ZIP_CODE="29465"
 MAX_CACHE_AGE=900  # 15 minutes (more frequent updates with API)
