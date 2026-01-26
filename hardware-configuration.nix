@@ -56,6 +56,9 @@
       
       # Reduce kernel log verbosity for known harmless warnings
       "loglevel=4"                  # Show warnings but reduce ACPI spam at boot
+      
+      # Plymouth display - use main laptop screen only (not ScreenPad)
+      "video=eDP-1:1920x1080@60"    # Primary display for boot splash
     ];
     
     # Bootloader - UEFI with systemd-boot
