@@ -5,6 +5,7 @@ format = """
 [](#5e81ac)\
 $os\
 $username\
+$hostname\
 [](bg:#81a1c1 fg:#5e81ac)\
 $directory\
 [](fg:#81a1c1 bg:#88c0d0)\
@@ -55,7 +56,14 @@ Macos = " "
 show_always = true
 style_user = "bg:#5e81ac fg:#eceff4"
 style_root = "bg:#bf616a fg:#eceff4"
-format = '[$user ]($style)'
+format = '[$user]($style)'
+disabled = false
+
+# Hostname - shows after username as user@hostname
+[hostname]
+ssh_only = false
+style = "bg:#5e81ac fg:#eceff4"
+format = '[@$hostname ]($style)'
 disabled = false
 
 # Directory
@@ -147,6 +155,7 @@ symbol = " "
 style = "bg:#8fbcbb fg:#2e3440"
 format = '[ $symbol ($version) ]($style)'
 
+# Nix shell indicator
 [nix_shell]
 symbol = "󱄅 "
 style = "bg:#8fbcbb fg:#2e3440"
@@ -163,9 +172,4 @@ format = '[ $symbol $context ]($style)'
 disabled = false
 time_format = "%R"
 style = "bg:#b48ead fg:#2e3440"
-format = '[ ♥ $time ]($style)'
-
-# Command duration
-[cmd_duration]
-min_time = 2_000
-format = "took [$duration](bold #ebcb8b) "
+format = '[ 󰥔 $time ]($style)'
