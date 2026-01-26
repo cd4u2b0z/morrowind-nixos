@@ -9,10 +9,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     
+    # Stylix - system-wide theming
+    stylix.url = "github:danth/stylix";
+    
     # Using Hyprland from nixpkgs (pre-built, no compilation needed)
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, stylix, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -32,6 +35,10 @@
         modules = [
           # Hardware configuration
           ./hardware-configuration.nix
+          
+          # Stylix theming (must come early)
+          stylix.nixosModules.stylix
+          ./modules/stylix.nix
           
           # Core system configuration
           ./modules/system.nix

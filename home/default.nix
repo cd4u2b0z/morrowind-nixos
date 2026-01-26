@@ -9,14 +9,7 @@
     homeDirectory = "/home/${username}";
     stateVersion = "24.05";
     
-    # Cursor theme (works in Wayland/Hyprland)
-    pointerCursor = {
-      name = "Nordzy-cursors-white";
-      package = pkgs.nordzy-cursor-theme;
-      size = 24;
-      gtk.enable = true;
-      x11.enable = true;
-    };
+    # Cursor theme now managed by Stylix (modules/stylix.nix)
   };
 
   # Let Home Manager manage itself
@@ -336,45 +329,26 @@
   xdg.configFile."tmux/wallust-colors.conf".source = ./dotfiles/tmux/wallust-colors.conf;
 
   # ═══════════════════════════════════════════════════════════════════
-  # GTK Theming
+  # GTK Theming (Stylix handles theme/cursor/fonts, we add icons)
   # ═══════════════════════════════════════════════════════════════════
   
   gtk = {
     enable = true;
     
-    theme = {
-      name = "adw-gtk3-dark";
-      package = pkgs.adw-gtk3;
-    };
-    
+    # Icons not handled by Stylix
     iconTheme = {
       name = "Papirus-Dark";
       package = pkgs.papirus-icon-theme;
-    };
-    
-    cursorTheme = {
-      name = "Nordzy-cursors-white";
-      package = pkgs.nordzy-cursor-theme;
-      size = 24;
-    };
-    
-    font = {
-      name = "Noto Sans";
-      size = 11;
     };
     
     gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;
     gtk4.extraConfig.gtk-application-prefer-dark-theme = 1;
   };
   
-  # Qt theming
+  # Qt theming - let it follow GTK (Stylix compatible)
   qt = {
     enable = true;
     platformTheme.name = "gtk";
-    style = {
-      name = "adwaita-dark";
-      package = pkgs.adwaita-qt;
-    };
   };
 
   # ═══════════════════════════════════════════════════════════════════
