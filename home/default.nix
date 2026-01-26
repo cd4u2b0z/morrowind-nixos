@@ -85,9 +85,6 @@
     
     # Extra settings (non-color)
     settings = {
-      # Font
-      font_family = "JetBrainsMono Nerd Font";
-      font_size = 11;
       
       # Cursor
       cursor_shape = "beam";
@@ -301,7 +298,6 @@
     # Stylix handles colors, we set layout/behavior
     settings = {
       main = {
-        font = "JetBrainsMono Nerd Font:size=12";
         dpi-aware = "auto";
         icon-theme = "Papirus-Dark";
         terminal = "kitty";
