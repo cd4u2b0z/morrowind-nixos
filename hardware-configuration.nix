@@ -58,7 +58,7 @@
       "loglevel=4"                  # Show warnings but reduce ACPI spam at boot
       
       # Plymouth display - use main laptop screen only (not ScreenPad)
-      "video=eDP-1:1920x1080@60"    # Primary display for boot splash
+      "video=DP-1:d"                    # Disable ScreenPad at boot for clean Plymouth
     ];
     
     # Bootloader - UEFI with systemd-boot
