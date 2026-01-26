@@ -83,11 +83,67 @@
       theme = "";  # Using Starship instead
     };
     
+    # Shell aliases
+    shellAliases = {
+      # File listing
+      ls = "ls --color=auto";
+      ll = "ls -alF";
+      la = "ls -A";
+      l = "ls -CF";
+      
+      # Better defaults
+      cat = "bat";
+      find = "fd";
+      grep = "rg";
+      top = "btop";
+      
+      # NixOS system management
+      rebuild = "sudo nixos-rebuild switch --flake /etc/nixos#mnemosyne";
+      update = "sudo nix flake update /etc/nixos && sudo nixos-rebuild switch --flake /etc/nixos#mnemosyne";
+      clean = "sudo nix-collect-garbage -d";
+      search = "nix search nixpkgs";
+      
+      # File operations (safe)
+      cp = "cp -i";
+      mv = "mv -i";
+      rm = "rm -i";
+      mkdir = "mkdir -pv";
+      
+      # Directory navigation
+      ".." = "cd ..";
+      "..." = "cd ../..";
+      "...." = "cd ../../..";
+      "....." = "cd ../../../..";
+      "~" = "cd ~";
+      
+      # Git shortcuts
+      g = "git";
+      ga = "git add";
+      gc = "git commit";
+      gp = "git push";
+      gl = "git pull";
+      gs = "git status";
+      gd = "git diff";
+      gco = "git checkout";
+      gb = "git branch";
+      glog = "git log --oneline --graph";
+      
+      # Media
+      music = "ncspot";
+      play = "playerctl play-pause";
+      next = "playerctl next";
+      prev = "playerctl previous";
+      stop = "playerctl stop";
+    };
+    
     initExtra = ''
-      # Source Chezmoi-managed zshrc if it exists
+      # Source local zshrc if it exists (for machine-specific config)
       if [ -f ~/.zshrc.local ]; then
         source ~/.zshrc.local
       fi
+      
+      # Add local bin to path
+      export PATH="$HOME/.local/bin:$PATH"
     '';
   };
   

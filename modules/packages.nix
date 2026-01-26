@@ -50,6 +50,17 @@
     unrar
     
     # ─────────────────────────────────────────────────────────────────
+    # Fonts - Nerd Fonts for terminal/waybar icons
+    # ─────────────────────────────────────────────────────────────────
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.fira-code
+    nerd-fonts.hack
+    nerd-fonts.symbols-only
+    noto-fonts
+    noto-fonts-emoji
+    font-awesome
+    
+    # ─────────────────────────────────────────────────────────────────
     # Development Tools
     # ─────────────────────────────────────────────────────────────────
     neovim
@@ -115,6 +126,7 @@
     wget
     curl
     rsync
+    jq  # JSON parsing for scripts
     
     # Disk utilities
     gparted
@@ -205,4 +217,15 @@
   # File manager support
   programs.xfconf.enable = true;
   services.tumbler.enable = true;  # Thumbnails for Thunar
+  
+  # Font configuration
+  fonts.fontconfig = {
+    enable = true;
+    defaultFonts = {
+      monospace = [ "JetBrainsMono Nerd Font" "Hack Nerd Font" ];
+      sansSerif = [ "Noto Sans" ];
+      serif = [ "Noto Serif" ];
+      emoji = [ "Noto Color Emoji" ];
+    };
+  };
 }

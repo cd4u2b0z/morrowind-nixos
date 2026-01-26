@@ -7,7 +7,7 @@
   "gtk-layer-shell": true,
   "margin": "6 8 0 8",
   "modules-left": [
-    "niri/workspaces",
+    "hyprland/workspaces",
     "custom/app-tray",
     "custom/music",
     "custom/cava"
@@ -24,14 +24,14 @@
     "battery",
     "pulseaudio"
   ],
-  "niri/workspaces": {
+  "hyprland/workspaces": {
     "format": "{icon}",
     "format-icons": {
       "active": "●",
       "default": "○"
     }
   },
-  "niri/window": {
+  "hyprland/window": {
     "format": "{}",
     "max-length": 50,
     "separate-outputs": true
