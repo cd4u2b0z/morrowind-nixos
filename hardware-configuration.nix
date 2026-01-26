@@ -46,7 +46,7 @@
       "i915.fastboot=1"             # Skip unnecessary mode switches
       
       # ASUS laptop ACPI compatibility
-      "acpi_osi=Linux"              # Tell ACPI we're Linux (helps with some quirks)
+      "acpi_osi=Linux"              # Tell ACPI we are Linux (helps with some quirks)
       "acpi_backlight=native"       # Use native backlight control
       
       # Suppress harmless ASUS firmware bug warnings
@@ -54,11 +54,14 @@
       "clocksource=tsc"             # Use TSC as clocksource
       "acpi_enforce_resources=lax"  # Reduce ACPI resource conflict warnings
       
-      # Reduce kernel log verbosity for known harmless warnings
-      "loglevel=3" "quiet"                  # Show warnings but reduce ACPI spam at boot
-      
-      # Plymouth display - use main laptop screen only (not ScreenPad)
-      "fbcon=map:0"                    # Force console to primary display only
+      # Clean boot - no console output, single display
+      "quiet"
+      "loglevel=0"                  # Suppress all kernel messages
+      "rd.systemd.show_status=false"  # Hide systemd status during initrd
+      "rd.udev.log_level=0"         # Suppress udev messages
+      "vt.global_cursor_default=0"  # Hide cursor on boot
+      "fbcon=map:0"                 # Force console to primary display only
+      "video=DP-1:d"                # Disable ScreenPad (DP-1) at kernel level
     ];
     
     # Bootloader - UEFI with systemd-boot
@@ -74,6 +77,7 @@
     
     # Enable Plymouth for beautiful boot splash
     plymouth.enable = false;  # Disabled - causes issues with dual displays
+    consoleLogLevel = 0;  # Suppress all boot console messages
   };
 
   # ═══════════════════════════════════════════════════════════════════
