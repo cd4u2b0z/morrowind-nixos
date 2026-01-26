@@ -74,7 +74,6 @@
     # ─────────────────────────────────────────────────────────────────
     # Browsers
     # ─────────────────────────────────────────────────────────────────
-    librewolf
     brave
     firefox        # Wayland enabled via MOZ_ENABLE_WAYLAND=1 in hyprland.nix
     

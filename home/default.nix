@@ -511,3 +511,58 @@
     };
   };
 }
+
+  # ════════════════════════════════════════════════════════════════════════════
+  # Librewolf Browser
+  # ════════════════════════════════════════════════════════════════════════════
+  
+  programs.librewolf = {
+    enable = true;
+    
+    # Policies (system-wide settings)
+    policies = {
+      DisableTelemetry = true;
+      DisableFirefoxStudies = true;
+      DisablePocket = true;
+      DisableFirefoxAccounts = false;  # Allow sync if you want
+      DisableSetDesktopBackground = true;
+      
+      # Hardware acceleration
+      HardwareAcceleration = true;
+      
+      # Extensions to install (use extension IDs from addons.mozilla.org)
+      ExtensionSettings = {
+        # uBlock Origin
+        "uBlock0@raymondhill.net" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
+          installation_mode = "force_installed";
+        };
+        # Bitwarden
+        "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi";
+          installation_mode = "force_installed";
+        };
+        # Dark Reader
+        "addon@darkreader.org" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi";
+          installation_mode = "force_installed";
+        };
+      };
+    };
+    
+    # Profile settings
+    settings = {
+      # Hardware video acceleration (VA-API)
+      "media.ffmpeg.vaapi.enabled" = true;
+      "media.hardware-video-decoding.enabled" = true;
+      "media.hardware-video-decoding.force-enabled" = true;
+      
+      # Wayland native
+      "widget.use-xdg-desktop-portal.file-picker" = 1;
+      "widget.use-xdg-desktop-portal.mime-handler" = 1;
+      
+      # Smooth scrolling
+      "general.smoothScroll" = true;
+    };
+  };
+}

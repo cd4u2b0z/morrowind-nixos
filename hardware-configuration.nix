@@ -43,7 +43,8 @@
     kernelParams = [
       "i915.enable_fbc=1"           # Framebuffer compression (saves power)
       "i915.enable_psr=1"           # Panel Self Refresh (saves power on eDP)
-      "i915.fastboot=1"             # Skip unnecessary mode switches
+      "i915.fastboot=1"
+      "i915.modeset=1"             # Early KMS for clean boot             # Skip unnecessary mode switches
       
       # ASUS laptop ACPI compatibility
       "acpi_osi=Linux"              # Tell ACPI we are Linux (helps with some quirks)
@@ -55,7 +56,7 @@
       "acpi_enforce_resources=lax"  # Reduce ACPI resource conflict warnings
       
       # Clean boot - no console output, single display
-      "quiet"
+      "quiet" "splash"
       "loglevel=0"                  # Suppress all kernel messages
       "rd.systemd.show_status=false"  # Hide systemd status during initrd
       "rd.udev.log_level=0"         # Suppress udev messages
