@@ -2,7 +2,7 @@
 # Wallpaper manager - slideshow control and status
 # Usage: wallpaper-manager [next|prev|status]
 
-WALLPAPER_DIR="${HOME}/Pictures/Wallpaper"
+WALLPAPER_DIR="${HOME}/Pictures/Wallpapers"
 STATE_FILE="${HOME}/.cache/wallpaper-state"
 
 # Get list of wallpapers
@@ -38,14 +38,23 @@ apply_wallpaper() {
     
     local wallpaper="${wallpapers[$index]}"
     
-    # Apply with hyprpaper
-    hyprctl hyprpaper unload all 2>/dev/null
-    hyprctl hyprpaper preload "$wallpaper" 2>/dev/null
-    hyprctl hyprpaper wallpaper ",$wallpaper" 2>/dev/null
+    # Apply with swww (animated transitions)
+    if command -v swww &>/dev/null; then
+        swww img "$wallpaper" --transition-type grow --transition-duration 2 --transition-pos center
+    else
+        # Fallback to hyprpaper
+        hyprctl hyprpaper unload all 2>/dev/null
+        hyprctl hyprpaper preload "$wallpaper" 2>/dev/null
+        hyprctl hyprpaper wallpaper ",$wallpaper" 2>/dev/null
+    fi
     
     # Apply wallust colors if available
     if command -v wallust &>/dev/null; then
         wallust run "$wallpaper" 2>/dev/null
+        # Restart waybar to pick up new colors
+        pkill waybar 2>/dev/null
+        sleep 0.3
+        waybar &
     fi
     
     # Save state

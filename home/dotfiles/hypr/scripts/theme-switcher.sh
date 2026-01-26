@@ -30,7 +30,7 @@ fi
 # �📂 CONFIGURATION
 # ═══════════════════════════════════════════════════════════════════
 
-readonly WALLPAPER_DIR="$HOME/Pictures/Wallpaper"
+readonly WALLPAPER_DIR="$HOME/Pictures/Wallpapers"
 readonly THEME_DIR="$HOME/.config/themes"
 readonly CONFIG_DIR="$HOME/.config/theme-switcher"
 readonly CURRENT_THEME_FILE="$CONFIG_DIR/current-theme"

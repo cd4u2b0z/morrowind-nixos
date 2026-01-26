@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Quick wallpaper picker using fuzzel
-# Selects a wallpaper from ~/Pictures/Wallpaper and applies it with wallust
+# Selects a wallpaper from ~/Pictures/Wallpapers and applies it with wallust
 
-WALLPAPER_DIR="${HOME}/Pictures/Wallpaper"
+WALLPAPER_DIR="${HOME}/Pictures/Wallpapers"
 
 # Check if wallpaper directory exists
 if [[ ! -d "$WALLPAPER_DIR" ]]; then
@@ -19,14 +19,23 @@ fi
 
 WALLPAPER_PATH="${WALLPAPER_DIR}/${SELECTED}"
 
-# Apply wallpaper with hyprpaper
-hyprctl hyprpaper unload all 2>/dev/null
-hyprctl hyprpaper preload "$WALLPAPER_PATH" 2>/dev/null
-hyprctl hyprpaper wallpaper ",$WALLPAPER_PATH" 2>/dev/null
+# Apply wallpaper with swww (animated transitions)
+if command -v swww &>/dev/null; then
+    swww img "$WALLPAPER_PATH" --transition-type grow --transition-duration 2 --transition-pos center
+else
+    # Fallback to hyprpaper
+    hyprctl hyprpaper unload all 2>/dev/null
+    hyprctl hyprpaper preload "$WALLPAPER_PATH" 2>/dev/null
+    hyprctl hyprpaper wallpaper ",$WALLPAPER_PATH" 2>/dev/null
+fi
 
 # If wallust is available, generate colorscheme from wallpaper
 if command -v wallust &>/dev/null; then
     wallust run "$WALLPAPER_PATH" 2>/dev/null
+    # Restart waybar to pick up new colors
+    pkill waybar 2>/dev/null
+    sleep 0.3
+    waybar &
     notify-send "Wallpaper" "Applied: $SELECTED (with wallust colors)"
 else
     notify-send "Wallpaper" "Applied: $SELECTED"

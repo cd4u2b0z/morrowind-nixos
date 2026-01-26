@@ -160,6 +160,7 @@
     
     # Wallpaper tools
     wallust        # Better pywal - available in nixpkgs!
+    swww           # Animated wallpaper daemon for Wayland
     
     # ─────────────────────────────────────────────────────────────────
     # Office & Productivity

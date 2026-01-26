@@ -8,6 +8,15 @@
     username = username;
     homeDirectory = "/home/${username}";
     stateVersion = "24.05";
+    
+    # Cursor theme (works in Wayland/Hyprland)
+    pointerCursor = {
+      name = "Nordzy-cursors-white";
+      package = pkgs.nordzy-cursor-theme;
+      size = 24;
+      gtk.enable = true;
+      x11.enable = true;
+    };
   };
 
   # Let Home Manager manage itself
@@ -57,6 +66,10 @@
   xdg.configFile."waybar/config".source = ./dotfiles/waybar/config;
   xdg.configFile."waybar/style.css".source = ./dotfiles/waybar/style.css;
   xdg.configFile."waybar/wallust-colors.css".source = ./dotfiles/waybar/wallust-colors.css;
+  xdg.configFile."waybar/launch.sh" = {
+    source = ./dotfiles/waybar/launch.sh;
+    executable = true;
+  };
   xdg.configFile."waybar/scripts" = {
     source = ./dotfiles/waybar/scripts;
     recursive = true;
@@ -216,7 +229,7 @@
     };
     
     cursorTheme = {
-      name = "Nordzy-cursors";
+      name = "Nordzy-cursors-white";
       package = pkgs.nordzy-cursor-theme;
       size = 24;
     };
