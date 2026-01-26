@@ -58,7 +58,7 @@
       "loglevel=3" "quiet"                  # Show warnings but reduce ACPI spam at boot
       
       # Plymouth display - use main laptop screen only (not ScreenPad)
-      "video=DP-1:d" "video=DP-2:d" "video=DP-3:d"  # Disable all secondary displays at boot
+      "fbcon=map:0"                    # Force console to primary display only
     ];
     
     # Bootloader - UEFI with systemd-boot
