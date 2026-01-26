@@ -1,12 +1,22 @@
 #!/usr/bin/env bash
 # Wallpaper manager - slideshow control and status
 # Usage: wallpaper-manager [next|prev|status]
+# Works on both Arch (~/Pictures/Wallpapers) and NixOS (~/.config/wallpapers)
 
-WALLPAPER_DIR="${HOME}/Pictures/Wallpapers"
+# Find wallpaper directory (check both locations)
+if [[ -d "${HOME}/Pictures/Wallpapers" ]]; then
+    WALLPAPER_DIR="${HOME}/Pictures/Wallpapers"
+elif [[ -d "${HOME}/.config/wallpapers" ]]; then
+    WALLPAPER_DIR="${HOME}/.config/wallpapers"
+else
+    notify-send "Wallpaper" "No wallpaper directory found"
+    exit 1
+fi
+
 STATE_FILE="${HOME}/.cache/wallpaper-state"
 HYPRLOCK_CONF="${HOME}/.config/hypr/hyprlock.conf"
 
-# Get list of wallpapers
+# Get list of wallpapers (follow symlinks with -L)
 get_wallpapers() {
     find -L "$WALLPAPER_DIR" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.webp" \) | sort
 }
@@ -20,10 +30,10 @@ get_current_index() {
     fi
 }
 
-# Sync hyprlock background
+# Sync hyprlock background (only if writable)
 sync_hyprlock() {
     local wallpaper_path="$1"
-    if [[ -f "$HYPRLOCK_CONF" ]]; then
+    if [[ -f "$HYPRLOCK_CONF" && -w "$HYPRLOCK_CONF" ]]; then
         sed -i "/^background {/,/^}/ s|^\([[:space:]]*path = \).*|\1${wallpaper_path}|" "$HYPRLOCK_CONF"
     fi
 }
@@ -60,25 +70,16 @@ apply_wallpaper() {
     # Sync hyprlock background
     sync_hyprlock "$wallpaper"
     
-    # Apply wallust colors if available
-    if command -v wallust &>/dev/null; then
-        wallust run "$wallpaper" 2>/dev/null
-        # Restart waybar to pick up new colors
-        pkill waybar 2>/dev/null
-        sleep 0.3
-        waybar &
-        # Reload mako
-        makoctl reload 2>/dev/null || true
-    fi
-    
     # Save state
     echo "$index" > "$STATE_FILE"
     
-    notify-send "Wallpaper" "$(basename "$wallpaper") ($((index+1))/$count)"
+    # Show notification
+    local name=$(basename "$wallpaper")
+    notify-send "Wallpaper" "Applied: $name"
 }
 
 case "$1" in
-    next|slide)
+    next)
         current=$(get_current_index)
         apply_wallpaper $((current + 1))
         ;;
@@ -91,12 +92,14 @@ case "$1" in
         wallpapers=($(get_wallpapers))
         count=${#wallpapers[@]}
         if [[ $count -gt 0 ]]; then
-            notify-send "Wallpaper Status" "Current: $((current+1))/$count\n$(basename "${wallpapers[$current]}")"
+            name=$(basename "${wallpapers[$current]}")
+            echo "Wallpaper $((current + 1))/$count: $name"
         else
-            notify-send "Wallpaper Status" "No wallpapers found"
+            echo "No wallpapers found"
         fi
         ;;
     *)
         echo "Usage: wallpaper-manager [next|prev|status]"
+        exit 1
         ;;
 esac

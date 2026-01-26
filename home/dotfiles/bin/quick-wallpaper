@@ -1,16 +1,18 @@
 #!/usr/bin/env bash
 # Quick wallpaper picker using fuzzel
-# Selects a wallpaper from ~/Pictures/Wallpapers and applies it with wallust
-# Also syncs to hyprlock background
+# Works on both Arch (~/Pictures/Wallpapers) and NixOS (~/.config/wallpapers)
 
-WALLPAPER_DIR="${HOME}/Pictures/Wallpapers"
-HYPRLOCK_CONF="${HOME}/.config/hypr/hyprlock.conf"
-
-# Check if wallpaper directory exists
-if [[ ! -d "$WALLPAPER_DIR" ]]; then
-    notify-send "Wallpaper" "No wallpaper directory found at $WALLPAPER_DIR"
+# Find wallpaper directory (check both locations)
+if [[ -d "${HOME}/Pictures/Wallpapers" ]]; then
+    WALLPAPER_DIR="${HOME}/Pictures/Wallpapers"
+elif [[ -d "${HOME}/.config/wallpapers" ]]; then
+    WALLPAPER_DIR="${HOME}/.config/wallpapers"
+else
+    notify-send "Wallpaper" "No wallpaper directory found"
     exit 1
 fi
+
+HYPRLOCK_CONF="${HOME}/.config/hypr/hyprlock.conf"
 
 # List wallpapers and let user pick with fuzzel (follow symlinks with -L)
 SELECTED=$(find -L "$WALLPAPER_DIR" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.webp" \) -printf '%f\n' | sort | fuzzel --dmenu -p "Wallpaper: ")
@@ -31,25 +33,9 @@ else
     hyprctl hyprpaper wallpaper ",$WALLPAPER_PATH" 2>/dev/null
 fi
 
-# Sync hyprlock background to match wallpaper
-if [[ -f "$HYPRLOCK_CONF" ]]; then
-    # Update the path in the background section of hyprlock.conf
+# Sync hyprlock background to match wallpaper (only if writable)
+if [[ -f "$HYPRLOCK_CONF" && -w "$HYPRLOCK_CONF" ]]; then
     sed -i "/^background {/,/^}/ s|^\([[:space:]]*path = \).*|\1${WALLPAPER_PATH}|" "$HYPRLOCK_CONF"
 fi
 
-# If wallust is available, generate colorscheme from wallpaper
-if command -v wallust &>/dev/null; then
-    wallust run "$WALLPAPER_PATH" 2>/dev/null
-    
-    # Restart waybar to pick up new colors
-    pkill waybar 2>/dev/null
-    sleep 0.3
-    waybar &
-    
-    # Reload mako to pick up new colors
-    makoctl reload 2>/dev/null || true
-    
-    notify-send "Wallpaper" "Applied: $SELECTED (with wallust colors)"
-else
-    notify-send "Wallpaper" "Applied: $SELECTED"
-fi
+notify-send "Wallpaper" "Applied: $SELECTED"
