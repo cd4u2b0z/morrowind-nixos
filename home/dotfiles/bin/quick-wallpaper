@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# Quick wallpaper picker using fuzzel
+# Selects a wallpaper from ~/Pictures/Wallpapers and applies it with wallust
+
+WALLPAPER_DIR="${HOME}/Pictures/Wallpapers"
+
+# Check if wallpaper directory exists
+if [[ ! -d "$WALLPAPER_DIR" ]]; then
+    notify-send "Wallpaper" "No wallpaper directory found at $WALLPAPER_DIR"
+    exit 1
+fi
+
+# List wallpapers and let user pick with fuzzel
+SELECTED=$(find "$WALLPAPER_DIR" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.webp" \) -printf '%f\n' | sort | fuzzel --dmenu -p "Wallpaper: ")
+
+if [[ -z "$SELECTED" ]]; then
+    exit 0
+fi
+
+WALLPAPER_PATH="${WALLPAPER_DIR}/${SELECTED}"
+
+# Apply wallpaper with hyprpaper
+hyprctl hyprpaper unload all 2>/dev/null
+hyprctl hyprpaper preload "$WALLPAPER_PATH" 2>/dev/null
+hyprctl hyprpaper wallpaper ",$WALLPAPER_PATH" 2>/dev/null
+
+# If wallust is available, generate colorscheme from wallpaper
+if command -v wallust &>/dev/null; then
+    wallust run "$WALLPAPER_PATH" 2>/dev/null
+    notify-send "Wallpaper" "Applied: $SELECTED (with wallust colors)"
+else
+    notify-send "Wallpaper" "Applied: $SELECTED"
+fi

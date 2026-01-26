@@ -143,6 +143,14 @@
   services.dbus.enable = true;
 
   # ═══════════════════════════════════════════════════════════════════
+  # GNOME Keyring - for VSCode auth, SSH keys, secrets storage
+  # ═══════════════════════════════════════════════════════════════════
+  
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.sddm.enableGnomeKeyring = true;
+  security.pam.services.login.enableGnomeKeyring = true;
+  
+  # ═══════════════════════════════════════════════════════════════════
   # Bluetooth
   # ═══════════════════════════════════════════════════════════════════
   

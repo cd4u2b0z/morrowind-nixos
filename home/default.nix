@@ -31,7 +31,10 @@
   
   # Hyprpaper (wallpaper daemon)
   xdg.configFile."hypr/hyprpaper.conf".source = ./dotfiles/hypr/hyprpaper.conf;
-  
+
+  # Thunar performance config (sourced by hyprland.conf)
+  xdg.configFile."hypr/thunar-performance.conf".source = ./dotfiles/hypr/thunar-performance.conf;
+
   # Hypr scripts (wallpaper, screenshot, startup, etc.)
   xdg.configFile."hypr/scripts" = {
     source = ./dotfiles/hypr/scripts;
@@ -230,5 +233,28 @@
   home.file."Pictures/Wallpapers" = {
     source = ./dotfiles/wallpapers;
     recursive = true;
+  };
+
+  # ═══════════════════════════════════════════════════════════════════
+  # Local bin scripts (wallpaper, etc.)
+  # ═══════════════════════════════════════════════════════════════════
+  
+  home.file.".local/bin/quick-wallpaper" = {
+    source = ./dotfiles/bin/quick-wallpaper;
+    executable = true;
+  };
+  
+  home.file.".local/bin/wallpaper-manager" = {
+    source = ./dotfiles/bin/wallpaper-manager;
+    executable = true;
+  };
+
+  # ═══════════════════════════════════════════════════════════════════
+  # GNOME Keyring - Required for VSCode auth and secret storage
+  # ═══════════════════════════════════════════════════════════════════
+  
+  services.gnome-keyring = {
+    enable = true;
+    components = [ "secrets" "ssh" ];
   };
 }

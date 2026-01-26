@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+# Wallpaper manager - slideshow control and status
+# Usage: wallpaper-manager [next|prev|status]
+
+WALLPAPER_DIR="${HOME}/Pictures/Wallpapers"
+STATE_FILE="${HOME}/.cache/wallpaper-state"
+
+# Get list of wallpapers
+get_wallpapers() {
+    find "$WALLPAPER_DIR" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.webp" \) | sort
+}
+
+# Get current wallpaper index
+get_current_index() {
+    if [[ -f "$STATE_FILE" ]]; then
+        cat "$STATE_FILE"
+    else
+        echo 0
+    fi
+}
+
+# Apply wallpaper by index
+apply_wallpaper() {
+    local index=$1
+    local wallpapers=($(get_wallpapers))
+    local count=${#wallpapers[@]}
+    
+    if [[ $count -eq 0 ]]; then
+        notify-send "Wallpaper" "No wallpapers found in $WALLPAPER_DIR"
+        return 1
+    fi
+    
+    # Wrap around
+    index=$((index % count))
+    if [[ $index -lt 0 ]]; then
+        index=$((count + index))
+    fi
+    
+    local wallpaper="${wallpapers[$index]}"
+    
+    # Apply with hyprpaper
+    hyprctl hyprpaper unload all 2>/dev/null
+    hyprctl hyprpaper preload "$wallpaper" 2>/dev/null
+    hyprctl hyprpaper wallpaper ",$wallpaper" 2>/dev/null
+    
+    # Apply wallust colors if available
+    if command -v wallust &>/dev/null; then
+        wallust run "$wallpaper" 2>/dev/null
+    fi
+    
+    # Save state
+    echo "$index" > "$STATE_FILE"
+    
+    notify-send "Wallpaper" "$(basename "$wallpaper") ($((index+1))/$count)"
+}
+
+case "$1" in
+    next|slide)
+        current=$(get_current_index)
+        apply_wallpaper $((current + 1))
+        ;;
+    prev)
+        current=$(get_current_index)
+        apply_wallpaper $((current - 1))
+        ;;
+    status)
+        current=$(get_current_index)
+        wallpapers=($(get_wallpapers))
+        count=${#wallpapers[@]}
+        if [[ $count -gt 0 ]]; then
+            notify-send "Wallpaper Status" "Current: $((current+1))/$count\n$(basename "${wallpapers[$current]}")"
+        else
+            notify-send "Wallpaper Status" "No wallpapers found"
+        fi
+        ;;
+    *)
+        echo "Usage: wallpaper-manager [next|prev|status]"
+        ;;
+esac

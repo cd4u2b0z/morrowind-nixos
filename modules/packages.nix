@@ -38,6 +38,11 @@
     nnn
     thunar
     
+    # Keyring and secrets (for VSCode auth, etc.)
+    gnome-keyring
+    libsecret
+    seahorse  # GUI for managing keyring
+    
     # Archive tools
     unzip
     zip
