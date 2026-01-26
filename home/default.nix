@@ -547,6 +547,16 @@
           install_url = "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi";
           installation_mode = "force_installed";
         };
+        # Canvas Blocker
+        "CanvasBlocker@kkapsner.de" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/canvasblocker/latest.xpi";
+          installation_mode = "force_installed";
+        };
+        # Decentraleyes
+        "jid1-BoFifL9Vbdl2zQ@jetpack" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/decentraleyes/latest.xpi";
+          installation_mode = "force_installed";
+        };
       };
     };
     
