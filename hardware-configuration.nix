@@ -48,6 +48,14 @@
       # ASUS laptop ACPI compatibility
       "acpi_osi=Linux"              # Tell ACPI we're Linux (helps with some quirks)
       "acpi_backlight=native"       # Use native backlight control
+      
+      # Suppress harmless ASUS firmware bug warnings
+      "tsc=reliable"                # Trust TSC despite firmware bugs
+      "clocksource=tsc"             # Use TSC as clocksource
+      "acpi_enforce_resources=lax"  # Reduce ACPI resource conflict warnings
+      
+      # Reduce kernel log verbosity for known harmless warnings
+      "loglevel=4"                  # Show warnings but reduce ACPI spam at boot
     ];
     
     # Bootloader - UEFI with systemd-boot
