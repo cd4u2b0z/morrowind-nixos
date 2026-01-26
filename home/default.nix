@@ -235,6 +235,12 @@
   xdg.configFile."cava/config".source = ./dotfiles/cava/config;
 
   # ═══════════════════════════════════════════════════════════════════
+  # Fastfetch (System Info)
+  # ═══════════════════════════════════════════════════════════════════
+  
+  xdg.configFile."fastfetch/config.jsonc".source = ./dotfiles/fastfetch/config.jsonc;
+
+  # ═══════════════════════════════════════════════════════════════════
   # Fuzzel Launcher
   # ═══════════════════════════════════════════════════════════════════
   
