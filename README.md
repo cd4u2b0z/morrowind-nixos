@@ -461,144 +461,717 @@ chmod +x ~/test-system.sh
 
 ## 🔧 Troubleshooting Guide
 
-### Common Issues & Solutions
+This section provides comprehensive troubleshooting for NixOS on the ASUS Vivobook S15, organized in NixOS manual style.
 
-#### 1. Black Screen After Login
+### Table of Contents - Troubleshooting
+- [Boot Issues](#boot-issues)
+- [Display & Graphics](#display--graphics)
+- [Audio Problems](#audio-problems)
+- [Network & WiFi](#network--wifi)
+- [Bluetooth](#bluetooth)
+- [Power & Battery](#power--battery)
+- [Hyprland & Wayland](#hyprland--wayland)
+- [Package & Build Errors](#package--build-errors)
+- [Hardware-Specific Issues](#hardware-specific-asus-vivobook-s15)
+- [Emergency Recovery](#emergency-recovery)
 
+---
+
+### Boot Issues
+
+#### System Won't Boot After nixos-rebuild
+
+**Symptoms:** Black screen, kernel panic, or stuck at boot logo.
+
+**Solution 1: Boot Previous Generation**
 ```bash
-# Boot to TTY (Ctrl+Alt+F2)
-# Check Hyprland logs
-journalctl --user -u hyprland -b
-
-# Common fixes:
-# - GPU driver issue: check hardware-configuration.nix
-# - Missing config: verify ~/.config/hyprland/hyprland.conf exists
+# At systemd-boot menu, press 'd' for options
+# Select an older generation that worked
 ```
 
-#### 2. Waybar Not Showing
-
+**Solution 2: Rollback from Live USB**
 ```bash
-# Start manually to see errors
-waybar
+# Boot from NixOS USB installer
+sudo mount /dev/nvme0n1p2 /mnt
+sudo mount /dev/nvme0n1p1 /mnt/boot
 
-# Check for config errors
-cat ~/.config/waybar/config | jq .  # Should parse without errors
+# Enter the system
+sudo nixos-enter --root /mnt
 
-# Restart Waybar
-pkill waybar && waybar &
+# Rollback
+nixos-rebuild switch --rollback
+
+# Or rebuild with fixes
+cd /etc/nixos
+nano modules/hyprland.nix  # Fix the issue
+nixos-rebuild switch --flake .#mnemosyne
 ```
 
-#### 3. No Audio
+**Solution 3: Check for UUID Mismatch**
+```bash
+# From live USB, verify UUIDs match
+blkid
+cat /mnt/etc/nixos/hardware-configuration.nix | grep uuid
+
+# If UUIDs don't match, update hardware-configuration.nix
+```
+
+#### Stage 1 Error: Cannot Mount Root Filesystem
+
+**Cause:** Wrong partition UUIDs in `hardware-configuration.nix`
 
 ```bash
-# Check PipeWire
-systemctl --user status pipewire
-systemctl --user status pipewire-pulse
+# Get correct UUIDs
+lsblk -f
 
-# Restart audio
-systemctl --user restart pipewire pipewire-pulse
+# Your partitions should show:
+# nvme0n1p1  vfat  FAT32  A45D-FCFE           (boot)
+# nvme0n1p2  ext4  1.0    8d1e7ce0-5184-...   (root)
 
-# Check devices
+# Update /etc/nixos/hardware-configuration.nix with correct UUIDs
+```
+
+#### ACPI Errors During Boot
+
+**Symptoms:** Errors like `ACPI BIOS Error: AE_ALREADY_EXISTS`
+
+**This is normal for ASUS laptops.** These are firmware bugs that don't affect functionality. To reduce noise:
+
+```nix
+# In hardware-configuration.nix
+boot.kernelParams = [
+  "acpi_osi=Linux"
+  "acpi_backlight=native"
+  "loglevel=3"  # Reduce boot messages
+];
+```
+
+---
+
+### Display & Graphics
+
+#### Black Screen After Login (Intel UHD 620)
+
+**Diagnosis:**
+```bash
+# Switch to TTY
+Ctrl+Alt+F2
+
+# Login and check Hyprland
+journalctl --user -xe | grep -i hypr
+
+# Check if Intel driver is loaded
+lspci -k | grep -A 3 VGA
+```
+
+**Common Fixes:**
+
+```nix
+# In hardware-configuration.nix, ensure:
+hardware.graphics = {
+  enable = true;
+  extraPackages = with pkgs; [
+    intel-media-driver    # VAAPI for Intel Gen 8+
+    intel-vaapi-driver    # Fallback
+  ];
+};
+
+# Environment variable
+environment.variables = {
+  LIBVA_DRIVER_NAME = "iHD";  # Use newer Intel driver
+};
+```
+
+**Start Hyprland Manually:**
+```bash
+# From TTY
+export XDG_SESSION_TYPE=wayland
+export XDG_CURRENT_DESKTOP=Hyprland
+Hyprland
+```
+
+#### Screen Flickering
+
+```nix
+# Add to boot.kernelParams
+boot.kernelParams = [
+  "i915.enable_psr=0"  # Disable Panel Self Refresh
+];
+```
+
+#### External Monitor Not Detected
+
+```bash
+# List outputs
+hyprctl monitors
+
+# Force detection
+wlr-randr
+
+# Add monitor config to ~/.config/hypr/monitors.conf
+# Example:
+# monitor=HDMI-A-1,1920x1080@60,1920x0,1
+```
+
+#### Screen Brightness Keys Not Working
+
+```bash
+# Check current brightness
+cat /sys/class/backlight/intel_backlight/brightness
+
+# Test manual control
+brightnessctl set 50%
+
+# If permissions issue, ensure user is in video group
+groups $USER | grep video
+```
+
+```nix
+# Add to system.nix if needed
+users.users.craig.extraGroups = [ "video" ];
+```
+
+---
+
+### Audio Problems
+
+#### No Sound (PipeWire)
+
+**Diagnosis:**
+```bash
+# Check services
+systemctl --user status pipewire pipewire-pulse wireplumber
+
+# List audio devices
+wpctl status
 pactl list sinks short
+
+# Check if muted
+wpctl get-volume @DEFAULT_AUDIO_SINK@
 ```
 
-#### 4. WiFi Not Working
+**Fix: Restart PipeWire Stack**
+```bash
+systemctl --user restart pipewire pipewire-pulse wireplumber
+```
+
+**Fix: Ensure PipeWire is Enabled**
+```nix
+# In services.nix
+services.pipewire = {
+  enable = true;
+  alsa.enable = true;
+  alsa.support32Bit = true;
+  pulse.enable = true;
+};
+```
+
+#### Microphone Not Working
 
 ```bash
-# Check NetworkManager
-systemctl status NetworkManager
+# List sources (microphones)
+pactl list sources short
 
-# List networks
+# Check if muted
+wpctl get-volume @DEFAULT_AUDIO_SOURCE@
+
+# Unmute
+wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 0
+
+# GUI control
+pavucontrol
+```
+
+#### Audio Crackling/Popping
+
+```nix
+# Increase buffer size in pipewire config
+# Create ~/.config/pipewire/pipewire.conf.d/99-latency.conf
+{
+  "context.properties": {
+    "default.clock.rate": 48000,
+    "default.clock.quantum": 1024,
+    "default.clock.min-quantum": 512
+  }
+}
+```
+
+---
+
+### Network & WiFi
+
+#### WiFi Not Working (Intel Wireless)
+
+**Diagnosis:**
+```bash
+# Check if driver loaded
+lspci -k | grep -A 3 Network
+dmesg | grep -i iwl
+
+# Check interface
+ip link show
+nmcli device status
+```
+
+**Common Issues:**
+
+| Issue | Solution |
+|-------|----------|
+| No WiFi interface | `sudo modprobe iwlwifi` |
+| Soft blocked | `rfkill unblock wifi` |
+| Hard blocked | Check laptop Fn key for airplane mode |
+| Connection drops | Disable WiFi power saving (see below) |
+
+**Disable WiFi Power Saving (Fixes Drops):**
+```nix
+# Already in hardware-configuration.nix:
+boot.extraModprobeConfig = ''
+  options iwlwifi power_save=0
+  options iwlmvm power_scheme=1
+'';
+```
+
+#### WiFi Slow or Unstable
+
+```bash
+# Check link quality
+iwconfig wlp2s0
+
+# Switch to 5GHz if available
 nmcli device wifi list
-
-# Connect
-nmcli device wifi connect "SSID" password "PASSWORD"
+nmcli device wifi connect "YourNetwork-5G" password "pass"
 ```
 
-#### 5. Bluetooth Not Connecting
+#### Can't Connect to Hidden Network
 
 ```bash
-# Check Bluetooth service
+nmcli device wifi connect "HIDDEN_SSID" password "password" hidden yes
+```
+
+---
+
+### Bluetooth
+
+#### Bluetooth Not Available
+
+```bash
+# Check service
 systemctl status bluetooth
 
-# Start if not running
+# Start if stopped
 sudo systemctl start bluetooth
+sudo systemctl enable bluetooth
 
-# Use bluetoothctl to pair
+# Check if blocked
+rfkill list bluetooth
+rfkill unblock bluetooth
+```
+
+#### Device Won't Pair
+
+```bash
 bluetoothctl
 > power on
 > agent on
 > default-agent
 > scan on
-# Wait for your device to appear (e.g., [NEW] Device XX:XX:XX:XX:XX:XX Your Device)
+# Wait for device...
 > pair XX:XX:XX:XX:XX:XX
 > trust XX:XX:XX:XX:XX:XX
 > connect XX:XX:XX:XX:XX:XX
-> quit
-
-# For GUI management
-blueman-manager
 ```
 
-**Common Bluetooth Issues:**
-
-| Issue | Solution |
-|-------|----------|
-| Device not found | Ensure device is in pairing mode, run `scan on` |
-| Connection refused | Remove and re-pair: `remove XX:XX:XX:XX:XX:XX` then pair again |
-| Audio device no sound | Check PipeWire: `pactl list sinks short`, select Bluetooth sink |
-| Bluetooth disabled after reboot | Check BIOS settings, ensure `hardware.bluetooth.enable = true` |
-
-#### 6. Keybindings Not Working
-
+**If Pairing Fails:**
 ```bash
-# Verify Hyprland config syntax
-hyprland validate
-
-# Check if Hyprland is reading config
-hyprland msg outputs  # Should respond
-
-# Reload config
-hyprland msg action reload-config
+# Remove and re-pair
+bluetoothctl
+> remove XX:XX:XX:XX:XX:XX
+> scan on
+> pair XX:XX:XX:XX:XX:XX
 ```
 
-#### 7. Flake Build Errors
+#### Bluetooth Audio Stuttering
 
-```bash
-# Update flake lock
-nix flake update
+```nix
+# Ensure proper codec support in packages.nix
+environment.systemPackages = with pkgs; [
+  bluez
+  bluez-tools
+];
 
-# Check for syntax errors
-nix flake check
-
-# Build without switching (dry run)
-nixos-rebuild build --flake .#mnemosyne
-
-# View build logs
-nixos-rebuild switch --flake .#mnemosyne 2>&1 | tee /tmp/build.log
+# Enable experimental features in services.nix
+hardware.bluetooth.settings = {
+  General = {
+    Enable = "Source,Sink,Media,Socket";
+    Experimental = true;
+  };
+};
 ```
 
-#### 8. Missing Fonts/Icons
+---
+
+### Power & Battery
+
+#### Battery Draining Fast
+
+**Check Power Profile:**
+```bash
+# TLP status
+sudo tlp-stat -s
+
+# Power consumption
+powerstat -d 0 1 60
+```
+
+**Optimize Power:**
+```nix
+# In hardware-configuration.nix
+services.tlp = {
+  enable = true;
+  settings = {
+    CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+    CPU_BOOST_ON_BAT = 0;
+    INTEL_GPU_MAX_FREQ_ON_BAT = 600;
+    WIFI_PWR_ON_BAT = "on";
+  };
+};
+```
+
+#### Laptop Not Suspending Properly
 
 ```bash
+# Check suspend method
+cat /sys/power/mem_sleep
+
+# Test suspend
+systemctl suspend
+
+# Check wake reasons
+journalctl -b -1 | grep -i wake
+```
+
+**Fix: Use S3 Sleep (If Available)**
+```nix
+boot.kernelParams = [ "mem_sleep_default=deep" ];
+```
+
+#### Lid Close Not Suspending
+
+```nix
+# In services.nix
+services.logind = {
+  lidSwitch = "suspend";
+  lidSwitchDocked = "ignore";
+  lidSwitchExternalPower = "suspend";
+};
+```
+
+---
+
+### Hyprland & Wayland
+
+#### Hyprland Config Errors
+
+**Check for Syntax Errors:**
+```bash
+# Hyprland validates on startup
+Hyprland  # Watch for errors in output
+
+# Check logs
+cat ~/.local/share/hyprland/hyprland.log
+```
+
+**Common Error: source=globbing error**
+```bash
+# This means a sourced file doesn't exist
+# Check the file path in hyprland.conf
+source = ~/.config/hypr/monitors.conf  # Does this file exist?
+
+# Create missing files or remove the source line
+touch ~/.config/hypr/monitors.conf
+```
+
+#### Waybar Not Displaying Icons
+
+**Cause:** Missing Nerd Fonts
+
+```bash
+# Check if fonts installed
+fc-list | grep -i nerd
+
 # Rebuild font cache
 fc-cache -fv
-
-# Verify fonts installed
-fc-list | grep -i "JetBrains"
-fc-list | grep -i "Inter"
-
-# Check icon theme
-ls /run/current-system/sw/share/icons/
 ```
 
-### Debug Mode Boot
+```nix
+# Ensure fonts in packages.nix:
+nerd-fonts.jetbrains-mono
+nerd-fonts.symbols-only
+```
 
-If system won't boot:
+#### Waybar Modules Not Working
 
-1. At GRUB menu, select previous generation
-2. Or select "NixOS - Configuration X (recovery)"
-3. Once booted, fix configuration and rebuild
+```bash
+# Start waybar manually to see errors
+pkill waybar
+waybar
+
+# Check JSON syntax
+cat ~/.config/waybar/config | jq .
+
+# Common fix: reload waybar
+pkill -SIGUSR2 waybar
+```
+
+#### Applications Not Opening in Wayland
+
+```bash
+# Force Wayland for specific apps
+# Firefox
+MOZ_ENABLE_WAYLAND=1 firefox
+
+# Electron apps
+electron-app --ozone-platform=wayland
+```
+
+**For Brave/Chrome:**
+```bash
+# Create ~/.config/brave-flags.conf
+--enable-features=UseOzonePlatform
+--ozone-platform=wayland
+```
+
+#### Screen Sharing Not Working
+
+```bash
+# Check XDG portal
+systemctl --user status xdg-desktop-portal-hyprland
+
+# Restart portals
+systemctl --user restart xdg-desktop-portal xdg-desktop-portal-hyprland
+```
+
+---
+
+### Package & Build Errors
+
+#### "attribute not found" Error
+
+```bash
+# Package name changed - search for correct name
+nix search nixpkgs <package>
+
+# Common renames:
+# vaapiVdpau → libva-vdpau-driver
+# mpc-cli → mpc
+# qt5ct → libsForQt5.qt5ct
+```
+
+#### Build Runs Out of Memory (OOM)
+
+```bash
+# Add swap temporarily
+sudo dd if=/dev/zero of=/swapfile bs=1G count=4
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+
+# Or limit build jobs
+sudo nixos-rebuild switch --flake .#mnemosyne -j 2
+
+# Or use tmpdir on disk
+export TMPDIR=/tmp
+```
+
+#### "collision" Errors
+
+**Cause:** Same file from two packages
+
+```nix
+# In packages.nix, set priority:
+environment.systemPackages = with pkgs; [
+  (lib.hiPrio package1)  # This one wins
+  package2
+];
+```
+
+#### Evaluation Warnings (Deprecated Options)
+
+```bash
+# Example warning:
+# "programs.zsh.initExtra is deprecated, use programs.zsh.initContent"
+
+# Find and update the deprecated option in your config
+grep -r "initExtra" /etc/nixos/
+```
+
+---
+
+### Hardware-Specific: ASUS Vivobook S15
+
+#### Touchpad Not Working
+
+```nix
+# In hardware-configuration.nix
+services.xserver.libinput.enable = true;
+
+# For Wayland/Hyprland, add to hyprland.conf:
+input {
+    touchpad {
+        natural_scroll = true
+        tap-to-click = true
+        disable_while_typing = true
+    }
+}
+```
+
+#### Function Keys Not Working
+
+**Vivobook Fn keys require kernel support:**
+
+```bash
+# Check if asus-nb-wmi loaded
+lsmod | grep asus
+
+# Load if missing
+sudo modprobe asus-nb-wmi
+```
+
+```nix
+# Add to kernelModules if needed
+boot.kernelModules = [ "asus-nb-wmi" ];
+```
+
+#### Screen Backlight Controls
+
+```bash
+# Check backlight interface
+ls /sys/class/backlight/
+
+# Should show: intel_backlight
+
+# Test
+echo 500 | sudo tee /sys/class/backlight/intel_backlight/brightness
+```
+
+```nix
+# Ensure brightnessctl in packages
+environment.systemPackages = with pkgs; [ brightnessctl ];
+
+# User in video group
+users.users.craig.extraGroups = [ "video" ];
+```
+
+#### Overheating / Fan Noise
+
+```bash
+# Check temperatures
+sensors
+
+# Check if thermald running
+systemctl status thermald
+```
+
+```nix
+# Enable thermal management (already in hardware-configuration.nix)
+services.thermald.enable = true;
+
+# TLP settings for thermals
+services.tlp.settings = {
+  CPU_BOOST_ON_BAT = 0;  # Disable turbo on battery
+};
+```
+
+#### SD Card Reader Not Working
+
+```nix
+# Add to initrd modules in hardware-configuration.nix
+boot.initrd.availableKernelModules = [
+  "rtsx_pci_sdmmc"  # Realtek SD card reader
+];
+```
+
+---
+
+### Emergency Recovery
+
+#### Complete System Unbootable
+
+1. **Boot from NixOS USB installer**
+2. **Mount your system:**
+   ```bash
+   sudo mount /dev/nvme0n1p2 /mnt
+   sudo mount /dev/nvme0n1p1 /mnt/boot
+   ```
+3. **Enter the system:**
+   ```bash
+   sudo nixos-enter --root /mnt
+   ```
+4. **Fix the issue and rebuild:**
+   ```bash
+   cd /etc/nixos
+   # Edit files to fix issue
+   nixos-rebuild switch --flake .#mnemosyne
+   ```
+
+#### Factory Reset (Keep Data)
+
+```bash
+# This rebuilds but keeps /home
+sudo nixos-rebuild switch --flake /etc/nixos#mnemosyne --install-bootloader
+```
+
+#### Complete Reinstall
+
+1. Boot USB installer
+2. Mount and backup `/home` if needed
+3. Run graphical installer or manual install
+4. Clone your config:
+   ```bash
+   sudo git clone https://github.com/cd4u2b0z/NixOS-Asus-Vivobook /etc/nixos
+   sudo nixos-install --flake /etc/nixos#mnemosyne
+   ```
+
+---
+
+### Getting Help
+
+#### Useful Diagnostic Commands
+
+```bash
+# System info
+nixos-version
+uname -a
+lspci
+lsusb
+
+# Service status
+systemctl status
+systemctl --user status
+
+# Logs
+journalctl -xe                    # Recent errors
+journalctl -b                     # Current boot
+journalctl -b -1                  # Previous boot
+journalctl --user -u hyprland     # Hyprland logs
+
+# Hardware
+sensors                           # Temperatures
+free -h                           # Memory
+df -h                             # Disk space
+```
+
+#### Resources
+
+| Resource | URL |
+|----------|-----|
+| NixOS Manual | https://nixos.org/manual/nixos/stable/ |
+| NixOS Options Search | https://search.nixos.org/options |
+| NixOS Packages Search | https://search.nixos.org/packages |
+| Home Manager Manual | https://nix-community.github.io/home-manager/ |
+| Hyprland Wiki | https://wiki.hyprland.org/ |
+| NixOS Discourse | https://discourse.nixos.org/ |
+| NixOS Reddit | https://reddit.com/r/NixOS |
 
 ---
 
