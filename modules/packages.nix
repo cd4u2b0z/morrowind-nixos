@@ -171,6 +171,9 @@
     cmatrix
     pipes
     cbonsai         # May need to check nixpkgs
+    asciiquarium
+    lavat
+    sl
     
     # ─────────────────────────────────────────────────────────────────
     # Additional tools from your setup
