@@ -86,7 +86,7 @@
     # ─────────────────────────────────────────────────────────────────
     librewolf
     brave
-    firefox        # Wayland enabled via MOZ_ENABLE_WAYLAND=1 in niri.nix
+    firefox        # Wayland enabled via MOZ_ENABLE_WAYLAND=1 in hyprland.nix
     
     # ─────────────────────────────────────────────────────────────────
     # Media & Audio
@@ -96,7 +96,7 @@
     wireplumber
     pavucontrol
     playerctl
-    pamixer        # CLI audio control (used by Niri keybindings)
+    pamixer        # CLI audio control (used by Hyprland keybindings)
     cava           # Audio visualizer
     
     # Music players
@@ -141,7 +141,7 @@
     
     # USB utilities
     usbutils
-    udiskie    # Automount USB drives (used by niri startup)
+    udiskie    # Automount USB drives (used by Hyprland startup)
     
     # ─────────────────────────────────────────────────────────────────
     # Theming & Appearance

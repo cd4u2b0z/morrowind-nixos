@@ -85,10 +85,10 @@
   };
 
   # ═══════════════════════════════════════════════════════════════════
-  # Display Manager (greetd with tuigreet)
+  # Display Manager
   # ═══════════════════════════════════════════════════════════════════
   
-  # Already configured in niri.nix, but included here for reference
+  # SDDM is configured in hyprland.nix
 
   # ═══════════════════════════════════════════════════════════════════
   # SSH (optional)

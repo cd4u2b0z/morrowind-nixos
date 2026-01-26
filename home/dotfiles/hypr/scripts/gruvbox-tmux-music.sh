@@ -34,7 +34,7 @@ create_music_session() {
     if command -v spotify &> /dev/null; then
         tmux send-keys -t "$SESSION_NAME:Spotify" "spotify" Enter
     else
-        tmux send-keys -t "$SESSION_NAME:Spotify" "echo 'Spotify not installed. Install with: yay -S spotify'" Enter
+        tmux send-keys -t "$SESSION_NAME:Spotify" "echo 'Spotify not installed. Add spotify to packages.nix and rebuild.'" Enter
     fi
     
     # Window 3: ncspot (Terminal Spotify client)
@@ -42,7 +42,7 @@ create_music_session() {
     if command -v ncspot &> /dev/null; then
         tmux send-keys -t "$SESSION_NAME:ncspot" "ncspot" Enter
     else
-        tmux send-keys -t "$SESSION_NAME:ncspot" "echo 'Installing ncspot...'; yay -S ncspot && ncspot" Enter
+        tmux send-keys -t "$SESSION_NAME:ncspot" "echo 'ncspot not installed. Add ncspot to packages.nix and rebuild.'" Enter
     fi
     
     # Window 4: Audio Visualizer
@@ -57,7 +57,7 @@ create_music_session() {
     if command -v ncmpcpp &> /dev/null; then
         tmux send-keys -t "$SESSION_NAME:MPD.0" "ncmpcpp" Enter
     else
-        tmux send-keys -t "$SESSION_NAME:MPD.0" "echo 'Installing ncmpcpp...'; sudo pacman -S ncmpcpp && ncmpcpp" Enter
+        tmux send-keys -t "$SESSION_NAME:MPD.0" "echo 'ncmpcpp not installed. Add ncmpcpp to packages.nix and rebuild.'" Enter
     fi
     tmux send-keys -t "$SESSION_NAME:MPD.1" "watch -n 1 'echo \"🎵 MPD Status:\"; mpc status 2>/dev/null || echo \"MPD not running\"'" Enter
     

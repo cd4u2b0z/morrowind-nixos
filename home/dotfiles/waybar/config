@@ -150,13 +150,13 @@
     "signal": 8
   },
   "custom/updates": {
-    "exec": "~/.config/waybar/scripts/nixos-updates.sh",
+    "exec": "~/.config/waybar/scripts/nixos-updates-wrapper.sh",
     "return-type": "json",
     "interval": 3600,
-    "format": "{}",
+    "format": "󱄅 {}",
     "tooltip": true,
-    "on-click": "kitty -e sudo nixos-rebuild switch --flake /etc/nixos",
-    "on-click-right": "kitty -e nix flake update /etc/nixos",
+    "on-click": "kitty -e ~/.config/waybar/scripts/nixos-update-manager.sh",
+    "on-click-right": "kitty -e sudo nixos-rebuild switch --flake /etc/nixos#mnemosyne",
     "signal": 8
   },
   "custom/cava": {
