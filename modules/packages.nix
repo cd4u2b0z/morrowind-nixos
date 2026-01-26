@@ -174,6 +174,9 @@
     asciiquarium
     lavat
     sl
+    fortune
+    cowsay
+    lolcat
     
     # ─────────────────────────────────────────────────────────────────
     # Additional tools from your setup
