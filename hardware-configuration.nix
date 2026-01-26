@@ -61,7 +61,7 @@
       "rd.udev.log_level=0"         # Suppress udev messages
       "vt.global_cursor_default=0"  # Hide cursor on boot
       "fbcon=map:0"                 # Force console to primary display only
-      "video=DP-1:d"                # Disable ScreenPad (DP-1) at kernel level
+      "video=DSI-1:d"                # Disable ScreenPad (DSI-1) at kernel level
     ];
     
     # Bootloader - UEFI with systemd-boot

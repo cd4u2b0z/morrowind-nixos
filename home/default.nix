@@ -9,7 +9,14 @@
     homeDirectory = "/home/${username}";
     stateVersion = "24.05";
     
-    # Cursor theme now managed by Stylix (modules/stylix.nix)
+    # Cursor theme - set explicitly for all environments
+    pointerCursor = {
+      name = "Bibata-Modern-Ice";
+      package = pkgs.bibata-cursors;
+      size = 24;
+      gtk.enable = true;
+      x11.enable = true;
+    };
   };
 
   # Let Home Manager manage itself
