@@ -99,9 +99,6 @@
       # Notifications
       mako.enable = true;
       
-      # Launcher  
-      fuzzel.enable = true;
-      
       # Bar
       waybar.enable = true;
       
