@@ -9,9 +9,13 @@
   # ═══════════════════════════════════════════════════════════════════
   
   networking = {
+    # Point to Crabhole (which forwards to Cloudflare)
+    nameservers = [ "127.0.0.1" ];
+    
     networkmanager = {
       enable = true;
       wifi.powersave = false;  # Prevents WiFi disconnects
+      dns = "none";  # Don't let NetworkManager override DNS
     };
     
     # Firewall
@@ -33,6 +37,28 @@
   # ═══════════════════════════════════════════════════════════════════
   # Audio (PipeWire)
   # ═══════════════════════════════════════════════════════════════════
+  
+  # systemd-resolved for DNS management
+  services.resolved = {
+    enable = true;
+    fallbackDns = [ "8.8.8.8" "8.8.4.4" ];  # Google fallback
+    llmnr = "true";  # Local hostname resolution
+    dnssec = "false";  # Disabled for compatibility
+    dnsovertls = "true";  # Encrypt DNS queries from ISP
+  };
+  
+  # Crabhole - DNS-level ad/tracker blocking
+  services.crabhole = {
+    enable = true;
+    settings = {
+      upstream = [ "1.1.1.1:53" "1.0.0.1:53" ];  # Cloudflare
+      bind = "127.0.0.1:5353";  # Local DNS sinkhole
+      blocklists = [
+        "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"  # Ads + malware
+        "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/hosts/pro.txt"  # Hagezi Pro
+      ];
+    };
+  };
   
   # Disable PulseAudio (using PipeWire instead)
   services.pulseaudio.enable = false;
