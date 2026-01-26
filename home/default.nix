@@ -62,9 +62,14 @@
   
   programs.waybar = {
     enable = true;
-    # Load config from JSON file, Stylix generates style.css
+    # Load config from JSON, we provide custom style.css with Nord colors
     settings = [ (builtins.fromJSON (builtins.readFile ./dotfiles/waybar/config)) ];
+    # Don't let Stylix generate style - we use our custom one
+    style = builtins.readFile ./dotfiles/waybar/style.css;
   };
+  
+  # Waybar Nord colors (our custom color file)
+  xdg.configFile."waybar/nord-colors.css".source = ./dotfiles/waybar/nord-colors.css;
   
   # Waybar scripts (custom modules like weather, system-stats)
   xdg.configFile."waybar/scripts" = {

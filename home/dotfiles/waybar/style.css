@@ -1,6 +1,6 @@
 /* DYNAMIC THEME - Wallust Powered */
 /* Colors imported from wallust-colors.css */
-@import "wallust-colors.css";
+@import "nord-colors.css";
 
 /* Shield animations */
 @keyframes pulse-pending {

@@ -55,10 +55,10 @@
       "acpi_enforce_resources=lax"  # Reduce ACPI resource conflict warnings
       
       # Reduce kernel log verbosity for known harmless warnings
-      "loglevel=4"                  # Show warnings but reduce ACPI spam at boot
+      "loglevel=3" "quiet"                  # Show warnings but reduce ACPI spam at boot
       
       # Plymouth display - use main laptop screen only (not ScreenPad)
-      "video=DP-1:d"                    # Disable ScreenPad at boot for clean Plymouth
+      "video=DP-1:d" "video=DP-2:d" "video=DP-3:d"  # Disable all secondary displays at boot
     ];
     
     # Bootloader - UEFI with systemd-boot
@@ -73,7 +73,7 @@
     };
     
     # Enable Plymouth for beautiful boot splash
-    plymouth.enable = true;
+    plymouth.enable = false;  # Disabled - causes issues with dual displays
   };
 
   # ═══════════════════════════════════════════════════════════════════
