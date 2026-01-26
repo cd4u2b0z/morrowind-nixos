@@ -426,11 +426,16 @@
   # Browser Configuration (Wayland-native)
   # ═══════════════════════════════════════════════════════════════════
   
-  xdg.configFile."brave-flags.conf".text = ''
-    --enable-features=UseOzonePlatform
-    --ozone-platform=wayland
-    --enable-wayland-ime
-  '';
+  # Brave browser with Wayland flags (via desktop entry override)
+  xdg.desktopEntries.brave-browser = {
+    name = "Brave";
+    genericName = "Web Browser";
+    exec = "brave --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime %U";
+    icon = "brave";
+    terminal = false;
+    categories = [ "Network" "WebBrowser" ];
+    mimeType = [ "text/html" "text/xml" "application/xhtml+xml" ];
+  };
   
   xdg.configFile."chromium-flags.conf".text = ''
     --enable-features=UseOzonePlatform
