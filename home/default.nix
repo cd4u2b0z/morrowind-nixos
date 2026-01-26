@@ -9,14 +9,8 @@
     homeDirectory = "/home/${username}";
     stateVersion = "24.05";
     
-    # Cursor theme - set explicitly for all environments
-    pointerCursor = {
-      name = "Bibata-Modern-Ice";
-      package = pkgs.bibata-cursors;
-      size = 24;
-      gtk.enable = true;
-      x11.enable = true;
-    };
+    # Cursor theme managed by Stylix (modules/stylix.nix)
+    # Additional cursor env vars in hyprland.conf for HYPRCURSOR support
   };
 
   # Let Home Manager manage itself
