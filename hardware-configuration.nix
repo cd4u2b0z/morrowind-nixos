@@ -61,8 +61,10 @@
       "rd.systemd.show_status=false"  # Hide systemd status during initrd
       "rd.udev.log_level=0"         # Suppress udev messages
       "vt.global_cursor_default=0"  # Hide cursor on boot
-      "fbcon=map:0"                 # Force console to primary display only
-      "video=DSI-1:d"                # Disable ScreenPad (DSI-1) at kernel level
+      "fbcon=map:1"                 # Bind TTY to first framebuffer only
+      "video=eDP-1:1920x1080@60"   # Force main laptop panel mode
+      "video=HDMI-A-1:d"            # Disable ScreenPad output 1
+      "video=HDMI-A-2:d"            # Disable ScreenPad output 2
     ];
     
     # Bootloader - UEFI with systemd-boot
