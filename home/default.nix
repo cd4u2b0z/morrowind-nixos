@@ -33,7 +33,10 @@
   xdg.configFile."hypr/wallust-colors.conf".source = ./dotfiles/hypr/wallust-colors.conf;
   
   # Hyprlock (screen locker)
-  xdg.configFile."hypr/hyprlock.conf".source = ./dotfiles/hypr/hyprlock.conf;
+  xdg.configFile."hypr/hyprlock.conf" = {
+    source = ./dotfiles/hypr/hyprlock.conf;
+    force = true;
+  };
   
   # Hypridle (idle manager)
   xdg.configFile."hypr/hypridle.conf".source = ./dotfiles/hypr/hypridle.conf;
@@ -176,7 +179,7 @@
       memory = "free -h";
     };
     
-    initExtra = ''
+    initContent = ''
       # Source local zshrc if it exists (for machine-specific config)
       if [ -f ~/.zshrc.local ]; then
         source ~/.zshrc.local
@@ -263,10 +266,10 @@
   
   programs.git = {
     enable = true;
-    userName = "craig";  # Change to your name
-    userEmail = "your-email@example.com";  # Change to your email
     
-    extraConfig = {
+    settings = {
+      user.name = "craig";  # Change to your name
+      user.email = "your-email@example.com";  # Change to your email
       init.defaultBranch = "main";
       pull.rebase = false;
       core.editor = "nvim";
