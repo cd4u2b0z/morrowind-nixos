@@ -73,7 +73,8 @@
       "keyColor": "blue"
     },
     {
-      "type": "theme",
+      "type": "command",
+      "text": "cat $HOME/.config/theme-switcher/current-theme 2>/dev/null || echo 'Nord'",
       "key": "├ 󰉼 Theme",
       "keyColor": "bright_magenta"
     },
