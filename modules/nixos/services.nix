@@ -143,4 +143,14 @@
       };
     };
   };
+
+  # ═══════════════════════════════════════════════════════════════════
+  # GNOME Keyring - for browser passwords, VSCode auth, SSH keys
+  # ═══════════════════════════════════════════════════════════════════
+  
+  services.gnome.gnome-keyring.enable = true;
+  
+  # Auto-unlock keyring at login (for TTY + Hyprland workflow)
+  security.pam.services.login.enableGnomeKeyring = true;
+  security.pam.services.greetd.enableGnomeKeyring = true;
 }
