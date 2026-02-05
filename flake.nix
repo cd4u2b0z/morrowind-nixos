@@ -1,9 +1,24 @@
+# NixOS Configuration - Dendritic Structure
+#
+# Entry point for the entire configuration.
+# This should stay minimal - complexity lives in modules/profiles.
+#
+# Rebuild:  sudo nixos-rebuild switch --flake .#mnemosyne
+# Test:     sudo nixos-rebuild test --flake .#mnemosyne
+# Update:   nix flake update && sudo nixos-rebuild switch --flake .#mnemosyne
+
 {
   description = "NixOS configuration for ASUS Vivobook S15 with Hyprland";
 
+  # ═══════════════════════════════════════════════════════════════════
+  # Inputs
+  # ═══════════════════════════════════════════════════════════════════
+  
   inputs = {
+    # Core
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     
+    # Home Manager
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -11,63 +26,47 @@
     
     # Stylix - system-wide theming
     stylix.url = "github:danth/stylix";
-    
-    # Using Hyprland from nixpkgs (pre-built, no compilation needed)
   };
 
+  # ═══════════════════════════════════════════════════════════════════
+  # Outputs
+  # ═══════════════════════════════════════════════════════════════════
+  
   outputs = { self, nixpkgs, home-manager, stylix, ... }@inputs:
     let
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      # Import helper library
+      myLib = import ./lib { inherit inputs; };
       
-      # Your username from Ansible config
+      # Common variables
       username = "craig";
-      hostname = "mnemosyne";
       
     in {
-      nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
-        inherit system;
-        
-        specialArgs = { 
-          inherit inputs username;
+      # ─────────────────────────────────────────────────────────────────
+      # NixOS Configurations
+      # ─────────────────────────────────────────────────────────────────
+      
+      nixosConfigurations = {
+        # Primary laptop
+        mnemosyne = myLib.mkHost {
+          hostname = "mnemosyne";
+          inherit username;
         };
         
-        modules = [
-          # Hardware configuration
-          ./hardware-configuration.nix
-          
-          # Stylix theming (must come early)
-          stylix.nixosModules.stylix
-          ./modules/stylix.nix
-          
-          # Core system configuration
-          ./modules/system.nix
-          
-          # Hyprland compositor
-          ./modules/hyprland.nix
-          
-          # Services
-          ./modules/services.nix
-          
-          # Packages
-          ./modules/packages.nix
-          
-          # Home Manager integration
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              backupFileExtension = "backup";
-              
-              users.${username} = import ./home;
-              
-              extraSpecialArgs = { 
-                inherit inputs username;
-              };
-            };
-          }
-        ];
+        # Add more machines here:
+        # server = myLib.mkHost { hostname = "server"; inherit username; };
       };
+
+      # ─────────────────────────────────────────────────────────────────
+      # Dev shell for working on this config
+      # ─────────────────────────────────────────────────────────────────
+      
+      devShells = myLib.forAllSystems (pkgs: {
+        default = pkgs.mkShell {
+          packages = with pkgs; [
+            nil           # Nix LSP
+            nixpkgs-fmt   # Formatter
+          ];
+        };
+      });
     };
 }
