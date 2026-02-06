@@ -8,6 +8,23 @@
 
 {
   # ═══════════════════════════════════════════════════════════════════
+  # Wayland Environment Variables for Browsers
+  # ═══════════════════════════════════════════════════════════════════
+  
+  home.sessionVariables = {
+    # Firefox/Librewolf Wayland
+    MOZ_ENABLE_WAYLAND = "1";
+    MOZ_USE_XINPUT2 = "1";
+    
+    # General Wayland for GTK/Qt apps
+    GDK_BACKEND = "wayland,x11";
+    QT_QPA_PLATFORM = "wayland;xcb";
+    
+    # Chromium/Electron Wayland
+    NIXOS_OZONE_WL = "1";
+  };
+
+  # ═══════════════════════════════════════════════════════════════════
   # Librewolf Browser
   # ═══════════════════════════════════════════════════════════════════
   
@@ -96,10 +113,21 @@
     --enable-wayland-ime
   '';
   
+  xdg.configFile."brave-flags.conf".text = ''
+    --enable-features=UseOzonePlatform
+    --ozone-platform=wayland
+    --enable-wayland-ime
+  '';
+  
   xdg.configFile."electron-flags.conf".text = ''
     --enable-features=UseOzonePlatform
     --ozone-platform=wayland
     --enable-wayland-ime
+  '';
+  
+  xdg.configFile."electron13-flags.conf".text = ''
+    --enable-features=UseOzonePlatform
+    --ozone-platform=wayland
   '';
 
   # ═══════════════════════════════════════════════════════════════════
