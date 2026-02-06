@@ -27,8 +27,18 @@
   "hyprland/workspaces": {
     "format": "{icon}",
     "format-icons": {
-      "active": "●",
-      "default": "○"
+      "1": "󰮯",
+      "2": "󱍊",
+      "3": "󰈙",
+      "4": "",
+      "5": "󰂵",
+      "6": "󰖛",
+      "7": "",
+      "8": "󰈸",
+      "9": "󰊠",
+      "10": "󰠱",
+      "active": "",
+      "default": ""
     }
   },
   "hyprland/window": {
@@ -67,11 +77,11 @@
       "weeks-pos": "left",
       "on-scroll": 1,
       "format": {
-        "months": "<span color='#EBDBB2' size='large' weight='bold'>{}</span>",
-        "days": "<span color='#EBDBB2'>{:>2}</span>",
-        "weeks": "<span color='#928374'>W{} </span>",
-        "weekdays": "<span color='#458588' weight='bold'>{:>2}</span>",
-        "today": "<span background='#98971A' color='#282828' weight='bold'> {:>2} </span>"
+        "months": "<span color='#D4C4A8' size='large' weight='bold'>{}</span>",
+        "days": "<span color='#D4C4A8'>{:>2}</span>",
+        "weeks": "<span color='#6B5D4F'>W{} </span>",
+        "weekdays": "<span color='#C47D3B' weight='bold'>{:>2}</span>",
+        "today": "<span background='#D4A843' color='#1C1410' weight='bold'> {:>2} </span>"
       }
     },
     "actions": {

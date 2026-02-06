@@ -4,10 +4,12 @@
 # Change theme by editing base16Scheme below and running:
 #   sudo nixos-rebuild switch --flake .#mnemosyne
 #
-# Popular themes:
-#   nord, gruvbox-dark-hard, gruvbox-dark-medium, catppuccin-mocha,
-#   catppuccin-macchiato, dracula, tokyo-night-dark, rose-pine,
-#   everforest, solarized-dark, one-dark
+# Current Theme: TES III: Morrowind
+#   Volcanic ashlands, Dwemer gold, Telvanni arcana, parchment scrolls.
+#
+# Alternative themes (from base16-schemes):
+#   nord, gruvbox-dark-hard, catppuccin-mocha, dracula, tokyo-night-dark,
+#   rose-pine, everforest, solarized-dark, one-dark
 
 { pkgs, ... }:
 
@@ -16,13 +18,15 @@
     enable = true;
     
     # ═══════════════════════════════════════════════════════════════════
-    # 🎨 THEME - Change this to switch your entire system theme!
+    # 🎨 THEME — TES III: Morrowind
+    # Ashlands, Dwemer gold, Telvanni teal, Daedric crimson
     # ═══════════════════════════════════════════════════════════════════
     
-    # Use a base16 scheme (see: https://github.com/tinted-theming/schemes)
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
+    # Custom Morrowind base16 scheme (lives in repo)
+    base16Scheme = ../themes/morrowind.yaml;
     
-    # Alternative themes (uncomment one to use):
+    # Alternative built-in themes (uncomment to switch):
+    # base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";

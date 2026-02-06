@@ -1,28 +1,28 @@
--- Wallust-generated Neovim colors
+-- Wallust-generated Neovim colors — Morrowind
 -- This file is auto-generated - do not edit manually
 
 local M = {}
 
 M.colors = {
-  background = "#2D353B",
-  foreground = "#D3C6AA",
-  cursor = "#D3C6AA",
-  color0 = "#343F44",
-  color1 = "#E67E80",
-  color2 = "#A7C080",
-  color3 = "#DBBC7F",
-  color4 = "#7FBBB3",
-  color5 = "#D699B6",
-  color6 = "#83C092",
-  color7 = "#D3C6AA",
-  color8 = "#5C6A72",
-  color9 = "#F85552",
-  color10 = "#8DA101",
-  color11 = "#DFA000",
-  color12 = "#3A94C5",
-  color13 = "#DF69BA",
-  color14 = "#35A77C",
-  color15 = "#DFDDC8",
+  background = "#1C1410",
+  foreground = "#D4C4A8",
+  cursor = "#D4A843",
+  color0 = "#2A211A",
+  color1 = "#A63D2F",
+  color2 = "#6A8F4D",
+  color3 = "#D4A843",
+  color4 = "#4E7BA8",
+  color5 = "#8B5E8B",
+  color6 = "#5B9E8F",
+  color7 = "#D4C4A8",
+  color8 = "#6B5D4F",
+  color9 = "#C47D3B",
+  color10 = "#7A9F55",
+  color11 = "#E0B84A",
+  color12 = "#5B8DBF",
+  color13 = "#9E6F9E",
+  color14 = "#6BB5A5",
+  color15 = "#F0E6D0",
 }
 
 return M

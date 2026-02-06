@@ -1,0 +1,31 @@
+# TES III: Morrowind - Base16 Color Scheme
+# Inspired by the ashlands, Dwemer ruins, and Telvanni towers
+# of Vvardenfell, province of Morrowind
+#
+# For use with Stylix / base16
+scheme: "Morrowind"
+author: "craig (nixos-asus-vivobook)"
+
+# ═══════════════════════════════════════════════════════════════════
+# Base shades (dark → light)
+# ═══════════════════════════════════════════════════════════════════
+base00: "1C1410"  # Deep volcanic dark (background)
+base01: "2A211A"  # Ashland stone (lighter background)
+base02: "3D3228"  # Volcanic rock (selection background)
+base03: "6B5D4F"  # Ash dust (comments, invisibles)
+base04: "8E7C6A"  # Weathered scroll (dark foreground)
+base05: "D4C4A8"  # Parchment (default foreground)
+base06: "E8DBC4"  # Light scroll (light foreground)
+base07: "F0E6D0"  # Bright parchment (lightest foreground)
+
+# ═══════════════════════════════════════════════════════════════════
+# Accent colors
+# ═══════════════════════════════════════════════════════════════════
+base08: "A63D2F"  # Daedric crimson (red - variables, errors)
+base09: "C47D3B"  # Silt strider amber (orange - integers, constants)
+base0A: "D4A843"  # Dwemer gold (yellow - classes, search)
+base0B: "6A8F4D"  # Bitter Coast (green - strings, success)
+base0C: "5B9E8F"  # Telvanni teal (cyan - support, regex)
+base0D: "4E7BA8"  # Azura's blue (blue - functions, headings)
+base0E: "8B5E8B"  # Soul gem violet (purple - keywords, tags)
+base0F: "7A4535"  # Red Mountain (brown - deprecated, embedded)

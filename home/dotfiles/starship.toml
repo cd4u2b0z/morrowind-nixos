@@ -1,17 +1,22 @@
-# Starship prompt configuration
-# Nord-themed to match desktop environment
+# ╔═══════════════════════════════════════════════════════════════════╗
+# ║  Starship Prompt — TES III: Morrowind                           ║
+# ║  "The ending of the words is ALMSIVI."                          ║
+# ║                                                                 ║
+# ║  Gradient: Red Mountain → Daedric → Dwemer → Telvanni →        ║
+# ║            Bitter Coast → Soul Gem                              ║
+# ╚═══════════════════════════════════════════════════════════════════╝
 
 format = """
-[](#5e81ac)\
+[](#7A4535)\
 $os\
 $username\
 $hostname\
-[](bg:#81a1c1 fg:#5e81ac)\
+[](bg:#A63D2F fg:#7A4535)\
 $directory\
-[](fg:#81a1c1 bg:#88c0d0)\
+[](fg:#A63D2F bg:#D4A843)\
 $git_branch\
 $git_status\
-[](fg:#88c0d0 bg:#8fbcbb)\
+[](fg:#D4A843 bg:#5B9E8F)\
 $c\
 $elixir\
 $elm\
@@ -25,21 +30,47 @@ $nim\
 $rust\
 $scala\
 $python\
+$lua\
+$ruby\
+$php\
+$perl\
+$kotlin\
+$swift\
+$zig\
+$dart\
+$ocaml\
+$terraform\
+$aws\
 $nix_shell\
-[](fg:#8fbcbb bg:#a3be8c)\
+[](fg:#5B9E8F bg:#6A8F4D)\
 $docker_context\
-[](fg:#a3be8c bg:#b48ead)\
+$container\
+$kubernetes\
+[](fg:#6A8F4D bg:#8B5E8B)\
+$cmd_duration\
 $time\
-[ ](fg:#b48ead)\
+[ ](fg:#8B5E8B)\
+$line_break\
+$character\
 """
 
-# Disable the blank line at the start of the prompt
-add_newline = false
+# Blank line between prompts for readability
+add_newline = true
 
-# OS icon
+# ─── Character (input line arrow) ──────────────────────────────────
+# Morrowind-style: Dwemer arrow when ok, Daedric flame on error
+[character]
+success_symbol = "[❯❯](bold #D4A843)"
+error_symbol = "[✦✦](bold #A63D2F)"
+vimcmd_symbol = "[❮❮](bold #5B9E8F)"
+vimcmd_replace_one_symbol = "[❮](bold #C47D3B)"
+vimcmd_replace_symbol = "[❮❮](bold #C47D3B)"
+vimcmd_visual_symbol = "[❮❮](bold #8B5E8B)"
+
+# ─── OS — Red Mountain bedrock ─────────────────────────────────────
 [os]
 disabled = false
-style = "bg:#5e81ac fg:#eceff4"
+style = "bg:#7A4535 fg:#F0E6D0"
 
 [os.symbols]
 NixOS = "󱄅 "
@@ -51,125 +82,240 @@ Linux = " "
 Windows = " "
 Macos = " "
 
-# Username
+# ─── Username — your Nerevarine identity ───────────────────────────
 [username]
 show_always = true
-style_user = "bg:#5e81ac fg:#eceff4"
-style_root = "bg:#bf616a fg:#eceff4"
-format = '[$user]($style)'
+style_user = "bg:#7A4535 fg:#F0E6D0"
+style_root = "bg:#A63D2F fg:#F0E6D0 bold"
+format = '[ $user]($style)'
 disabled = false
 
-# Hostname - shows after username as user@hostname
+# ─── Hostname — which hold you garrison ────────────────────────────
 [hostname]
 ssh_only = false
-style = "bg:#5e81ac fg:#eceff4"
+ssh_symbol = "󰣀 "
+style = "bg:#7A4535 fg:#F0E6D0"
 format = '[@$hostname ]($style)'
 disabled = false
 
-# Directory
+# ─── Directory — navigating the ashlands ───────────────────────────
 [directory]
-style = "bg:#81a1c1 fg:#2e3440"
-format = "[ $path ]($style)"
+style = "bg:#A63D2F fg:#F0E6D0"
+format = "[ $path ]($style)[$read_only]($read_only_style)"
 truncation_length = 3
 truncation_symbol = "…/"
+read_only = " 󰌾"
+read_only_style = "bg:#A63D2F fg:#C47D3B"
+home_symbol = "󰜥 "
+use_os_path_sep = false
 
 [directory.substitutions]
 "Documents" = "󰈙 "
-"Downloads" = " "
-"Music" = " "
-"Pictures" = " "
+"Downloads" = "󰇚 "
+"Music" = "󰝚 "
+"Pictures" = "󰋩 "
+"Videos" = "󰿎 "
 "Projects" = "󰲋 "
+"projects" = "󰲋 "
+".config" = "󰒓 "
+"Desktop" = "󰍹 "
+"nixos-asus-vivobook" = "󱄅 "
 
-# Git
+# ─── Git — the Elder Scrolls of your code ─────────────────────────
 [git_branch]
-symbol = ""
-style = "bg:#88c0d0 fg:#2e3440"
-format = '[ $symbol $branch ]($style)'
+symbol = "󰊢 "
+style = "bg:#D4A843 fg:#1C1410"
+format = '[ $symbol$branch(:$remote_branch) ]($style)'
+truncation_length = 24
+truncation_symbol = "…"
 
 [git_status]
-style = "bg:#88c0d0 fg:#2e3440"
+style = "bg:#D4A843 fg:#1C1410"
 format = '[$all_status$ahead_behind ]($style)'
+conflicted = "⚔ ${count} "
+ahead = "⇡${count} "
+behind = "⇣${count} "
+diverged = "⇕⇡${ahead_count}⇣${behind_count} "
+untracked = "?${count} "
+stashed = "󰏗 ${count} "
+modified = "!${count} "
+staged = "+${count} "
+renamed = "»${count} "
+deleted = "✘${count} "
+up_to_date = ""
 
-# Programming languages
+# ═══════════════════════════════════════════════════════════════════
+# Enchantments — Language & Tool Detection
+# Each language gets a thematic Nerd Font glyph
+# ═══════════════════════════════════════════════════════════════════
+
 [c]
 symbol = " "
-style = "bg:#8fbcbb fg:#2e3440"
-format = '[ $symbol ($version) ]($style)'
+style = "bg:#5B9E8F fg:#1C1410"
+format = '[ $symbol$version ]($style)'
+detect_extensions = ["c", "h", "cpp", "hpp", "cc", "cxx"]
 
 [elixir]
 symbol = " "
-style = "bg:#8fbcbb fg:#2e3440"
-format = '[ $symbol ($version) ]($style)'
+style = "bg:#5B9E8F fg:#1C1410"
+format = '[ $symbol$version ]($style)'
 
 [elm]
 symbol = " "
-style = "bg:#8fbcbb fg:#2e3440"
-format = '[ $symbol ($version) ]($style)'
+style = "bg:#5B9E8F fg:#1C1410"
+format = '[ $symbol$version ]($style)'
 
 [golang]
-symbol = " "
-style = "bg:#8fbcbb fg:#2e3440"
-format = '[ $symbol ($version) ]($style)'
+symbol = "󰟓 "
+style = "bg:#5B9E8F fg:#1C1410"
+format = '[ $symbol$version ]($style)'
 
 [gradle]
-style = "bg:#8fbcbb fg:#2e3440"
-format = '[ $symbol ($version) ]($style)'
+symbol = " "
+style = "bg:#5B9E8F fg:#1C1410"
+format = '[ $symbol$version ]($style)'
 
 [haskell]
-symbol = " "
-style = "bg:#8fbcbb fg:#2e3440"
-format = '[ $symbol ($version) ]($style)'
+symbol = "󰲒 "
+style = "bg:#5B9E8F fg:#1C1410"
+format = '[ $symbol$version ]($style)'
 
 [java]
-symbol = " "
-style = "bg:#8fbcbb fg:#2e3440"
-format = '[ $symbol ($version) ]($style)'
+symbol = "󰬷 "
+style = "bg:#5B9E8F fg:#1C1410"
+format = '[ $symbol$version ]($style)'
 
 [julia]
 symbol = " "
-style = "bg:#8fbcbb fg:#2e3440"
-format = '[ $symbol ($version) ]($style)'
+style = "bg:#5B9E8F fg:#1C1410"
+format = '[ $symbol$version ]($style)'
 
 [nodejs]
-symbol = ""
-style = "bg:#8fbcbb fg:#2e3440"
-format = '[ $symbol ($version) ]($style)'
+symbol = "󰎙 "
+style = "bg:#5B9E8F fg:#1C1410"
+format = '[ $symbol$version ]($style)'
+detect_extensions = ["js", "mjs", "cjs", "ts", "mts", "cts"]
 
 [nim]
 symbol = "󰆥 "
-style = "bg:#8fbcbb fg:#2e3440"
-format = '[ $symbol ($version) ]($style)'
+style = "bg:#5B9E8F fg:#1C1410"
+format = '[ $symbol$version ]($style)'
 
 [rust]
-symbol = ""
-style = "bg:#8fbcbb fg:#2e3440"
-format = '[ $symbol ($version) ]($style)'
+symbol = "󱘗 "
+style = "bg:#5B9E8F fg:#1C1410"
+format = '[ $symbol$version ]($style)'
 
 [scala]
 symbol = " "
-style = "bg:#8fbcbb fg:#2e3440"
-format = '[ $symbol ($version) ]($style)'
+style = "bg:#5B9E8F fg:#1C1410"
+format = '[ $symbol$version ]($style)'
 
 [python]
-symbol = " "
-style = "bg:#8fbcbb fg:#2e3440"
-format = '[ $symbol ($version) ]($style)'
+symbol = "󰌠 "
+style = "bg:#5B9E8F fg:#1C1410"
+format = '[ $symbol$version( \($virtualenv\)) ]($style)'
+detect_extensions = ["py", "pyi"]
 
-# Nix shell indicator
+[lua]
+symbol = "󰢱 "
+style = "bg:#5B9E8F fg:#1C1410"
+format = '[ $symbol$version ]($style)'
+
+[ruby]
+symbol = "󰴭 "
+style = "bg:#5B9E8F fg:#1C1410"
+format = '[ $symbol$version ]($style)'
+
+[php]
+symbol = "󰌟 "
+style = "bg:#5B9E8F fg:#1C1410"
+format = '[ $symbol$version ]($style)'
+
+[perl]
+symbol = " "
+style = "bg:#5B9E8F fg:#1C1410"
+format = '[ $symbol$version ]($style)'
+
+[kotlin]
+symbol = "󱈙 "
+style = "bg:#5B9E8F fg:#1C1410"
+format = '[ $symbol$version ]($style)'
+
+[swift]
+symbol = "󰛥 "
+style = "bg:#5B9E8F fg:#1C1410"
+format = '[ $symbol$version ]($style)'
+
+[zig]
+symbol = " "
+style = "bg:#5B9E8F fg:#1C1410"
+format = '[ $symbol$version ]($style)'
+
+[dart]
+symbol = " "
+style = "bg:#5B9E8F fg:#1C1410"
+format = '[ $symbol$version ]($style)'
+
+[ocaml]
+symbol = " "
+style = "bg:#5B9E8F fg:#1C1410"
+format = '[ $symbol$version ]($style)'
+
+[terraform]
+symbol = "󱁢 "
+style = "bg:#5B9E8F fg:#1C1410"
+format = '[ $symbol$version ]($style)'
+
+[aws]
+symbol = "󰸏 "
+style = "bg:#5B9E8F fg:#1C1410"
+format = '[ $symbol($profile )(\($region\) ) ]($style)'
+
+# ─── Nix shell — the Telvanni way ─────────────────────────────────
 [nix_shell]
 symbol = "󱄅 "
-style = "bg:#8fbcbb fg:#2e3440"
-format = '[ $symbol $state( \($name\)) ]($style)'
+style = "bg:#5B9E8F fg:#1C1410"
+format = '[ $symbol$state( \($name\)) ]($style)'
+impure_msg = '[impure](bg:#5B9E8F fg:#A63D2F bold)'
+pure_msg = '[pure](bg:#5B9E8F fg:#6A8F4D bold)'
 
-# Docker
+# ═══════════════════════════════════════════════════════════════════
+# Infrastructure — Bitter Coast marshland
+# ═══════════════════════════════════════════════════════════════════
+
 [docker_context]
-symbol = " "
-style = "bg:#a3be8c fg:#2e3440"
-format = '[ $symbol $context ]($style)'
+symbol = "󰡨 "
+style = "bg:#6A8F4D fg:#1C1410"
+format = '[ $symbol$context ]($style)'
 
-# Time
+[container]
+symbol = "󰏖 "
+style = "bg:#6A8F4D fg:#1C1410"
+format = '[ $symbol$name ]($style)'
+
+[kubernetes]
+symbol = "󱃾 "
+style = "bg:#6A8F4D fg:#1C1410"
+format = '[ $symbol$context( \($namespace\)) ]($style)'
+disabled = true
+
+# ═══════════════════════════════════════════════════════════════════
+# Soul Gem — rightmost segment
+# ═══════════════════════════════════════════════════════════════════
+
+# Command duration — how long your spell took to cast
+[cmd_duration]
+min_time = 2_000
+style = "bg:#8B5E8B fg:#F0E6D0"
+format = '[ 󱎫 $duration ]($style)'
+show_milliseconds = false
+min_time_to_notify = 30_000
+show_notifications = false
+
+# Time — observed by the Tribunal
 [time]
 disabled = false
 time_format = "%R"
-style = "bg:#b48ead fg:#2e3440"
+style = "bg:#8B5E8B fg:#F0E6D0"
 format = '[ 󰥔 $time ]($style)'

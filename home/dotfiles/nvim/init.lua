@@ -1,5 +1,5 @@
 -- Neovim Configuration
--- Migrated from Linux Mint to Arch with Nord theme
+-- Morrowind theme — Under sun and sky, Outlander
 
 -- Set leader key early
 vim.g.mapleader = " "
@@ -33,7 +33,7 @@ require("lazy").setup({
     lazy = false,
     version = false, -- always use the latest git commit
   },
-  install = { colorscheme = { "nord" } },
+  install = { colorscheme = { "base16" } },
   checker = { enabled = true }, -- automatically check for plugin updates
   performance = {
     rtp = {
