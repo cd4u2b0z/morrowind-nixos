@@ -14,6 +14,25 @@
   programs.librewolf = {
     enable = true;
     
+    # Profile for Stylix theming
+    profiles.default = {
+      id = 0;
+      isDefault = true;
+      settings = {
+        # Hardware video acceleration (VA-API)
+        "media.ffmpeg.vaapi.enabled" = true;
+        "media.hardware-video-decoding.enabled" = true;
+        "media.hardware-video-decoding.force-enabled" = true;
+        
+        # Wayland native
+        "widget.use-xdg-desktop-portal.file-picker" = 1;
+        "widget.use-xdg-desktop-portal.mime-handler" = 1;
+        
+        # Smooth scrolling
+        "general.smoothScroll" = true;
+      };
+    };
+    
     # Policies (system-wide settings)
     policies = {
       DisableTelemetry = true;
@@ -53,21 +72,6 @@
           installation_mode = "force_installed";
         };
       };
-    };
-    
-    # Profile settings
-    settings = {
-      # Hardware video acceleration (VA-API)
-      "media.ffmpeg.vaapi.enabled" = true;
-      "media.hardware-video-decoding.enabled" = true;
-      "media.hardware-video-decoding.force-enabled" = true;
-      
-      # Wayland native
-      "widget.use-xdg-desktop-portal.file-picker" = 1;
-      "widget.use-xdg-desktop-portal.mime-handler" = 1;
-      
-      # Smooth scrolling
-      "general.smoothScroll" = true;
     };
   };
 
