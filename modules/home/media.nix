@@ -18,6 +18,7 @@
   # ═══════════════════════════════════════════════════════════════════
   
   xdg.configFile."fastfetch/config.jsonc".source = ../../home/dotfiles/fastfetch/config.jsonc;
+  xdg.configFile."fastfetch/logo.png".source = ../../home/dotfiles/fastfetch/logo.png;
 
   # ═══════════════════════════════════════════════════════════════════
   # MPV Video Player
