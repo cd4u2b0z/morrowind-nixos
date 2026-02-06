@@ -36,8 +36,8 @@
       id = 0;
       isDefault = true;
       
-      # Extensions via NUR or nixpkgs
-      extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
+      # Extensions via NUR
+      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
         ublock-origin
         darkreader
         bitwarden
