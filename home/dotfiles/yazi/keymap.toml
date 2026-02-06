@@ -1,0 +1,39 @@
+# ╔══════════════════════════════════════════════════════════════════╗
+# ║  TES III: MORROWIND — Yazi Keymap                               ║
+# ║  "Speak quickly, Outlander, or go away."                        ║
+# ╚══════════════════════════════════════════════════════════════════╝
+
+# Default keymap — inherits yazi defaults, with useful additions
+
+[manager]
+prepend_keymap = [
+  # Quick shell
+  { on = ["!"], run = "shell --interactive", desc = "Open shell" },
+  # Toggle hidden files
+  { on = ["."], run = "hidden toggle", desc = "Toggle hidden files" },
+  # Open in Thunar
+  { on = ["T"], run = '''shell 'thunar "$@"' --orphan''', desc = "Open in Thunar" },
+  # Create file/dir
+  { on = ["a"], run = "create", desc = "Create file/dir" },
+  # Bulk rename
+  { on = ["b", "r"], run = "bulk_rename", desc = "Bulk rename" },
+  # Copy path
+  { on = ["y", "p"], run = "copy path", desc = "Copy file path" },
+  { on = ["y", "d"], run = "copy dirname", desc = "Copy dir path" },
+  { on = ["y", "n"], run = "copy filename", desc = "Copy filename" },
+]
+
+[tasks]
+prepend_keymap = []
+
+[select]
+prepend_keymap = []
+
+[input]
+prepend_keymap = []
+
+[completion]
+prepend_keymap = []
+
+[help]
+prepend_keymap = []

@@ -113,6 +113,9 @@
       wp = "~/.local/bin/wallpaper-manager";
       theme = "~/.config/hypr/scripts/theme-switcher.sh";
       
+      # Yazi file manager
+      y = "yazi";
+      
       # System info
       neofetch = "fastfetch";
       disk = "df -h";
@@ -127,6 +130,17 @@
       
       # Add local bin to path
       export PATH="$HOME/.local/bin:$PATH"
+      
+      # ── Yazi cd-on-quit wrapper ────────────────────────────────────
+      # Opens yazi; on quit, cd to the directory yazi was last in
+      function yy() {
+        local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+        yazi "$@" --cwd-file="$tmp"
+        if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+          builtin cd -- "$cwd"
+        fi
+        rm -f -- "$tmp"
+      }
       
       # ── Eza Morrowind Color Theme ──────────────────────────────────
       # Colors use 256-color ANSI codes mapped to the Morrowind palette:

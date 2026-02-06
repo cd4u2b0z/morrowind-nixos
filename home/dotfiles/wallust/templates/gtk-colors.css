@@ -1,34 +1,44 @@
-/* Wallust-generated GTK colors for adw-gtk3 */
-/* These @define-color variables control the entire theme */
+/* ╔══════════════════════════════════════════════════════════════════╗
+   ║  Wallust-generated GTK colors for adw-gtk3                      ║
+   ║  Dynamic wallpaper-based theming · Thunar enhanced              ║
+   ╚══════════════════════════════════════════════════════════════════╝ */
 
-@define-color accent_color {{color4}};
-@define-color accent_bg_color {{color4}};
-@define-color accent_fg_color {{foreground}};
+/* Core accents */
+@define-color accent_color {{color3}};
+@define-color accent_bg_color {{color3}};
+@define-color accent_fg_color {{background}};
 
+/* Window chrome */
 @define-color window_bg_color {{background}};
 @define-color window_fg_color {{foreground}};
 
+/* Views/content area */
 @define-color view_bg_color {{color0}};
 @define-color view_fg_color {{foreground}};
 
+/* Headerbar */
 @define-color headerbar_bg_color {{color0}};
 @define-color headerbar_fg_color {{foreground}};
 @define-color headerbar_backdrop_color {{background}};
 
-@define-color sidebar_bg_color {{color0}};
+/* Sidebar */
+@define-color sidebar_bg_color {{background}};
 @define-color sidebar_fg_color {{foreground}};
 @define-color sidebar_backdrop_color {{background}};
 
+/* Cards */
 @define-color card_bg_color {{color0}};
 @define-color card_fg_color {{foreground}};
 
+/* Popovers & dialogs */
 @define-color popover_bg_color {{background}};
 @define-color popover_fg_color {{foreground}};
 
 @define-color dialog_bg_color {{background}};
 @define-color dialog_fg_color {{foreground}};
 
-@define-color shade_color rgba(0, 0, 0, 0.25);
+/* Shadows & scrollbars */
+@define-color shade_color rgba(0, 0, 0, 0.36);
 @define-color scrollbar_outline_color rgba(0, 0, 0, 0.5);
 
 /* Borders */
@@ -36,8 +46,8 @@
 @define-color unfocused_borders {{color8}};
 
 /* Selection */
-@define-color selected_bg_color {{color4}};
-@define-color selected_fg_color {{foreground}};
+@define-color selected_bg_color {{color3}};
+@define-color selected_fg_color {{background}};
 
 /* Links */
 @define-color link_color {{color4}};
@@ -58,6 +68,95 @@ tooltip,
 tooltip.background {
   background-color: {{background}};
   color: {{foreground}};
-  border: 1px solid {{color4}};
+  border: 1px solid {{color6}};
   border-radius: 8px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   Thunar-specific overrides
+   ═══════════════════════════════════════════════════════════════════ */
+
+.thunar .sidebar,
+.thunar placessidebar {
+  background-color: {{background}};
+  color: {{foreground}};
+}
+
+.thunar .sidebar row:selected,
+.thunar placessidebar row:selected {
+  background-color: alpha({{color3}}, 0.25);
+  color: {{color15}};
+}
+
+.thunar .sidebar row:hover,
+.thunar placessidebar row:hover {
+  background-color: alpha({{color6}}, 0.15);
+  color: {{color7}};
+}
+
+.thunar .view,
+.thunar iconview,
+.thunar treeview {
+  background-color: {{color0}};
+  color: {{foreground}};
+}
+
+.thunar .view:selected,
+.thunar iconview:selected,
+.thunar treeview row:selected {
+  background-color: alpha({{color3}}, 0.3);
+  color: {{color15}};
+}
+
+.thunar .view:hover,
+.thunar iconview:hover,
+.thunar treeview row:hover {
+  background-color: alpha({{color6}}, 0.12);
+}
+
+.thunar toolbar,
+.thunar .pathbar {
+  background-color: {{color0}};
+  color: {{foreground}};
+  border-bottom: 1px solid {{color8}};
+}
+
+.thunar toolbar button:hover {
+  background-color: alpha({{color3}}, 0.2);
+  color: {{color15}};
+}
+
+.thunar statusbar {
+  background-color: {{background}};
+  color: {{color8}};
+  border-top: 1px solid {{color8}};
+}
+
+.thunar menu,
+.thunar popover {
+  background-color: {{background}};
+  color: {{foreground}};
+  border: 1px solid {{color8}};
+  border-radius: 8px;
+}
+
+.thunar menu menuitem:hover,
+.thunar popover modelbutton:hover {
+  background-color: alpha({{color3}}, 0.2);
+  color: {{color15}};
+}
+
+.thunar scrollbar slider {
+  background-color: {{color8}};
+  border-radius: 9999px;
+  min-width: 6px;
+  min-height: 6px;
+}
+
+.thunar scrollbar slider:hover {
+  background-color: {{color3}};
+}
+
+.thunar scrollbar trough {
+  background-color: {{background}};
 }

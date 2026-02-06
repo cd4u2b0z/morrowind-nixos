@@ -37,7 +37,7 @@
     neofetch
     
     # File managers
-    ranger
+    yazi           # Terminal file manager (Morrowind themed)
     nnn
     thunar
     

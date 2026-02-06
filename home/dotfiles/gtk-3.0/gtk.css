@@ -1,0 +1,204 @@
+/* ╔══════════════════════════════════════════════════════════════════╗
+   ║  TES III: MORROWIND — GTK3/adw-gtk3 Color Overrides             ║
+   ║  "What a grand and intoxicating innocence."                     ║
+   ║  Static fallback — wallust overwrites dynamically               ║
+   ╚══════════════════════════════════════════════════════════════════╝ */
+
+/* Core accents — Dwemer gold & Telvanni teal */
+@define-color accent_color #D4A843;
+@define-color accent_bg_color #D4A843;
+@define-color accent_fg_color #1C1410;
+
+/* Window chrome — volcanic ash */
+@define-color window_bg_color #1C1410;
+@define-color window_fg_color #D4C4A8;
+
+/* Views/content area — ashland stone */
+@define-color view_bg_color #2A211A;
+@define-color view_fg_color #D4C4A8;
+
+/* Headerbar — slightly lighter */
+@define-color headerbar_bg_color #2A211A;
+@define-color headerbar_fg_color #D4C4A8;
+@define-color headerbar_backdrop_color #1C1410;
+
+/* Sidebar (Thunar side panel) — volcanic base */
+@define-color sidebar_bg_color #1C1410;
+@define-color sidebar_fg_color #D4C4A8;
+@define-color sidebar_backdrop_color #1C1410;
+
+/* Cards — ashland stone */
+@define-color card_bg_color #2A211A;
+@define-color card_fg_color #D4C4A8;
+
+/* Popovers & dialogs */
+@define-color popover_bg_color #1C1410;
+@define-color popover_fg_color #D4C4A8;
+
+@define-color dialog_bg_color #1C1410;
+@define-color dialog_fg_color #D4C4A8;
+
+/* Shadows & scrollbars */
+@define-color shade_color rgba(0, 0, 0, 0.36);
+@define-color scrollbar_outline_color rgba(0, 0, 0, 0.5);
+
+/* Borders — ash dust */
+@define-color borders #6B5D4F;
+@define-color unfocused_borders #3D3228;
+
+/* Selection — Dwemer gold */
+@define-color selected_bg_color #D4A843;
+@define-color selected_fg_color #1C1410;
+
+/* Links — Azura's blue / Soul gem violet */
+@define-color link_color #4E7BA8;
+@define-color link_visited_color #8B5E8B;
+
+/* Status colors */
+@define-color warning_color #D4A843;
+@define-color error_color #A63D2F;
+@define-color success_color #6A8F4D;
+
+/* Destructive — Daedric crimson */
+@define-color destructive_color #A63D2F;
+@define-color destructive_bg_color #A63D2F;
+@define-color destructive_fg_color #F0E6D0;
+
+/* ═══════════════════════════════════════════════════════════════════
+   Tooltip styling
+   ═══════════════════════════════════════════════════════════════════ */
+tooltip,
+tooltip.background {
+  background-color: #1C1410;
+  color: #D4C4A8;
+  border: 1px solid #5B9E8F;
+  border-radius: 8px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   Thunar-specific overrides
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Sidebar (Places panel) */
+.thunar .sidebar,
+.thunar placessidebar {
+  background-color: #1C1410;
+  color: #D4C4A8;
+}
+
+.thunar .sidebar row:selected,
+.thunar placessidebar row:selected {
+  background-color: alpha(#D4A843, 0.25);
+  color: #F0E6D0;
+}
+
+.thunar .sidebar row:hover,
+.thunar placessidebar row:hover {
+  background-color: alpha(#5B9E8F, 0.15);
+  color: #E8DBC4;
+}
+
+/* Main file view */
+.thunar .view,
+.thunar iconview,
+.thunar treeview {
+  background-color: #2A211A;
+  color: #D4C4A8;
+}
+
+.thunar .view:selected,
+.thunar iconview:selected,
+.thunar treeview row:selected {
+  background-color: alpha(#D4A843, 0.3);
+  color: #F0E6D0;
+}
+
+.thunar .view:hover,
+.thunar iconview:hover,
+.thunar treeview row:hover {
+  background-color: alpha(#5B9E8F, 0.12);
+}
+
+/* Toolbar / pathbar */
+.thunar toolbar,
+.thunar .pathbar {
+  background-color: #2A211A;
+  color: #D4C4A8;
+  border-bottom: 1px solid #3D3228;
+}
+
+.thunar toolbar button {
+  color: #D4C4A8;
+  border-radius: 6px;
+}
+
+.thunar toolbar button:hover {
+  background-color: alpha(#D4A843, 0.2);
+  color: #F0E6D0;
+}
+
+/* Statusbar */
+.thunar statusbar {
+  background-color: #1C1410;
+  color: #6B5D4F;
+  border-top: 1px solid #3D3228;
+}
+
+/* Location bar entry */
+.thunar .path-bar button,
+.thunar .location-bar entry {
+  background-color: #2A211A;
+  color: #D4C4A8;
+  border: 1px solid #3D3228;
+  border-radius: 6px;
+}
+
+.thunar .path-bar button:hover,
+.thunar .location-bar entry:focus {
+  border-color: #D4A843;
+  box-shadow: 0 0 0 1px alpha(#D4A843, 0.3);
+}
+
+/* Tab bar (if using tabs) */
+.thunar notebook header tab {
+  background-color: #1C1410;
+  color: #6B5D4F;
+  border-radius: 6px 6px 0 0;
+}
+
+.thunar notebook header tab:checked {
+  background-color: #2A211A;
+  color: #D4A843;
+  border-bottom: 2px solid #D4A843;
+}
+
+/* Right-click context menu */
+.thunar menu,
+.thunar popover {
+  background-color: #1C1410;
+  color: #D4C4A8;
+  border: 1px solid #3D3228;
+  border-radius: 8px;
+}
+
+.thunar menu menuitem:hover,
+.thunar popover modelbutton:hover {
+  background-color: alpha(#D4A843, 0.2);
+  color: #F0E6D0;
+}
+
+/* Scrollbar Morrowind style */
+.thunar scrollbar slider {
+  background-color: #6B5D4F;
+  border-radius: 9999px;
+  min-width: 6px;
+  min-height: 6px;
+}
+
+.thunar scrollbar slider:hover {
+  background-color: #D4A843;
+}
+
+.thunar scrollbar trough {
+  background-color: #1C1410;
+}

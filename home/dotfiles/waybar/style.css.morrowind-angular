@@ -1,7 +1,6 @@
 /* ╔══════════════════════════════════════════════════════════════════╗
    ║  TES III: MORROWIND — Waybar Theme                              ║
    ║  "Under sun and sky, Outlander, we greet you warmly."           ║
-   ║  Original shape preserved · Morrowind color scheme              ║
    ╚══════════════════════════════════════════════════════════════════╝ */
 /* Toggle between static Morrowind or dynamic wallust colors */
 @import "morrowind-colors.css";
@@ -27,30 +26,31 @@
 
 * {
   border: none;
-  border-radius: 12px;
+  border-radius: 4px;
   font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Inter", system-ui, sans-serif;
   font-weight: 500;
   font-size: 12px;
   min-height: 0;
   color: @foreground;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 
 window#waybar {
-  background: alpha(@background, 0.6);
-  border: none;
-  border-radius: 12px;
+  background: alpha(@background, 0.70);
+  border: 1px solid alpha(@accent, 0.25);
+  border-radius: 4px;
   margin: 0;
   padding: 0;
-  box-shadow: none;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
 }
 
 window#waybar:hover {
-  background: alpha(@background, 0.9);
+  background: alpha(@background, 0.92);
+  border-color: alpha(@accent, 0.5);
   box-shadow:
-    0 12px 40px rgba(0, 0, 0, 0.5),
-    0 0 0 1px alpha(@accent2, 0.15),
-    inset 0 1px 0 alpha(@color15, 0.15);
+    0 8px 32px rgba(0, 0, 0, 0.6),
+    0 0 0 1px alpha(@accent, 0.3),
+    inset 0 1px 0 alpha(@accent, 0.1);
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -58,17 +58,18 @@ window#waybar:hover {
    ═══════════════════════════════════════════════════════════════════ */
 
 tooltip {
-  background: alpha(@background, 0.80);
-  border: 2px solid @accent2;
-  border-radius: 12px;
+  background: alpha(@background, 0.92);
+  border: 1px solid alpha(@accent, 0.6);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
 tooltip * {
-  color: @color15;
+  color: @foreground;
 }
 
 tooltip label {
-  color: @color15;
+  color: @foreground;
   font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Inter", sans-serif;
   font-size: 13px;
   padding: 8px 12px;
@@ -86,8 +87,8 @@ tooltip label {
 .modules-left > widget > *:hover,
 .modules-center > widget > *:hover,
 .modules-right > widget > *:hover {
-  background: alpha(@accent2, 0.25);
-  border-color: alpha(@accent2, 0.6);
+  background: alpha(@accent, 0.15);
+  border-color: alpha(@accent, 0.4);
   color: @color15;
 }
 
@@ -97,7 +98,7 @@ tooltip label {
 #custom-app-tray {
   background: transparent;
   border: none;
-  border-radius: 12px;
+  border-radius: 4px;
   padding: 6px 12px;
   margin: 0;
   color: @foreground;
@@ -108,10 +109,10 @@ tooltip label {
 }
 
 #custom-app-tray:hover {
-  background: alpha(@accent2, 0.2);
-  color: @color15;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px alpha(@accent2, 0.2);
+  background: alpha(@accent, 0.15);
+  color: @accent;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px alpha(@accent, 0.15);
 }
 
 #custom-app-tray.empty {
@@ -129,7 +130,7 @@ tooltip label {
 #workspaces {
   background: transparent;
   border: none;
-  border-radius: 12px;
+  border-radius: 4px;
   padding: 4px 8px;
   margin: 0;
 }
@@ -140,7 +141,7 @@ tooltip label {
   color: @color8;
   background: transparent;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   font-weight: 600;
   font-size: 14px;
   font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Inter", sans-serif;
@@ -149,16 +150,16 @@ tooltip label {
 
 #workspaces button:hover {
   background: alpha(@accent, 0.2);
-  color: @accent2;
-  border-radius: 8px;
+  color: @accent;
+  border-radius: 4px;
 }
 
 #workspaces button.active {
-  background: alpha(@accent2, 0.6);
+  background: alpha(@accent, 0.65);
   color: @background;
-  border-radius: 8px;
+  border-radius: 4px;
   font-weight: 700;
-  box-shadow: 0 2px 8px alpha(@accent2, 0.3);
+  box-shadow: 0 2px 8px alpha(@accent, 0.3);
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -166,37 +167,37 @@ tooltip label {
    ═══════════════════════════════════════════════════════════════════ */
 #clock {
   background: transparent;
-  color: @color15;
+  color: @accent;
   font-weight: 700;
   font-size: 16px;
   font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Inter", sans-serif;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.5px;
   padding: 6px 12px;
-  border-radius: 12px;
-  text-shadow: none;
+  border-radius: 4px;
+  text-shadow: 0 0 8px alpha(@accent, 0.3);
 }
 
 #clock:hover {
-  background: alpha(@color15, 0.1);
-  color: @color15;
+  background: alpha(@accent, 0.1);
+  color: @accent;
   transition: all 0.2s ease-in-out;
 }
 
 #custom-weather {
   background: transparent;
-  color: @color15;
+  color: @foreground;
   font-weight: 700;
   font-size: 16px;
   font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Inter", sans-serif;
   letter-spacing: 0.3px;
   padding: 6px 24px;
-  border-radius: 12px;
+  border-radius: 4px;
   text-shadow: none;
 }
 
 #custom-weather:hover {
-  background: alpha(@color15, 0.1);
-  color: @color15;
+  background: alpha(@accent, 0.1);
+  color: @accent;
   transition: all 0.2s ease-in-out;
 }
 
@@ -207,7 +208,7 @@ tooltip label {
   padding: 8px 14px;
   margin: 0;
   border: none;
-  border-radius: 12px;
+  border-radius: 4px;
   font-size: 16px;
   font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Inter", sans-serif;
 }
@@ -259,7 +260,7 @@ tooltip label {
   color: @error;
 }
 
-/* Seamless modules - transparent background */
+/* Seamless modules — parchment on volcanic dark */
 #custom-system-stats,
 #bluetooth,
 #network,
@@ -268,9 +269,9 @@ tooltip label {
 #custom-weather,
 #clock {
   background: transparent;
-  color: @color15;
+  color: @foreground;
   border: none;
-  border-radius: 12px;
+  border-radius: 4px;
 }
 
 #custom-system-stats:hover,
@@ -281,64 +282,64 @@ tooltip label {
 #custom-weather:hover,
 #clock:hover,
 #custom-updates:hover {
-  background: alpha(@color15, 0.1);
-  color: @color15;
+  background: alpha(@accent, 0.12);
+  color: @accent;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
    UPDATES SHIELD STATES
    ═══════════════════════════════════════════════════════════════════ */
 #custom-updates.updated {
-  color: @color15;
+  color: @foreground;
 }
 
 #custom-updates.pending {
-  color: @color15;
+  color: @accent;
   animation: pulse-pending 2s ease-in-out infinite;
 }
 
 #custom-updates.urgent {
-  color: @color15;
+  color: @color1;
   animation: pulse-urgent 1s ease-in-out infinite;
 }
 
 #custom-updates.checking {
-  color: @color15;
+  color: @accent2;
   animation: pulse-checking 1.5s ease-in-out infinite;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   CALENDAR POPUP
+   CALENDAR POPUP — Dwemer Inscription Style
    ═══════════════════════════════════════════════════════════════════ */
 calendar {
   background-color: @background;
-  border: 2px solid @accent2;
-  border-radius: 12px;
+  border: 1px solid alpha(@accent, 0.5);
+  border-radius: 4px;
   padding: 12px;
   color: @foreground;
   font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Inter", sans-serif;
 }
 
 calendar:selected {
-  background-color: @accent1;
+  background-color: @accent;
   color: @background;
-  border-radius: 6px;
+  border-radius: 2px;
 }
 
 calendar.header {
-  color: @accent1;
+  color: @accent;
   font-weight: 600;
   font-size: 13px;
 }
 
 calendar.button {
   color: @color8;
-  border-radius: 6px;
+  border-radius: 2px;
   padding: 4px 8px;
 }
 
 calendar.button:hover {
-  background-color: @accent1;
+  background-color: @accent;
   color: @background;
 }
 
@@ -356,11 +357,11 @@ calendar > grid > label {
   min-height: 28px;
   margin: 2px;
   padding: 4px;
-  border-radius: 6px;
+  border-radius: 2px;
 }
 
 calendar > grid > label:hover {
-  background-color: alpha(@accent1, 0.3);
+  background-color: alpha(@accent, 0.2);
 }
 
 /* ═══════════════════════════════════════════════════════════════════

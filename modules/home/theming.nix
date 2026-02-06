@@ -28,6 +28,18 @@
     
     gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;
     gtk4.extraConfig.gtk-application-prefer-dark-theme = 1;
+
+    # Morrowind GTK3 CSS overrides (Thunar theming, etc.)
+    gtk3.extraCss = builtins.readFile ../../home/dotfiles/gtk-3.0/gtk.css;
+  };
+
+  # ═══════════════════════════════════════════════════════════════════
+  # Yazi file manager (Morrowind themed)
+  # ═══════════════════════════════════════════════════════════════════
+
+  xdg.configFile."yazi" = {
+    source = ../../home/dotfiles/yazi;
+    recursive = true;
   };
 
   # ═══════════════════════════════════════════════════════════════════

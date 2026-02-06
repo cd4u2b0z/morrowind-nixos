@@ -1,0 +1,248 @@
+# ╔══════════════════════════════════════════════════════════════════╗
+# ║  TES III: MORROWIND — Yazi Theme                                ║
+# ║  "They have taken you from the Imperial City's prison, first    ║
+# ║   by carriage and now by boat."                                  ║
+# ║                                                                  ║
+# ║  Palette:                                                        ║
+# ║    bg=#1C1410   fg=#D4C4A8   gold=#D4A843   teal=#5B9E8F        ║
+# ║    ash=#2A211A  dust=#6B5D4F crimson=#A63D2F green=#6A8F4D      ║
+# ║    blue=#4E7BA8 violet=#8B5E8B amber=#C47D3B                    ║
+# ╚══════════════════════════════════════════════════════════════════╝
+
+# ═══════════════════════════════════════════════════════════════════
+# Manager (file list)
+# ═══════════════════════════════════════════════════════════════════
+[manager]
+cwd = { fg = "#D4A843", bold = true }
+
+# Hovered item
+hovered = { bg = "#2A211A", fg = "#F0E6D0", bold = true }
+preview_hovered = { underline = true }
+
+# Find (search highlights)
+find_keyword = { fg = "#1C1410", bg = "#D4A843", bold = true }
+find_position = { fg = "#5B9E8F", bg = "reset", italic = true }
+
+# Marker (selection indicators)
+marker_copied = { fg = "#6A8F4D", bg = "#6A8F4D" }
+marker_cut = { fg = "#A63D2F", bg = "#A63D2F" }
+marker_selected = { fg = "#D4A843", bg = "#D4A843" }
+marker_marked = { fg = "#5B9E8F", bg = "#5B9E8F" }
+
+# Tabs
+tab_active = { fg = "#1C1410", bg = "#D4A843", bold = true }
+tab_inactive = { fg = "#6B5D4F", bg = "#2A211A" }
+tab_width = 1
+
+# Count badges
+count_copied = { fg = "#1C1410", bg = "#6A8F4D" }
+count_cut = { fg = "#1C1410", bg = "#A63D2F" }
+count_selected = { fg = "#1C1410", bg = "#D4A843" }
+
+# Borders
+border_symbol = "│"
+border_style = { fg = "#6B5D4F" }
+
+# ═══════════════════════════════════════════════════════════════════
+# Status bar
+# ═══════════════════════════════════════════════════════════════════
+[status]
+separator_open = ""
+separator_close = ""
+separator_style = { fg = "#2A211A", bg = "#2A211A" }
+
+# Mode indicator (normal/select/unset)
+mode_normal = { fg = "#1C1410", bg = "#D4A843", bold = true }
+mode_select = { fg = "#1C1410", bg = "#5B9E8F", bold = true }
+mode_unset = { fg = "#1C1410", bg = "#A63D2F", bold = true }
+
+# Progress bar
+progress_label = { fg = "#D4C4A8", bold = true }
+progress_normal = { fg = "#5B9E8F", bg = "#2A211A" }
+progress_error = { fg = "#A63D2F", bg = "#2A211A" }
+
+# Permissions
+permissions_t = { fg = "#D4A843" }
+permissions_r = { fg = "#6A8F4D" }
+permissions_w = { fg = "#A63D2F" }
+permissions_x = { fg = "#5B9E8F" }
+permissions_s = { fg = "#6B5D4F" }
+
+# ═══════════════════════════════════════════════════════════════════
+# Select popup
+# ═══════════════════════════════════════════════════════════════════
+[select]
+border = { fg = "#5B9E8F" }
+active = { fg = "#D4A843", bold = true }
+inactive = { fg = "#D4C4A8" }
+
+# Footer (key hints)
+[select.footer]
+style = { fg = "#6B5D4F", bg = "#1C1410" }
+
+# ═══════════════════════════════════════════════════════════════════
+# Input dialog
+# ═══════════════════════════════════════════════════════════════════
+[input]
+border = { fg = "#5B9E8F" }
+title = { fg = "#D4A843", bold = true }
+value = { fg = "#D4C4A8" }
+selected = { reversed = true }
+
+# ═══════════════════════════════════════════════════════════════════
+# Completion popup
+# ═══════════════════════════════════════════════════════════════════
+[completion]
+border = { fg = "#6B5D4F" }
+active = { fg = "#1C1410", bg = "#D4A843" }
+inactive = { fg = "#D4C4A8" }
+
+# ═══════════════════════════════════════════════════════════════════
+# Tasks manager
+# ═══════════════════════════════════════════════════════════════════
+[tasks]
+border = { fg = "#5B9E8F" }
+title = { fg = "#D4A843", bold = true }
+hovered = { fg = "#F0E6D0", underline = true }
+
+# ═══════════════════════════════════════════════════════════════════
+# Which-key help popup
+# ═══════════════════════════════════════════════════════════════════
+[which]
+cols = 3
+mask = { bg = "#1C1410" }
+rest = { fg = "#6B5D4F" }
+desc = { fg = "#D4C4A8" }
+run = { fg = "#5B9E8F" }
+separator = "  "
+separator_style = { fg = "#3D3228" }
+
+# ═══════════════════════════════════════════════════════════════════
+# Help menu
+# ═══════════════════════════════════════════════════════════════════
+[help]
+on = { fg = "#D4A843" }
+run = { fg = "#5B9E8F" }
+desc = { fg = "#D4C4A8" }
+hovered = { bg = "#2A211A", bold = true }
+footer = { fg = "#6B5D4F", bg = "#1C1410" }
+
+# ═══════════════════════════════════════════════════════════════════
+# Notify popup
+# ═══════════════════════════════════════════════════════════════════
+[notify]
+title_info = { fg = "#5B9E8F" }
+title_warn = { fg = "#D4A843" }
+title_error = { fg = "#A63D2F" }
+
+# ═══════════════════════════════════════════════════════════════════
+# File type colors (icons inherit these)
+# ═══════════════════════════════════════════════════════════════════
+[filetype]
+
+rules = [
+  # Vvardenfell directories — Dwemer gold glow
+  { name = "*/", is = "dir", fg = "#D4A843", bold = true },
+
+  # Hidden files — ash dust
+  { name = ".*", is = "file", fg = "#6B5D4F" },
+  { name = ".*", is = "dir", fg = "#6B5D4F" },
+
+  # Symlinks — Telvanni teal
+  { name = "*", is = "link", fg = "#5B9E8F", italic = true },
+
+  # Orphan links — Daedric crimson
+  { name = "*", is = "orphan", fg = "#A63D2F" },
+
+  # Executables — Bitter Coast green
+  { name = "*", is = "exec", fg = "#6A8F4D" },
+
+  # ── Documents (scrolls of knowledge) ──
+  { name = "*.md", fg = "#D4C4A8" },
+  { name = "*.txt", fg = "#D4C4A8" },
+  { name = "*.org", fg = "#D4C4A8" },
+  { name = "*.pdf", fg = "#A63D2F" },
+  { name = "*.doc*", fg = "#4E7BA8" },
+
+  # ── Nix (Morrowind enchantments) ──
+  { name = "*.nix", fg = "#5B9E8F", bold = true },
+  { name = "flake.nix", fg = "#D4A843", bold = true },
+  { name = "flake.lock", fg = "#6B5D4F" },
+
+  # ── Config files (spell scrolls) ──
+  { name = "*.toml", fg = "#C47D3B" },
+  { name = "*.yaml", fg = "#C47D3B" },
+  { name = "*.yml", fg = "#C47D3B" },
+  { name = "*.json", fg = "#C47D3B" },
+  { name = "*.ini", fg = "#C47D3B" },
+  { name = "*.conf", fg = "#C47D3B" },
+
+  # ── Code (Dwemer mechanisms) ──
+  { name = "*.rs", fg = "#C47D3B" },
+  { name = "*.py", fg = "#4E7BA8" },
+  { name = "*.lua", fg = "#4E7BA8", bold = true },
+  { name = "*.js", fg = "#D4A843" },
+  { name = "*.ts", fg = "#4E7BA8" },
+  { name = "*.tsx", fg = "#5B9E8F" },
+  { name = "*.jsx", fg = "#5B9E8F" },
+  { name = "*.go", fg = "#5B9E8F" },
+  { name = "*.c", fg = "#8B5E8B" },
+  { name = "*.cpp", fg = "#8B5E8B" },
+  { name = "*.h", fg = "#8B5E8B", italic = true },
+  { name = "*.sh", fg = "#6A8F4D" },
+  { name = "*.zsh", fg = "#6A8F4D" },
+  { name = "*.bash", fg = "#6A8F4D" },
+  { name = "*.css", fg = "#8B5E8B" },
+  { name = "*.html", fg = "#A63D2F" },
+
+  # ── Images (paintings & tapestries) ──
+  { name = "*.png", fg = "#8B5E8B" },
+  { name = "*.jpg", fg = "#8B5E8B" },
+  { name = "*.jpeg", fg = "#8B5E8B" },
+  { name = "*.gif", fg = "#8B5E8B" },
+  { name = "*.svg", fg = "#8B5E8B" },
+  { name = "*.webp", fg = "#8B5E8B" },
+  { name = "*.ico", fg = "#8B5E8B" },
+
+  # ── Audio/Video (bardic performances) ──
+  { name = "*.mp3", fg = "#5B9E8F" },
+  { name = "*.flac", fg = "#5B9E8F" },
+  { name = "*.ogg", fg = "#5B9E8F" },
+  { name = "*.wav", fg = "#5B9E8F" },
+  { name = "*.mp4", fg = "#4E7BA8" },
+  { name = "*.mkv", fg = "#4E7BA8" },
+  { name = "*.webm", fg = "#4E7BA8" },
+
+  # ── Archives (locked chests) ──
+  { name = "*.zip", fg = "#A63D2F", bold = true },
+  { name = "*.tar*", fg = "#A63D2F", bold = true },
+  { name = "*.gz", fg = "#A63D2F" },
+  { name = "*.xz", fg = "#A63D2F" },
+  { name = "*.7z", fg = "#A63D2F" },
+  { name = "*.rar", fg = "#A63D2F" },
+
+  # ── Git (guild records) ──
+  { name = ".gitignore", fg = "#6B5D4F" },
+  { name = ".gitmodules", fg = "#6B5D4F" },
+
+  # ── Lock/generated files (sealed scrolls) ──
+  { name = "*.lock", fg = "#6B5D4F" },
+  { name = "package-lock.json", fg = "#6B5D4F" },
+
+  # ── Makefiles & build (forge blueprints) ──
+  { name = "Makefile", fg = "#6A8F4D", bold = true },
+  { name = "Dockerfile", fg = "#4E7BA8", bold = true },
+  { name = "*.Dockerfile", fg = "#4E7BA8" },
+  { name = "docker-compose*", fg = "#4E7BA8" },
+
+  # ── README & license (town crier notices) ──
+  { name = "README*", fg = "#D4A843", bold = true },
+  { name = "LICENSE*", fg = "#6B5D4F" },
+  { name = "CHANGELOG*", fg = "#C47D3B" },
+]
+
+# ═══════════════════════════════════════════════════════════════════
+# Icon overrides (Nerd Font glyphs)
+# ═══════════════════════════════════════════════════════════════════
+[icon]
+rules = []
