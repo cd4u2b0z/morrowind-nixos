@@ -138,15 +138,10 @@ set_wallpaper() {
 
 sync_hyprlock_wallpaper() {
     local wallpaper_path="$1"
-    local hyprlock_conf="$HOME/.config/hypr/hyprlock.conf"
     
-    if [[ ! -f "$hyprlock_conf" ]]; then
-        log "Hyprlock config not found at $hyprlock_conf"
-        return 1
-    fi
-    
-    # Update the background path in hyprlock.conf
-    sed -i "/^background {/,/^}/ s|^\([[:space:]]*path = \).*|\1${wallpaper_path}|" "$hyprlock_conf"
+    # Create symlink so hyprlock always reads the current wallpaper
+    # (hyprlock.conf is read-only on NixOS, so we can't sed it)
+    ln -sf "$wallpaper_path" "$HOME/.cache/current-wallpaper"
     
     log "Synced hyprlock wallpaper: $(basename "$wallpaper_path")"
 }

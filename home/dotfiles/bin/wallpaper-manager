@@ -14,7 +14,6 @@ else
 fi
 
 STATE_FILE="${HOME}/.cache/wallpaper-state"
-HYPRLOCK_CONF="${HOME}/.config/hypr/hyprlock.conf"
 
 # Get list of wallpapers (follow symlinks with -L)
 get_wallpapers() {
@@ -30,12 +29,11 @@ get_current_index() {
     fi
 }
 
-# Sync hyprlock background (only if writable)
+# Sync hyprlock background via symlink
+# (hyprlock.conf is read-only on NixOS, so we point a symlink instead)
 sync_hyprlock() {
     local wallpaper_path="$1"
-    if [[ -f "$HYPRLOCK_CONF" && -w "$HYPRLOCK_CONF" ]]; then
-        sed -i "/^background {/,/^}/ s|^\([[:space:]]*path = \).*|\1${wallpaper_path}|" "$HYPRLOCK_CONF"
-    fi
+    ln -sf "$wallpaper_path" "$HOME/.cache/current-wallpaper"
 }
 
 # Apply wallpaper by index

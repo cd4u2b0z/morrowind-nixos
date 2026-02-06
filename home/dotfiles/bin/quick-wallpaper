@@ -12,8 +12,6 @@ else
     exit 1
 fi
 
-HYPRLOCK_CONF="${HOME}/.config/hypr/hyprlock.conf"
-
 # List wallpapers and let user pick with fuzzel (follow symlinks with -L)
 SELECTED=$(find -L "$WALLPAPER_DIR" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.webp" \) -printf '%f\n' | sort | fuzzel --dmenu -p "Wallpaper: ")
 
@@ -33,9 +31,8 @@ else
     hyprctl hyprpaper wallpaper ",$WALLPAPER_PATH" 2>/dev/null
 fi
 
-# Sync hyprlock background to match wallpaper (only if writable)
-if [[ -f "$HYPRLOCK_CONF" && -w "$HYPRLOCK_CONF" ]]; then
-    sed -i "/^background {/,/^}/ s|^\([[:space:]]*path = \).*|\1${WALLPAPER_PATH}|" "$HYPRLOCK_CONF"
-fi
+# Sync hyprlock background via symlink
+# (hyprlock.conf is read-only on NixOS, so we point a symlink instead)
+ln -sf "$WALLPAPER_PATH" "$HOME/.cache/current-wallpaper"
 
 notify-send "Wallpaper" "Applied: $SELECTED"
