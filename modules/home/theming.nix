@@ -70,4 +70,9 @@
     source = ../../home/dotfiles/bin/wallpaper-manager;
     executable = true;
   };
+
+  home.file.".local/bin/morrowind-greet" = {
+    source = ../../home/dotfiles/bin/morrowind-greet;
+    executable = true;
+  };
 }

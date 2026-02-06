@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+# ── Morrowind Terminal Greeting ──────────────────────────────────
+# A brief ash-whisper effect on shell open. Fast, subtle, immersive.
+# Inspired by skooma-launcher.sh — distilled to a single moment.
+
+# Morrowind palette (truecolor)
+G='\033[38;2;107;93;79m'    # ash dust
+A='\033[38;2;212;168;67m'   # dwemer gold
+T='\033[38;2;91;158;143m'   # telvanni teal
+D='\033[2m'                  # dim
+B='\033[1m'                  # bold
+R='\033[0m'                  # reset
+
+whispers=(
+  "Under sun and sky, outlander, we greet you warmly."
+  "Stand up. There you go. You were dreaming."
+  "The ending of the words is ALMSIVI."
+  "They have taken you from the Imperial City's prison."
+  "Speak quickly, outlander, or go away."
+  "What a fool you are. I'm a god."
+  "Welcome, Moon-and-Star, to this place where destiny is made."
+  "We're watching you… scum."
+  "Come, Nerevar. Friend or traitor, come."
+  "The sleeper has awakened."
+  "You like to dance close to the fire, don't you?"
+  "Wealth beyond measure, outlander."
+  "May you walk on warm sands."
+  "Three blessings, sera."
+  "The Tribunal's power wanes, but yours grows."
+  "Dagoth Ur welcomes you, Nerevar."
+  "Sweet moon sugar dreams await."
+  "Your journal has been updated."
+  "You N'wah!"
+  "Die, fetcher!"
+  "By Azura, by Azura, by Azura!"
+  "The prophecy unfolds with each step."
+  "You feel the pull of the Heart of Lorkhan."
+  "Fly, cliff racer, fly away home."
+)
+
+# Pick a random whisper
+msg="${whispers[$((RANDOM % ${#whispers[@]}))]}"
+
+# ── Ash-particle reveal ─────────────────────────────────────────
+# Show a brief line of ash particles that dissolve into the quote.
+# Total time: ~0.3s — fast enough to never feel like waiting.
+
+ash='·˙°∘•'
+len=${#msg}
+buf=""
+
+# Phase 1: flash a short scatter of ash particles (~0.12s)
+printf "  ${D}${G}"
+for (( i=0; i<len && i<60; i++ )); do
+  printf '%s' "${ash:$((RANDOM % ${#ash})):1}"
+done
+printf "${R}"
+
+# Brief pause to register the particles
+sleep 0.08
+
+# Phase 2: replace with the actual quote in gold
+printf "\r  ${D}${T}─── ${B}${A}%s${R} ${D}${T}───${R}\n" "$msg"

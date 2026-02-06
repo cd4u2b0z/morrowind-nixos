@@ -311,6 +311,13 @@
       # History search with up/down arrows
       bindkey "^[[A" history-search-backward
       bindkey "^[[B" history-search-forward
+
+      # ── Morrowind ash-whisper greeting ─────────────────────────────
+      # Brief effect on first interactive shell (skip nested/tmux/vscode)
+      if [[ -o interactive ]] && [[ -z "$MORROWIND_GREETED" ]] && [[ -z "$TMUX" ]] && [[ -z "$VSCODE_INJECTION" ]]; then
+        export MORROWIND_GREETED=1
+        [[ -x "$HOME/.local/bin/morrowind-greet" ]] && "$HOME/.local/bin/morrowind-greet"
+      fi
     '';
   };
   
