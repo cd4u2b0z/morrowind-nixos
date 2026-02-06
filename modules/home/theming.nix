@@ -25,13 +25,16 @@
     # papirus-folders can't run at activation time (Nix store is read-only),
     # so we patch the icon theme at build time instead.
     papirus-dark-orange = pkgs.runCommandLocal "papirus-dark-orange" {
-      nativeBuildInputs = [ pkgs.papirus-folders pkgs.papirus-icon-theme pkgs.getent ];
+      nativeBuildInputs = [ pkgs.papirus-folders ];
     } ''
-      mkdir -p $out/share/icons
-      cp -r --no-preserve=mode ${pkgs.papirus-icon-theme}/share/icons/Papirus-Dark $out/share/icons/Papirus-Dark
-
       export HOME=$(mktemp -d)
-      ${pkgs.papirus-folders}/bin/papirus-folders -C orange --theme Papirus-Dark -o $out/share/icons
+      mkdir -p $HOME/.local/share/icons
+      cp -r --no-preserve=mode ${pkgs.papirus-icon-theme}/share/icons/Papirus-Dark $HOME/.local/share/icons/Papirus-Dark
+
+      ${pkgs.papirus-folders}/bin/papirus-folders -C orange --theme Papirus-Dark -o
+
+      mkdir -p $out/share/icons
+      mv $HOME/.local/share/icons/Papirus-Dark $out/share/icons/Papirus-Dark
     '';
   in {
     enable = true;
