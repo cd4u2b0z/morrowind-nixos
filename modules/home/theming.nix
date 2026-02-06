@@ -13,6 +13,9 @@
   
   stylix.targets.librewolf.profileNames = [ "default" ];
 
+  # Prevent Stylix from overriding our custom Morrowind yazi theme
+  stylix.targets.yazi.enable = false;
+
   # ═══════════════════════════════════════════════════════════════════
   # GTK Theming (Stylix handles theme/cursor/fonts, we add icons)
   # ═══════════════════════════════════════════════════════════════════
@@ -29,6 +32,12 @@
     gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;
     gtk4.extraConfig.gtk-application-prefer-dark-theme = 1;
   };
+
+  # Set Papirus folder icons to amber (Dwemer gold) instead of default blue
+  home.packages = [ pkgs.papirus-folders ];
+  home.activation.papirus-folders = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    ${pkgs.papirus-folders}/bin/papirus-folders -C orange --theme Papirus-Dark 2>/dev/null || true
+  '';
 
   # Morrowind GTK3 CSS overrides (Thunar theming, etc.)
   # Must go through stylix.targets.gtk.extraCss — plain gtk.gtk3.extraCss is ignored by Stylix
