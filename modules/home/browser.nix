@@ -22,6 +22,9 @@
     
     # Chromium/Electron Wayland
     NIXOS_OZONE_WL = "1";
+    
+    # Intel VA-API driver
+    LIBVA_DRIVER_NAME = "iHD";
   };
 
   # ═══════════════════════════════════════════════════════════════════
@@ -71,7 +74,7 @@
   xdg.desktopEntries.brave-browser = {
     name = "Brave";
     genericName = "Web Browser";
-    exec = "brave --enable-features=UseOzonePlatform,WaylandWindowDecorations,VaapiVideoDecodeLinuxGL --ozone-platform=wayland --enable-wayland-ime --disable-features=CrashpadOOPReporting --password-store=gnome-libsecret --use-gl=egl %U";
+    exec = "brave --enable-features=UseOzonePlatform,WaylandWindowDecorations,VaapiVideoDecodeLinuxGL --ozone-platform=wayland --enable-wayland-ime --disable-features=CrashpadOOPReporting --password-store=gnome-libsecret --use-gl=egl --use-angle=gl --disable-gpu-sandbox %U";
     icon = "brave";
     terminal = false;
     categories = [ "Network" "WebBrowser" ];
@@ -86,6 +89,8 @@
     --disable-features=CrashpadOOPReporting
     --password-store=gnome-libsecret
     --use-gl=egl
+    --use-angle=gl
+    --disable-gpu-sandbox
   '';
   
   xdg.configFile."brave-flags.conf".text = ''
@@ -95,6 +100,8 @@
     --disable-features=CrashpadOOPReporting
     --password-store=gnome-libsecret
     --use-gl=egl
+    --use-angle=gl
+    --disable-gpu-sandbox
   '';
   
   xdg.configFile."electron-flags.conf".text = ''
