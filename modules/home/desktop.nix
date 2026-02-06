@@ -55,8 +55,8 @@
     style = builtins.readFile ../../home/dotfiles/waybar/style.css;
   };
   
-  # Waybar Nord colors (our custom color file)
-  xdg.configFile."waybar/nord-colors.css".source = ../../home/dotfiles/waybar/nord-colors.css;
+  # Waybar Morrowind colors (our custom color file)
+  xdg.configFile."waybar/morrowind-colors.css".source = ../../home/dotfiles/waybar/morrowind-colors.css;
   
   # Waybar scripts (custom modules like weather, system-stats)
   xdg.configFile."waybar/scripts" = {
