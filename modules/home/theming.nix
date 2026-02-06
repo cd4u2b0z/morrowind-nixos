@@ -24,17 +24,22 @@
     # Build Papirus-Dark with orange/amber folders (Dwemer gold)
     # papirus-folders can't run at activation time (Nix store is read-only),
     # so we patch the icon theme at build time instead.
-    papirus-dark-orange = pkgs.runCommandLocal "papirus-dark-orange" {
-      nativeBuildInputs = [ pkgs.papirus-folders ];
-    } ''
-      export HOME=$(mktemp -d)
-      mkdir -p $HOME/.local/share/icons
-      cp -r --no-preserve=mode ${pkgs.papirus-icon-theme}/share/icons/Papirus-Dark $HOME/.local/share/icons/Papirus-Dark
-
-      ${pkgs.papirus-folders}/bin/papirus-folders -C orange --theme Papirus-Dark -o
-
+    papirus-dark-orange = pkgs.runCommandLocal "papirus-dark-orange" {} ''
       mkdir -p $out/share/icons
-      mv $HOME/.local/share/icons/Papirus-Dark $out/share/icons/Papirus-Dark
+      cp -r --no-preserve=mode ${pkgs.papirus-icon-theme}/share/icons/Papirus-Dark $out/share/icons/Papirus-Dark
+
+      # Replicate what papirus-folders -C orange does:
+      # Find all symlinks in places/ pointing to *blue* and relink to *orange*
+      find $out/share/icons/Papirus-Dark -type l -path '*/places/*' | while read -r link; do
+        target=$(readlink "$link")
+        if echo "$target" | grep -q 'blue'; then
+          new_target=$(echo "$target" | sed 's/blue/orange/g')
+          parent=$(dirname "$link")
+          if [ -e "$parent/$new_target" ] || [ -L "$parent/$new_target" ]; then
+            ln -sf "$new_target" "$link"
+          fi
+        fi
+      done
     '';
   in {
     enable = true;
