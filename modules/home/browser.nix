@@ -35,6 +35,16 @@
     profiles.default = {
       id = 0;
       isDefault = true;
+      
+      # Extensions via NUR or nixpkgs
+      extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
+        ublock-origin
+        darkreader
+        bitwarden
+        decentraleyes
+        canvasblocker
+      ];
+      
       settings = {
         # Hardware video acceleration (VA-API)
         "media.ffmpeg.vaapi.enabled" = true;
@@ -47,47 +57,9 @@
         
         # Smooth scrolling
         "general.smoothScroll" = true;
-      };
-    };
-    
-    # Policies (system-wide settings)
-    policies = {
-      DisableTelemetry = true;
-      DisableFirefoxStudies = true;
-      DisablePocket = true;
-      DisableFirefoxAccounts = false;  # Allow sync if you want
-      DisableSetDesktopBackground = true;
-      
-      # Hardware acceleration
-      HardwareAcceleration = true;
-      
-      # Extensions to install (use extension IDs from addons.mozilla.org)
-      ExtensionSettings = {
-        # uBlock Origin
-        "uBlock0@raymondhill.net" = {
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
-          installation_mode = "force_installed";
-        };
-        # Bitwarden
-        "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi";
-          installation_mode = "force_installed";
-        };
-        # Dark Reader
-        "addon@darkreader.org" = {
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi";
-          installation_mode = "force_installed";
-        };
-        # Canvas Blocker
-        "CanvasBlocker@kkapsner.de" = {
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/canvasblocker/latest.xpi";
-          installation_mode = "force_installed";
-        };
-        # Decentraleyes
-        "jid1-BoFifL9Vbdl2zQ@jetpack" = {
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/decentraleyes/latest.xpi";
-          installation_mode = "force_installed";
-        };
+        
+        # Enable extensions
+        "extensions.autoDisableScopes" = 0;
       };
     };
   };
@@ -99,7 +71,7 @@
   xdg.desktopEntries.brave-browser = {
     name = "Brave";
     genericName = "Web Browser";
-    exec = "brave --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime %U";
+    exec = "brave --enable-features=UseOzonePlatform,WaylandWindowDecorations --ozone-platform=wayland --enable-wayland-ime --disable-features=CrashpadOOPReporting %U";
     icon = "brave";
     terminal = false;
     categories = [ "Network" "WebBrowser" ];
@@ -108,19 +80,21 @@
   
   # Chromium/Electron Wayland flags
   xdg.configFile."chromium-flags.conf".text = ''
-    --enable-features=UseOzonePlatform
+    --enable-features=UseOzonePlatform,WaylandWindowDecorations
     --ozone-platform=wayland
     --enable-wayland-ime
+    --disable-features=CrashpadOOPReporting
   '';
   
   xdg.configFile."brave-flags.conf".text = ''
-    --enable-features=UseOzonePlatform
+    --enable-features=UseOzonePlatform,WaylandWindowDecorations
     --ozone-platform=wayland
     --enable-wayland-ime
+    --disable-features=CrashpadOOPReporting
   '';
   
   xdg.configFile."electron-flags.conf".text = ''
-    --enable-features=UseOzonePlatform
+    --enable-features=UseOzonePlatform,WaylandWindowDecorations
     --ozone-platform=wayland
     --enable-wayland-ime
   '';

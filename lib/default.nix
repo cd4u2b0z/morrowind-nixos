@@ -22,6 +22,11 @@ in
       };
       
       modules = [
+        # NUR overlay for Firefox/Librewolf extensions
+        {
+          nixpkgs.overlays = [ inputs.nur.overlays.default ];
+        }
+        
         # Host-specific config
         ../hosts/${hostname}
         

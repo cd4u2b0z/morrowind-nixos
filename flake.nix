@@ -26,13 +26,16 @@
     
     # Stylix - system-wide theming
     stylix.url = "github:danth/stylix";
+    
+    # NUR - Nix User Repository (for Firefox/Librewolf extensions)
+    nur.url = "github:nix-community/NUR";
   };
 
   # ═══════════════════════════════════════════════════════════════════
   # Outputs
   # ═══════════════════════════════════════════════════════════════════
   
-  outputs = { self, nixpkgs, home-manager, stylix, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, stylix, nur, ... }@inputs:
     let
       # Import helper library
       myLib = import ./lib { inherit inputs; };
