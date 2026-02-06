@@ -28,10 +28,11 @@
     
     gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;
     gtk4.extraConfig.gtk-application-prefer-dark-theme = 1;
-
-    # Morrowind GTK3 CSS overrides (Thunar theming, etc.)
-    gtk3.extraCss = builtins.readFile ../../home/dotfiles/gtk-3.0/gtk.css;
   };
+
+  # Morrowind GTK3 CSS overrides (Thunar theming, etc.)
+  # Must go through stylix.targets.gtk.extraCss — plain gtk.gtk3.extraCss is ignored by Stylix
+  stylix.targets.gtk.extraCss = builtins.readFile ../../home/dotfiles/gtk-3.0/gtk.css;
 
   # ═══════════════════════════════════════════════════════════════════
   # Yazi file manager (Morrowind themed)
