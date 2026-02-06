@@ -20,24 +20,31 @@
   # GTK Theming (Stylix handles theme/cursor/fonts, we add icons)
   # ═══════════════════════════════════════════════════════════════════
   
-  gtk = {
+  gtk = let
+    # Build Papirus-Dark with orange/amber folders (Dwemer gold)
+    # papirus-folders can't run at activation time (Nix store is read-only),
+    # so we patch the icon theme at build time instead.
+    papirus-dark-orange = pkgs.runCommandLocal "papirus-dark-orange" {
+      nativeBuildInputs = [ pkgs.papirus-folders pkgs.papirus-icon-theme pkgs.getent ];
+    } ''
+      mkdir -p $out/share/icons
+      cp -r --no-preserve=mode ${pkgs.papirus-icon-theme}/share/icons/Papirus-Dark $out/share/icons/Papirus-Dark
+
+      export HOME=$(mktemp -d)
+      ${pkgs.papirus-folders}/bin/papirus-folders -C orange --theme Papirus-Dark -o $out/share/icons
+    '';
+  in {
     enable = true;
     
-    # Icons not handled by Stylix
+    # Papirus-Dark with Dwemer gold (orange) folders
     iconTheme = {
       name = "Papirus-Dark";
-      package = pkgs.papirus-icon-theme;
+      package = papirus-dark-orange;
     };
     
     gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;
     gtk4.extraConfig.gtk-application-prefer-dark-theme = 1;
   };
-
-  # Set Papirus folder icons to amber (Dwemer gold) instead of default blue
-  home.packages = [ pkgs.papirus-folders ];
-  home.activation.papirus-folders = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    ${pkgs.papirus-folders}/bin/papirus-folders -C orange --theme Papirus-Dark 2>/dev/null || true
-  '';
 
   # Morrowind GTK3 CSS overrides (Thunar theming, etc.)
   # Must go through stylix.targets.gtk.extraCss — plain gtk.gtk3.extraCss is ignored by Stylix
