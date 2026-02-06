@@ -26,7 +26,7 @@
 
 * {
   border: none;
-  border-radius: 4px;
+  border-radius: 12px;
   font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Inter", system-ui, sans-serif;
   font-weight: 500;
   font-size: 12px;
@@ -38,7 +38,7 @@
 window#waybar {
   background: alpha(@background, 0.70);
   border: 1px solid alpha(@accent, 0.25);
-  border-radius: 4px;
+  border-radius: 12px;
   margin: 0;
   padding: 0;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
@@ -60,7 +60,7 @@ window#waybar:hover {
 tooltip {
   background: alpha(@background, 0.92);
   border: 1px solid alpha(@accent, 0.6);
-  border-radius: 4px;
+  border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
@@ -98,7 +98,7 @@ tooltip label {
 #custom-app-tray {
   background: transparent;
   border: none;
-  border-radius: 4px;
+  border-radius: 12px;
   padding: 6px 12px;
   margin: 0;
   color: @foreground;
@@ -111,7 +111,7 @@ tooltip label {
 #custom-app-tray:hover {
   background: alpha(@accent, 0.15);
   color: @accent;
-  border-radius: 4px;
+  border-radius: 12px;
   box-shadow: 0 2px 8px alpha(@accent, 0.15);
 }
 
@@ -130,7 +130,7 @@ tooltip label {
 #workspaces {
   background: transparent;
   border: none;
-  border-radius: 4px;
+  border-radius: 12px;
   padding: 4px 8px;
   margin: 0;
 }
@@ -141,7 +141,7 @@ tooltip label {
   color: @color8;
   background: transparent;
   border: none;
-  border-radius: 4px;
+  border-radius: 12px;
   font-weight: 600;
   font-size: 14px;
   font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Inter", sans-serif;
@@ -151,13 +151,13 @@ tooltip label {
 #workspaces button:hover {
   background: alpha(@accent, 0.2);
   color: @accent;
-  border-radius: 4px;
+  border-radius: 12px;
 }
 
 #workspaces button.active {
   background: alpha(@accent, 0.65);
   color: @background;
-  border-radius: 4px;
+  border-radius: 12px;
   font-weight: 700;
   box-shadow: 0 2px 8px alpha(@accent, 0.3);
 }
@@ -173,7 +173,7 @@ tooltip label {
   font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Inter", sans-serif;
   letter-spacing: 0.5px;
   padding: 6px 12px;
-  border-radius: 4px;
+  border-radius: 12px;
   text-shadow: 0 0 8px alpha(@accent, 0.3);
 }
 
@@ -191,7 +191,7 @@ tooltip label {
   font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Inter", sans-serif;
   letter-spacing: 0.3px;
   padding: 6px 24px;
-  border-radius: 4px;
+  border-radius: 12px;
   text-shadow: none;
 }
 
@@ -208,7 +208,7 @@ tooltip label {
   padding: 8px 14px;
   margin: 0;
   border: none;
-  border-radius: 4px;
+  border-radius: 12px;
   font-size: 16px;
   font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Inter", sans-serif;
 }
@@ -271,7 +271,7 @@ tooltip label {
   background: transparent;
   color: @foreground;
   border: none;
-  border-radius: 4px;
+  border-radius: 12px;
 }
 
 #custom-system-stats:hover,
@@ -314,7 +314,7 @@ tooltip label {
 calendar {
   background-color: @background;
   border: 1px solid alpha(@accent, 0.5);
-  border-radius: 4px;
+  border-radius: 12px;
   padding: 12px;
   color: @foreground;
   font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Inter", sans-serif;
@@ -323,7 +323,7 @@ calendar {
 calendar:selected {
   background-color: @accent;
   color: @background;
-  border-radius: 2px;
+  border-radius: 6px;
 }
 
 calendar.header {
@@ -334,7 +334,7 @@ calendar.header {
 
 calendar.button {
   color: @color8;
-  border-radius: 2px;
+  border-radius: 6px;
   padding: 4px 8px;
 }
 
@@ -357,7 +357,7 @@ calendar > grid > label {
   min-height: 28px;
   margin: 2px;
   padding: 4px;
-  border-radius: 2px;
+  border-radius: 6px;
 }
 
 calendar > grid > label:hover {
