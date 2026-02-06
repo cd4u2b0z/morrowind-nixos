@@ -20,34 +20,12 @@
   # GTK Theming (Stylix handles theme/cursor/fonts, we add icons)
   # ═══════════════════════════════════════════════════════════════════
   
-  gtk = let
-    # Build Papirus-Dark with orange/amber folders (Dwemer gold)
-    # papirus-folders can't run at activation time (Nix store is read-only),
-    # so we patch the icon theme at build time instead.
-    papirus-dark-orange = pkgs.runCommandLocal "papirus-dark-orange" {} ''
-      mkdir -p $out/share/icons
-      cp -r --no-preserve=mode ${pkgs.papirus-icon-theme}/share/icons/Papirus-Dark $out/share/icons/Papirus-Dark
-
-      # Replicate what papirus-folders -C orange does:
-      # Find all symlinks in places/ pointing to *blue* and relink to *orange*
-      find $out/share/icons/Papirus-Dark -type l -path '*/places/*' | while read -r link; do
-        target=$(readlink "$link")
-        if echo "$target" | grep -q 'blue'; then
-          new_target=$(echo "$target" | sed 's/blue/orange/g')
-          parent=$(dirname "$link")
-          if [ -e "$parent/$new_target" ] || [ -L "$parent/$new_target" ]; then
-            ln -sf "$new_target" "$link"
-          fi
-        fi
-      done
-    '';
-  in {
+  gtk = {
     enable = true;
     
-    # Papirus-Dark with Dwemer gold (orange) folders
     iconTheme = {
       name = "Papirus-Dark";
-      package = papirus-dark-orange;
+      package = pkgs.papirus-icon-theme;
     };
     
     gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;
