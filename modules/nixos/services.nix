@@ -93,12 +93,12 @@
   services.dbus.enable = true;
 
   # ═══════════════════════════════════════════════════════════════════
-  # GNOME Keyring - for VSCode auth, SSH keys, secrets storage
+  # GNOME Keyring - for browser passwords, VSCode auth, SSH keys
   # ═══════════════════════════════════════════════════════════════════
   
   services.gnome.gnome-keyring.enable = true;
-  security.pam.services.sddm.enableGnomeKeyring = true;
   security.pam.services.login.enableGnomeKeyring = true;
+  security.pam.services.greetd.enableGnomeKeyring = true;
 
   # ═══════════════════════════════════════════════════════════════════
   # Location services (for redshift/night light)
@@ -144,13 +144,4 @@
     };
   };
 
-  # ═══════════════════════════════════════════════════════════════════
-  # GNOME Keyring - for browser passwords, VSCode auth, SSH keys
-  # ═══════════════════════════════════════════════════════════════════
-  
-  services.gnome.gnome-keyring.enable = true;
-  
-  # Auto-unlock keyring at login (for TTY + Hyprland workflow)
-  security.pam.services.login.enableGnomeKeyring = true;
-  security.pam.services.greetd.enableGnomeKeyring = true;
 }
