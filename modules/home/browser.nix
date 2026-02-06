@@ -71,7 +71,7 @@
   xdg.desktopEntries.brave-browser = {
     name = "Brave";
     genericName = "Web Browser";
-    exec = "brave --enable-features=UseOzonePlatform,WaylandWindowDecorations --ozone-platform=wayland --enable-wayland-ime --disable-features=CrashpadOOPReporting %U";
+    exec = "brave --enable-features=UseOzonePlatform,WaylandWindowDecorations,VaapiVideoDecodeLinuxGL --ozone-platform=wayland --enable-wayland-ime --disable-features=CrashpadOOPReporting --password-store=gnome-libsecret --use-gl=egl %U";
     icon = "brave";
     terminal = false;
     categories = [ "Network" "WebBrowser" ];
@@ -80,17 +80,21 @@
   
   # Chromium/Electron Wayland flags
   xdg.configFile."chromium-flags.conf".text = ''
-    --enable-features=UseOzonePlatform,WaylandWindowDecorations
+    --enable-features=UseOzonePlatform,WaylandWindowDecorations,VaapiVideoDecodeLinuxGL
     --ozone-platform=wayland
     --enable-wayland-ime
     --disable-features=CrashpadOOPReporting
+    --password-store=gnome-libsecret
+    --use-gl=egl
   '';
   
   xdg.configFile."brave-flags.conf".text = ''
-    --enable-features=UseOzonePlatform,WaylandWindowDecorations
+    --enable-features=UseOzonePlatform,WaylandWindowDecorations,VaapiVideoDecodeLinuxGL
     --ozone-platform=wayland
     --enable-wayland-ime
     --disable-features=CrashpadOOPReporting
+    --password-store=gnome-libsecret
+    --use-gl=egl
   '';
   
   xdg.configFile."electron-flags.conf".text = ''

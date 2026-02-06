@@ -20,6 +20,17 @@
   # Desktop Profile Additions
   # ═══════════════════════════════════════════════════════════════════
   
-  # Graphics
-  hardware.graphics.enable = true;
+  # Graphics (Intel integrated)
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver    # VA-API for newer Intel (Broadwell+)
+      intel-vaapi-driver    # VA-API for older Intel
+      vpl-gpu-rt            # Intel Quick Sync Video
+      libvdpau-va-gl        # VDPAU backend for VA-API
+    ];
+  };
+  
+  # Power management (for UPower battery info)
+  services.upower.enable = true;
 }
