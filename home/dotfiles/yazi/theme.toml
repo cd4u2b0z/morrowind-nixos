@@ -142,11 +142,10 @@ title_error = { fg = "#A63D2F" }
 
 rules = [
   # Vvardenfell directories — Dwemer gold glow
-  { name = "*/", is = "dir", fg = "#D4A843", bold = true },
+  { name = "*/", fg = "#D4A843", bold = true },
 
-  # Hidden files — ash dust
-  { name = ".*", is = "file", fg = "#6B5D4F" },
-  { name = ".*", is = "dir", fg = "#6B5D4F" },
+  # Hidden files/dirs — ash dust
+  { name = ".*", is = "hidden", fg = "#6B5D4F" },
 
   # Symlinks — Telvanni teal
   { name = "*", is = "link", fg = "#5B9E8F", italic = true },
