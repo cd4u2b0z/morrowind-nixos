@@ -20,7 +20,7 @@
     # Nix-compiled treesitter parsers — correct linking, reproducible, offline
     plugins = with pkgs.vimPlugins; [
       (nvim-treesitter.withPlugins (p: [
-        p.bash p.c p.diff p.html p.javascript p.jsdoc p.json p.jsonc
+        p.bash p.c p.diff p.html p.javascript p.jsdoc p.json
         p.lua p.luadoc p.luap p.markdown p.markdown_inline p.python
         p.query p.regex p.toml p.tsx p.typescript p.vim p.vimdoc p.yaml
         p.nix  # for editing this config!
