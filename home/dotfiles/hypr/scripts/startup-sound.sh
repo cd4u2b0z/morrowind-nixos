@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Wait for PipeWire to be fully ready before playing startup sound
 
 LOG="/tmp/startup-sound.log"

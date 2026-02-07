@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Use load average instead of combined CPU percentage
 load_avg=$(cat /proc/loadavg | cut -d' ' -f1)

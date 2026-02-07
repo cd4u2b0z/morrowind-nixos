@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Wallust colors for shell scripts
 background='{{background}}'
 foreground='{{foreground}}'

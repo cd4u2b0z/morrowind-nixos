@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Dynamic Music Player for Waybar - Spotify/ncspot priority
 
 escape_pango() {

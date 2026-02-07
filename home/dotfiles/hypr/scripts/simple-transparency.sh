@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Simple Window Transparency Controller 
 # Just like Linux Mint - two keys, slider behavior

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Enhanced Updates Wrapper for Waybar
 # Integrates with simple-update-manager-enhanced.sh for intelligent update descriptions

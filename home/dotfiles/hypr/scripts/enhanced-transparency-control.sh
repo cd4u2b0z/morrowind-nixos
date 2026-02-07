@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Enhanced Window Transparency Controller with Visual Feedback
 # Shows transparency level with progress bar in notifications

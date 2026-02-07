@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Update Manager - Clean TUI
 
 CACHE_DIR="/tmp/update-manager"

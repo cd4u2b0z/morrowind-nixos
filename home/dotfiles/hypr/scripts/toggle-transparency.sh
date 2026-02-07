@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Transparency Toggle - Enable/Disable globally
 TOGGLE_FILE="/tmp/transparency_disabled"

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # ═══════════════════════════════════════════════════════════════════
 # 🔄 WAYBAR LAUNCHER & RESTART SCRIPT
 # Clean restart of Waybar with error handling

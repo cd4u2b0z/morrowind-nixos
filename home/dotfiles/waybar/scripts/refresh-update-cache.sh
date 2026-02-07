@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Refresh update cache for Waybar
 # Called by systemd timer
 

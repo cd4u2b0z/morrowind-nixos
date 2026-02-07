@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Window Transparency Controller for Hyprland
 # Mimics Linux Mint's Ctrl+- and Ctrl++ transparency controls

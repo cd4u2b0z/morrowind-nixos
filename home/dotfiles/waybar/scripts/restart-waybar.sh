@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Emergency Waybar restart script
 echo "🔧 Waybar Emergency Restart"

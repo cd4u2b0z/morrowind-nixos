@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # 🎵 GRUVBOX TRIPLE-MONITOR MUSIC SETUP
 # Advanced TMUX music interface with multi-monitor support

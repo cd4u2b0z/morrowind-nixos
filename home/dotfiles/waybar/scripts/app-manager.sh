@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # App Manager - Fast Focus/Kill/Launch menu with proper window handling
 
 # Get all running windows once (faster than multiple calls)

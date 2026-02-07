@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Cava visualizer for Waybar
 # Synced with custom/music module - both check every 2 seconds

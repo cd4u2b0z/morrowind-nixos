@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Get system stats from your original script and extract just the tooltip content
 original_output=$(~/.config/waybar/scripts/system-monitor.sh 2>/dev/null)

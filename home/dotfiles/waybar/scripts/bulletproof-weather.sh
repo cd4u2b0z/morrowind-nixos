@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # 🌤️ Bulletproof Weather Script with OpenWeatherMap API
 # Primary: OpenWeatherMap API, Fallback: wttr.in
