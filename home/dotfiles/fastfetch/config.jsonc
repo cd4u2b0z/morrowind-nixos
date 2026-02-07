@@ -3,7 +3,7 @@
   "logo": {
     "source": "~/.config/fastfetch/logo.png",
     "type": "kitty-direct",
-    "height": 20,
+    "height": 10,
     "preserveAspectRatio": true,
     "padding": {
       "top": 1,
