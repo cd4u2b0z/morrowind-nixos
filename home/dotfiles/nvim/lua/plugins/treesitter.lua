@@ -1,7 +1,7 @@
 -- Treesitter for syntax highlighting
 return {
   "nvim-treesitter/nvim-treesitter",
-  build = ":TSUpdate",
+  build = (vim.fn.executable("nix") == 1) and false or ":TSUpdate",
   event = { "BufReadPost", "BufNewFile" },
   dependencies = {
     {
@@ -30,7 +30,6 @@ return {
       end,
     },
   },
-  cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
   keys = {
     { "<c-space>", desc = "Increment selection" },
     { "<bs>", desc = "Decrement selection", mode = "x" },
@@ -85,7 +84,12 @@ return {
   },
   ---@param opts TSConfig
   config = function(_, opts)
-    if type(opts.ensure_installed) == "table" then
+    -- On NixOS, parsers are provided by Nix — skip runtime compilation
+    if vim.fn.executable("nix") == 1 then
+      opts.ensure_installed = {}
+      opts.auto_install = false
+    elseif type(opts.ensure_installed) == "table" then
+      -- On non-NixOS (Arch, etc.), deduplicate ensure_installed
       ---@type table<string, boolean>
       local added = {}
       opts.ensure_installed = vim.tbl_filter(function(lang)
